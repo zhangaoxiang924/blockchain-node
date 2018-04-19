@@ -3,30 +3,88 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const fileStreamRotator = require('file-stream-rotator')
 const fs = require('fs')
 
-const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
 const proxyRouter = require('./routes/proxy')
-var newsDetailRouter = require('./routes/newsDetail')
+const newsDetailRouter = require('./routes/newsDetail')
 
 const app = express()
-app.use('/api', proxyRouter)
+
+// java接口代理
+app.use('/info', proxyRouter)
+app.use('/market', proxyRouter)
+app.use('/passport', proxyRouter)
+app.use('/lives', proxyRouter)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs.log'), {flags: 'a'})
-app.use(logger('combined', {stream: accessLogStream}))
+// logger
+const logDir = '/data/node_website/mars-logs'
+fs.existsSync(logDir) || fs.mkdirSync(logDir)
+const accessLogStream = fileStreamRotator.getStream({
+    date_format: 'YYYYMMDD',
+    filename: path.join(logDir, 'logs-%DATE%.log'),
+    frequency: 'daily',
+    verbose: true
+})
+
+app.use(logger('dev'))
+app.use(logger('common', {stream: accessLogStream}))
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
-app.use('/users', usersRouter)
 app.use('/newsdetail', newsDetailRouter)
+
+// react-router browserhistory
+app.get([
+    '/',
+    '/index',
+    '/personal',
+    '/livenews',
+    '/markets',
+    '/news',
+    '/newsauthor',
+    '/primer',
+    '/newsdetail',
+    '/newcoins',
+    '/newcoinsList',
+    '/newcoinsDetail',
+    '/project',
+    '/projectInfo',
+    '/projectProjectmaterial',
+    '/projectRelatenews',
+    '/exchangelist',
+    '/copyright',
+    '/about',
+    '/user',
+    '/userMyAttention',
+    '/userMyAttentionProject',
+    '/userMyAttentionAuthor',
+    '/userMyArticle',
+    '/userMyInfo',
+    '/userBindingPhone',
+    '/changePhoneEml',
+    '/userChangePassword',
+    '/userMyCollection',
+    '/userCertification',
+    '/edit',
+    '/search',
+    '/live',
+    '/live/liveList',
+    '/live/liveDetails',
+    '/app',
+    '/hot',
+    '/showSpecial',
+    '/showSpecialNews'
+], function (req, res) {
+    res.sendFile(path.resolve(__dirname, 'public/static/index.html'))
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

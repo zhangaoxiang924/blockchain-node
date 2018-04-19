@@ -83,43 +83,16 @@ const axiosAjax = (arg) => {
  */
 // const ajaxJavaUrl = 'http://www.huoxing24.vip'
 const ajaxJavaUrl = 'http://www.huoxing24.com'
-const javaPrefix = '/pc'
 const proxyJavaApi = [
-    // javaPrefix + '/info/news/getbyid',
-    javaPrefix + '/market/coin/total',
-    javaPrefix + '/market/coin/financerate',
-    javaPrefix + '/passport/account/login',
-    javaPrefix + '/passport/account/register',
-    javaPrefix + '/passport/account/getbackuserpw',
-    javaPrefix + '/passport/account/getverifcode',
-    javaPrefix + '/passport/account/logout',
-    javaPrefix + '/info/news/getauthorinfo', // 作者信息
-    javaPrefix + '/info/news/relatednews', // 相关新闻
-    javaPrefix + '/info/ad/showad', // 广告
-    javaPrefix + '/info/follow/author/delete', // 取消关注
-    javaPrefix + '/info/follow/author/add', // 关注
-    javaPrefix + '/market/coin/querycoins', // 行情
-    javaPrefix + '/info/comment/getbyarticle', // 获取评论
-    javaPrefix + '/info/comment/del', // 删除评论
-    javaPrefix + '/info/comment/add', // 添加评论
-    javaPrefix + '/info/comment/reply', // 回复
-    javaPrefix + '/info/news/collect' // 收藏
-]
-
-/**
- * php: bbs接口代理
- */
-const ajaxPhpUrl = 'http://wecenter.huoxing24.vip'
-const phpPrefix = '/bbs'
-const proxyPhpApi = [
-    phpPrefix,
-    phpPrefix + '/account/ajax/profiles_setting'
+    '/*',
+    '/*/*',
+    '/*/*/*',
+    '/*/*/*/*',
+    '/*/*/*/*/*'
 ]
 
 module.exports = {
-    ajaxPhpUrl,
     ajaxJavaUrl,
-    proxyPhpApi,
     proxyJavaApi,
     axiosAjax
 }

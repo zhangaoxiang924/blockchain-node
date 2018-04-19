@@ -4,10 +4,11 @@
  * Description：Description
  */
 
-import {pageLoadingHide} from './public/public'
+import '../../node_modules/layui-layer/dist/layer.js'
+
+import {pageLoadingHide, publicFuncM} from './public/public'
 
 $(function () {
     pageLoadingHide()
-
-    // console.log('index.js')
+    publicFuncM()
 })

@@ -34,10 +34,8 @@ const replace = (obj) => {
             let newManifest = {}
             for (let key in manifest) {
                 const value = manifest[key]
-
                 const pointArr = value.split('.')
                 const fileSuffix = pointArr[pointArr.length - 1]
-
                 const lineArr = value.split('-')
                 let fileName = ''
                 for (let key in lineArr) {

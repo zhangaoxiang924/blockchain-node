@@ -5,7 +5,7 @@
  */
 
 import axios from 'axios'
-import '../../../node_modules/layui-layer/dist/layer.js'
+import layer from 'layui-layer'
 
 const isPc = () => {
     const userAgent = window.navigator.userAgent.toLowerCase()
@@ -281,12 +281,9 @@ const getTimeContent = (publishTime, requestTime) => {
     }
     return content
 }
+
 const lang = 'zh'
-const proxyUrl = '/api'
-const proxyUrlBbs = '/api'
-const proxyUrlPc = '/api/pc'
-const hrefHost = 'http://www.huoxing24.com'
-// const hrefHost = 'http://www.huoxing24.vip'
+const proxyUrl = ''
 
 export {
     isPc,
@@ -298,11 +295,8 @@ export {
     getQueryString,
     pageLoadingHide,
     axiosAjax,
-    proxyUrlBbs,
-    proxyUrlPc,
     proxyUrl,
     lang,
-    hrefHost,
     outputdollars,
     isPoneAvailable,
     fomartQuery,

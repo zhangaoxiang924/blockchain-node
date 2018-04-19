@@ -4,7 +4,7 @@
  * Description：Description
  */
 
-import {axiosAjax, proxyUrlPc, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString} from './public/public'
+import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './public/componentTemplate'
 
@@ -13,7 +13,7 @@ $(function () {
     const getRollMsg = () => {
         axiosAjax({
             type: 'get',
-            url: `${proxyUrlPc}/market/coin/total`,
+            url: `${proxyUrl}/market/coin/total`,
             contentType: 'application/x-www-form-urlencoded',
             formData: false,
             params: {},
@@ -22,7 +22,7 @@ $(function () {
                 if (res.code === 1) {
                     axiosAjax({
                         type: 'get',
-                        url: `${proxyUrlPc}/market/coin/financerate`,
+                        url: `${proxyUrl}/market/coin/financerate`,
                         contentType: 'application/x-www-form-urlencoded',
                         formData: false,
                         params: {},
@@ -135,7 +135,7 @@ $(function () {
     function loginOut () {
         axiosAjax({
             type: 'get',
-            url: `${proxyUrlPc}/passport/account/logout`,
+            url: `${proxyUrl}/passport/account/logout`,
             formData: false,
             params: {passportid: Cookies.get('hx_user_id')},
             fn: function (res) {
@@ -161,8 +161,6 @@ $(function () {
                 }
             }
         })
-
-        // browserHistory.push('/')
     }
 
     $('#loginBlock .login-close').on('click', function () {
@@ -228,7 +226,7 @@ $(function () {
         }
         axiosAjax({
             type: 'post',
-            url: `${proxyUrlPc}/passport/account/getverifcode?${paramStr}`,
+            url: `${proxyUrl}/passport/account/getverifcode?${paramStr}`,
             formData: false,
             params: {},
             fn: function (res) {
@@ -416,7 +414,7 @@ $(function () {
     function loginFunc (urlLastStr, sendData, fun) {
         // '/passport/account/login', '/passport/account/register', '/passport/account/retrievePassword'
         let paramStr = fomartQuery(sendData)
-        let url = `${proxyUrlPc}/passport/account${urlLastStr}?${paramStr}`
+        let url = `${proxyUrl}/passport/account${urlLastStr}?${paramStr}`
         axiosAjax({
             type: 'post',
             url: url,

@@ -4,7 +4,7 @@
  * Description：Description
  */
 
-import {axiosAjax, proxyUrlPc, formatDate, fomartQuery, formatPrice, getTimeContent} from './public'
+import {axiosAjax, proxyUrl, formatDate, fomartQuery, formatPrice, getTimeContent} from './public'
 import Cookies from 'js-cookie'
 import layer from 'layui-layer'
 
@@ -45,6 +45,7 @@ class NewsAuthor {
         // this.warp = warp
         this.htmlStr = ``
     }
+
     init (warp, dir) {
         let self = this
         warp.html(this.getStr(dir))
@@ -95,7 +96,7 @@ class NewsAuthor {
             'token': Cookies.get('hx_user_token'),
             'authorId': this.info.passportId
         }
-        let url = `${proxyUrlPc}/info/follow/author/${type}?${fomartQuery(sendData)}`
+        let url = `${proxyUrl}/info/follow/author/${type}?${fomartQuery(sendData)}`
         axiosAjax({
             type: 'post',
             url: url,
@@ -161,7 +162,7 @@ class AsideMarked {
     }
 
     getRate (fn) {
-        let url = `${proxyUrlPc}/market/coin/financerate`
+        let url = `${proxyUrl}/market/coin/financerate`
         axiosAjax({
             type: 'post',
             url: url,
@@ -190,7 +191,7 @@ class AsideMarked {
                 order: sort
             }
         }
-        let url = `${proxyUrlPc}/market/coin/querycoins`
+        let url = `${proxyUrl}/market/coin/querycoins`
         axiosAjax({
             type: 'post',
             url: url,
@@ -221,14 +222,15 @@ class Reply {
         this.currentPage = 1
         this.pageSize = 5
         this.recordCount = 0
-        this.userNickName = Cookies.get('hx_user_nickname')
-        this.userId = Cookies.get('hx_user_id')
-        this.nickUrl = Cookies.get('hx_user_url')
-        this.token = Cookies.get('hx_user_token')
+        this.userNickName = Cookies.get('hx_user_nickname') ? Cookies.get('hx_user_nickname') : ''
+        this.userId = Cookies.get('hx_user_id') ? Cookies.get('hx_user_id') : ''
+        this.nickUrl = Cookies.get('hx_user_url') ? Cookies.get('hx_user_url') : ''
+        this.token = Cookies.get('hx_user_token') ? Cookies.get('hx_user_token') : ''
         this.conmentStr = ''
         this.notLogin = `<div class="prompt-not-login" style="display: ${!this.token ? 'block' : 'none'};"><p>请先 <span class="reply-login-button">登陆</span> 再评论</p></div>`
         this.hasLogin = `<div class="prompt-has-login" style="display: ${!this.token ? 'none' : 'block'};"><img alt="" src="${this.nickUrl}"><div class="reply-editor"><div class="editor"><textarea></textarea></div></div><p class="submit-btn"><span>评论</span></p></div>`
     }
+
     init () {
         let self = this
         let htmlStr = `<div class="reply-module">${this.notLogin}<div class="reply-section">`
@@ -309,7 +311,7 @@ class Reply {
     // 获取评论
     getNewsConments (currentPage, pageSize) {
         let self = this
-        let url = `${proxyUrlPc}/info/comment/getbyarticle`
+        let url = `${proxyUrl}/info/comment/getbyarticle`
         this.currentPage = currentPage
         let sendData = {
             id: this.newsId,
@@ -388,7 +390,7 @@ class Reply {
     // 删除回复
     delNewsComments (id) {
         let self = this
-        let url = `${proxyUrlPc}/info/comment/del`
+        let url = `${proxyUrl}/info/comment/del`
         let sendData = {
             id: id,
             token: this.token,
@@ -412,7 +414,7 @@ class Reply {
     // 回复
     replyNewsComments (commentsId, content) {
         let self = this
-        let url = `${proxyUrlPc}/info/comment/reply`
+        let url = `${proxyUrl}/info/comment/reply`
         let sendData = {
             targetId: this.newsId,
             token: this.token,
@@ -439,7 +441,7 @@ class Reply {
     // 评论
     addNewsComments (content) {
         let self = this
-        let url = `${proxyUrlPc}/info/comment/add`
+        let url = `${proxyUrl}/info/comment/add`
         let sendData = {
             targetId: this.newsId,
             content: content,
@@ -476,6 +478,7 @@ class MusicPlay {
         this.paused = true
         this.timeId = 0
     }
+
     init () {
         let self = this
         setTimeout(() => {
@@ -527,6 +530,7 @@ class MusicPlay {
         let audio = this.audio
         audio.play()
     }
+
     pause () {
         let audio = this.audio
         audio.pause()

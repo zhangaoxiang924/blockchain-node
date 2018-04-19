@@ -1,0 +1,26 @@
+<!-- public -->
+<script src="http://static.huoxing24.com/assets/zepto.min.js"></script>
+<script src="http://static.huoxing24.com/assets/touch.js"></script>
+
+<!-- plugin -->
+<% for (var i = 0 in plugin) { %>
+<script src="<%= plugin[i] %>"></script>
+<% } %>
+
+<!-- private -->
+<script src="../js/vendors.js"></script>
+<% for (var i = 0 in private) { %>
+<script src="<%= private[i] %>"></script>
+<% } %>
+
+<footer>
+
+</footer>
+<!-- statistics -->
+<div style="display: none">
+    <script src="https://s19.cnzz.com/z_stat.php?id=1273405182&web_id=1273405182" language="JavaScript"></script>
+</div>
+<iframe id="iframe" src=""></iframe>
+
+</body>
+</html>

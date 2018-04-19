@@ -4,8 +4,10 @@ private: ['./css/newsDetail.css']
 }) %>
 <!-- 公共头部 -->
 <%- include('./public/commonHeader', {newsData: newsData}) %>
+
 <!-- 内容 -->
 <%- include('./newsDetail/newsDetailMain', {newsData: newsData}) %>
+
 <!-- 公共底部 -->
 <%- include('./public/commonFooter', {newsData: newsData}) %>
 <%- include('./public/footer', {

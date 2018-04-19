@@ -40,7 +40,7 @@
                     float: left;
                     margin-left: 25px;
                     cursor: pointer;
-                    background: url("../img/footer/share.png") no-repeat;
+                    background: url("../../img/footer/share.png") no-repeat;
 
                     a {
                         display: inline-block;
@@ -174,7 +174,8 @@
                     }
 
                     &:nth-child(6),
-                    &:nth-child(12) {
+                    &:nth-child(12),
+                    &:nth-child(18) {
                         span {
                             border-right: none;
                         }
