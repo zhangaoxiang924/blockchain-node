@@ -24,7 +24,7 @@
         position: relative;
         width: 1200px;
         margin: 0 auto;
-        padding: 60px 0 35px;
+        padding: 40px 0 35px;
 
         .footer-share-con {
             position: absolute;
@@ -146,10 +146,10 @@
             }
 
             .ft-partner-link {
-                //margin-bottom: 28px;
+                margin-bottom: 20px;
                 font-size: 16px;
                 width: 580px;
-                height: 130px;
+                // height: 130px;
 
                 a {
                     position: relative;
@@ -175,7 +175,8 @@
 
                     &:nth-child(6),
                     &:nth-child(12),
-                    &:nth-child(18) {
+                    &:nth-child(18),
+                    &:last-child {
                         span {
                             border-right: none;
                         }
@@ -183,7 +184,8 @@
 
                     &:nth-child(1),
                     &:nth-child(7),
-                    &:nth-child(13) {
+                    &:nth-child(13),
+                    &:nth-child(19) {
                         padding-left: 0;
                         text-align: left;
                     }
@@ -203,7 +205,7 @@
     }
 
     .footer-copyright {
-        padding: 35px 0;
+        padding-bottom: 35px;
         margin: 0 auto;
         width: 1200px;
         position: relative;
@@ -213,7 +215,7 @@
             width: 380px;
             height: 262px;
             right: 0;
-            top: -335px;
+            top: -360px;
 
             h5 {
                 position: absolute;
@@ -231,7 +233,7 @@
                 padding: 0 5px;
                 height: 28px;
                 line-height: 28px;
-                margin: 2px;
+                margin: 2px 2px;
                 cursor: pointer;
 
                 &:hover {

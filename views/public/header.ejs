@@ -2,8 +2,9 @@
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="火星论坛">
-    <meta name="description" content="火星论坛">
+    <meta name="keywords"
+          content="区块链，区块链项目，区块链是什么，区块链概念股，区块链论坛，区块链社区，区块链服务，区块链培训，区块链资讯，区块链活动，区块链市场，区块链投资，区块链百科，虚拟币，数字货币，挖矿，虚拟币是什么，数字货币是什么，怎么挖矿，挖矿是什么，coinmarketcap，比特币，比特币今日价格，比特币交易平台，莱特币，以太坊">
+    <meta name="description" content="火星财经是集新闻、资讯、行情、数据等区块链信息等专业服务平台，致力于为区块链创业者以及数字货币投资者提供最新最及时的项目报道、投资顾问、项目分析、市场行情">
     <meta name="author" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -14,7 +15,8 @@
           minimum-scale=1.0,
           maximum-scale=1.0,
           user-scalable=no"/>
-    <title>火星财经</title>
+    <link rel='icon' href='./img/icon.ico' type='image/x-ico'>
+    <title><%= title %></title>
 
     <!--[if lte IE 8]>
     <script src="http://static.huoxing24.com/assets/browser-tips.js"></script>
@@ -34,12 +36,127 @@
 
 </head>
 <body>
+
+<!-- page loading -->
 <div class="lk-loading active" id="pageLoading">
     <div class="lk-loading-center">
         <div class="lk-loading-center-absolute">
             <div class="round round-one"></div>
             <div class="round round-two"></div>
             <div class="round round-three"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 行情滚动信息 -->
+<div class="header-roll-msg-wrap">
+    <div class="header-roll" id="coinInfo"></div>
+</div>
+
+<!-- 头部 -->
+<div class="header-nav-wrap">
+    <!-- 头部导航 -->
+    <div class="header-nav">
+        <iframe style="display: none;"></iframe>
+        <a class="logo-img" href="/">
+            <img src="./img/header/logo-last-new.svg"
+                 alt="" class="logo"><span>区块链先锋门户</span></a>
+        <ul class="nav-content">
+            <li class="nav-item "><a target="_blank" href="/index">首页</a></li>
+            <li class="nav-item "><a target="_blank" href="/news">新闻</a></li>
+            <li class="nav-item ">
+                <a target="_blank" href="/forum">火星社区</a>
+                <img class="new-icon" src="./img/header/beta-icon.png">
+            </li>
+            <li class="nav-item ">
+                <a target="_blank" href="/baike">百科</a>
+                <img class="new-icon" src="./img/header/new-icon.png">
+            </li>
+            <li class="nav-item "><a target="_blank" href="/livenews">快讯</a></li>
+            <li class="nav-item "><a target="_blank" href="/news?id=7">游戏</a></li>
+            <li class="nav-item "><a target="_blank" href="/markets">行情</a></li>
+            <!--<li class="nav-item "><a target="_blank" href="/app">APP</a></li>-->
+        </ul>
+        <div class="search-content-div">
+            <div class="search-box-btn">
+                <p class="search-content">
+                    <input type="text" class="search-input" placeholder="输入关键词" maxlength="20">
+                </p>
+            </div>
+            <span class="close"></span>
+        </div>
+        <p id="navLoginContent" class="login-content">
+            <span class="login show-login">登录</span>
+            <a style="display:none" class="login" title="LeonChou" href="/user">LeonCh...</a>
+            <span class="separation"> </span>
+            <span class="register show-register">注册</span>
+            <span style="display:none" id="loginOut">注销</span>
+        </p>
+        <div class="wx-ewm">
+            <div class="wx-ewm-img"><img src="./img/header/sw-ewm.png" alt=""><img src="./img/header/hx-ewm.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录 -->
+    <div id="loginBlock" class="login-mask" style="display: none;">
+        <div class="login-con">
+            <iframe src="" style="display: none;"></iframe>
+            <div id="registerModal" class="login-con-main" style="display: none;">
+                <h1>注册</h1>
+                <p class="error-msg "></p>
+                <div class="login-item">
+                <span>
+                    <img src="../img/login/login-phone-number.png">
+                </span>
+                    <input name="phone" placeholder="请输入手机号码">
+                </div>
+                <div class="login-item auth-code-item">
+                <span>
+                    <img src="../img/login/login-auth-code.png">
+                </span>
+                    <a id="getCodeBtn" style="display: block;">获取验证码</a>
+                    <a id="waitTime" class="auth-wait-time" style="display: none;">60S</a>
+                    <input name="code" placeholder="请输入手机验证码">
+                </div>
+                <div class="login-item">
+                <span><img src="../img/login/login-password.png">
+                </span>
+                    <input name="pwd" type="password" placeholder="请输入新密码">
+                </div>
+                <div class="login-item">
+                <span>
+                    <img src="../img/login/login-re-password.png">
+                </span>
+                    <input name="repwd" type="password" placeholder="请再次输入新密码">
+                </div>
+                <button>注册</button>
+                <div class="login-tips"><p>已有账号？<a class="show-login">立即登录</a></p></div>
+            </div>
+            <div id="loginModal" class="login-con-main" style="display: none;">
+                <h1>登录</h1>
+                <p class="login-error-msg "></p>
+                <div class="login-item">
+                <span>
+                    <img src="../img/login/login-phone-number.png">
+                </span>
+                    <input name="phone" placeholder="请输入手机号码">
+                </div>
+                <div class="login-item">
+                <span>
+                    <img src="../img/login/login-password.png">
+                </span>
+                    <input name="pwd" type="password" placeholder="请输入密码">
+                </div>
+                <button>登录</button>
+                <div class="login-tips clearfix">
+                    <p>没有账号？<a class="show-register">立即注册</a></p>
+                    <a class="forget-password">忘记密码</a>
+                </div>
+            </div>
+            <a class="login-close">
+                <img src="../img/login/login-close.png">
+            </a>
         </div>
     </div>
 </div>

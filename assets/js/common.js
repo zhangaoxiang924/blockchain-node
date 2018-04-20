@@ -6,7 +6,7 @@
 
 import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString} from './public/public'
 import Cookies from 'js-cookie'
-import {Reply} from './public/componentTemplate'
+import {Reply} from './newsDetail/index'
 
 $(function () {
     // 顶部行情

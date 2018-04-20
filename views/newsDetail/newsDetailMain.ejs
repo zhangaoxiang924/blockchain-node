@@ -52,7 +52,7 @@
                 audioData = JSON.parse(audioData)
             if (audioData.length > 0) {
             %>
-            <%- include('../public/audio', {audioData: audioData[0]}) %>
+            <%- include('./audio', {audioData: audioData[0]}) %>
             <%
             }
             }
@@ -161,7 +161,7 @@
             </div>
             <!-- 评论 -->
             <div id="replyBox">
-                <!--<div class="reply-module">
+                <!--<div class="reply-modules">
                     <div class="prompt-not-login" style="display: none;">
                         <p>请先 <span class="reply-login-button">登陆</span>再评论</p>
                     </div>
