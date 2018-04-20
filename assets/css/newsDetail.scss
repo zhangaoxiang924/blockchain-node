@@ -3,22 +3,17 @@
  * Time：2018/4/9
  * Description：Description
  */
-
 @import "./public/normalize";
 @import "./public/public";
 @import "./public/header";
 @import "./public/footer";
-@import "./public/login";
-@import "./public/fonts";
-@import "./public/market";
-@import "./public/marketAside";
-@import "./public/musicPlayer";
-@import "./public/reset";
-@import "./public/newsRecommend";
-@import "./public/reply";
-@import "./public/ad";
-@import "./public/newsAuthor";
-@import "./public/simditor";
+@import "./modules/newsRecommend";
+@import "./modules/ad";
+@import "./modules/newsAuthor";
+@import "./newsDetail/reply";
+@import "./newsDetail/market";
+@import "./newsDetail/marketAside";
+@import "./newsDetail/musicPlayer";
 
 .news-detail-con {
     border: none;

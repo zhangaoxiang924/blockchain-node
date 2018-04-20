@@ -6,11 +6,11 @@
 
 import Cookies from 'js-cookie'
 import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getQueryString} from './public/public'
-import {ad, relatedNews, NewsAuthor, AsideMarked, Reply, MusicPlay} from './public/componentTemplate'
+import {ad, relatedNews, NewsAuthor} from './modules/index'
+import {AsideMarked, Reply, MusicPlay} from './newsDetail/index'
 
 $(function () {
     let newsId = getQueryString('id')
-
     pageLoadingHide()
     let newsDataInfo = $('.news-detail').data('info')
 
@@ -38,7 +38,10 @@ $(function () {
     // 作者信息
     axiosAjax({
         type: 'get',
-        url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({passportId: newsDataInfo.createdBy, myPassportId: Cookies.get('hx_user_id')})}`,
+        url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+            passportId: newsDataInfo.createdBy,
+            myPassportId: Cookies.get('hx_user_id')
+        })}`,
         formData: false,
         params: {},
         fn: function (res) {
@@ -55,7 +58,11 @@ $(function () {
     // 相关新闻
     axiosAjax({
         type: 'get',
-        url: `${proxyUrl}/info/news/relatednews?${fomartQuery({tags: newsDataInfo.tags, id: newsDataInfo.id, newsCounts: 6})}`,
+        url: `${proxyUrl}/info/news/relatednews?${fomartQuery({
+            tags: newsDataInfo.tags,
+            id: newsDataInfo.id,
+            newsCounts: 6
+        })}`,
         formData: false,
         params: {},
         fn: function (res) {
@@ -68,6 +75,7 @@ $(function () {
             }
         }
     })
+
     // 行情
     let marked = new AsideMarked($('.market'))
     marked.init()

@@ -15,7 +15,7 @@ const ajaxJavaUrl = utils.ajaxJavaUrl
 router.get('/', function (req, res, next) {
     let newsId = req.query.id
 
-    async function newsDetailData () {
+    async function newsDetailData() {
         const data = await new Promise((resolve) => {
             let sendData = null
             if (!req.cookies.hx_user_token) {
