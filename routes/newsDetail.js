@@ -15,7 +15,7 @@ const ajaxJavaUrl = utils.ajaxJavaUrl
 router.get('/', function (req, res, next) {
     let newsId = req.query.id
 
-    async function newsDetailData() {
+    async function newsDetailData () {
         const data = await new Promise((resolve) => {
             let sendData = null
             if (!req.cookies.hx_user_token) {
@@ -43,7 +43,10 @@ router.get('/', function (req, res, next) {
 
     newsDetailData().then((resData) => {
         if (resData.code === 1) {
-            res.render('newsDetail', {newsData: resData.obj})
+            res.render('newsDetail', {
+                newsData: resData.obj,
+                title: resData.obj.current.title
+            })
         } else {
             res.render('error', {
                 message: resData.msg,

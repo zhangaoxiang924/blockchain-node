@@ -1,10 +1,11 @@
 {
-  "name": "mars-forum-node",
+  "name": "blockchain-node",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "nodemon": "nodemon ./bin/www",
-    "gulp": "gulp dev"
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.5",
@@ -18,6 +19,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.9",
+    "del": "^3.0.0",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-loader": "^1.9.0",
@@ -30,11 +32,16 @@
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^3.7.0",
     "gulp-connect": "^5.5.0",
+    "gulp-ejs": "^3.1.3",
+    "gulp-file-include": "^2.0.1",
     "gulp-imagemin": "^4.1.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-rev": "^8.1.1",
+    "gulp-rev-collector": "^1.3.1",
     "gulp-sass": "^3.2.1",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-stylelint": "^5.0.0",
+    "gulp-util": "^3.0.8",
     "gulp-webpack": "^1.5.0",
     "run-sequence": "^2.1.0",
     "simditor": "^2.3.6",
@@ -43,6 +50,7 @@
     "stylelint-config-standard": "^18.0.0",
     "through-gulp": "^0.5.0",
     "url-loader": "^1.0.1",
+    "vinyl-paths": "^2.1.0",
     "webpack": "^3.10.0"
   },
   "dependencies": {
