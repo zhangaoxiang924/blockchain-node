@@ -173,7 +173,8 @@ gulp.task('revCssFonts', () => { // fonts in css
             replaceReved: true,
             dirReplacements: {
                 '../../fonts': publicPath + '/fonts',
-                '../fonts': publicPath + '/fonts'
+                '../fonts': publicPath + '/fonts',
+                './fonts': publicPath + '/fonts'
             }
         }))
         .pipe(gulp.dest('public/css'))
@@ -184,7 +185,8 @@ gulp.task('revCssImg', () => { // img in css
             replaceReved: true,
             dirReplacements: {
                 '../../img': publicPath + '/img',
-                '../img': publicPath + '/img'
+                '../img': publicPath + '/img',
+                './img': publicPath + '/img'
             }
         }))
         .pipe(gulp.dest('public/css'))
@@ -195,7 +197,8 @@ gulp.task('revJsImg', () => { // img in js
             replaceReved: true,
             dirReplacements: {
                 '../../img': publicPath + '/img',
-                '../img': publicPath + '/img'
+                '../img': publicPath + '/img',
+                './img': publicPath + '/img'
             }
         }))
         .pipe(gulp.dest('public/js'))
@@ -206,7 +209,8 @@ gulp.task('revHtmlImg', () => { // img in html
             replaceReved: true,
             dirReplacements: {
                 '../../img': publicPath + '/img',
-                '../img': publicPath + '/img'
+                '../img': publicPath + '/img',
+                './img': publicPath + '/img'
             }
         }))
         .pipe(gulp.dest('views'))
@@ -217,7 +221,8 @@ gulp.task('revHtmlCss', () => { // css in html
             replaceReved: true,
             dirReplacements: {
                 '../../css': publicPath + '/css',
-                '../css': publicPath + '/css'
+                '../css': publicPath + '/css',
+                './css': publicPath + '/css'
             }
         }))
         .pipe(gulp.dest('views'))
@@ -228,7 +233,8 @@ gulp.task('revHtmlJs', () => { // js in html
             replaceReved: true,
             dirReplacements: {
                 '../../js': publicPath + '/js',
-                '../js': publicPath + '/js'
+                '../js': publicPath + '/js',
+                './js': publicPath + '/js'
             }
         }))
         .pipe(gulp.dest('views'))

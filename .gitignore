@@ -3,6 +3,7 @@
 /dist/*
 /build/*
 /rev/*
+/views/*
 /node_modules/*
 /public/css
 /public/js
