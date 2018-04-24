@@ -1,0 +1,15 @@
+<!-- 公共头部 -->
+<%- include('./public/header', {
+plugin: ['http://static.huoxing24.com/assets/swiper.min.css'],
+private: ['./css/index.css'],
+title: '火星财经-区块链先锋门户'
+}) %>
+
+<!-- 内容 -->
+<%- include('./index/main', {data: data}) %>
+
+<!-- 公共底部 -->
+<%- include('./public/footer', {
+plugin: ['http://static.huoxing24.com/assets/swiper.jquery.min.js'],
+private: ['./js/common.js', './js/index.js']
+}) %>

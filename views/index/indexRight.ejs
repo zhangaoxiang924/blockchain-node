@@ -1,0 +1,71 @@
+<!-- 火星专栏 -->
+<div class="index-news-right">
+    <div class="news-author clearfix">
+        <div class="box-author clearfix">
+            <p class="title">火星专栏</p>
+            <!-- item  -->
+            <%
+            data.map((item) => {
+                %>
+            <div class="list-author">
+                <div class="portrait-img">
+                    <a target="_blank" href="/newsauthor?userId=<%= item.passportId %>">
+                        <img src="<%= item.iconUrl %>" alt="">
+                        <%
+                            if (parseInt(item.vGrade) === 0) {
+                         %>
+                        <span class="v-ordinary"></span>
+                        <%
+                            } else if (parseInt(item.vGrade) === 1) {
+                        %>
+                        <span class="v-personal"></span>
+                        <%
+                            } else if (parseInt(item.vGrade) === 2) {
+                        %>
+                            <span clas="v-enterprise"></span>
+                        <%
+                            }
+                         %>
+                    </a>
+                    <div class="name-follower">
+                        <a target="_blank" class="author-call" title="<%= item.nickName %>" href="/newsauthor?userId=<%= item.passportId %>"><%= item.nickName %></a>
+                        <p class="crowd">粉丝：<span><%= item.followCount %></span></p>
+                    </div>
+                </div>
+                <a target="_blank" class="article-title" href="/newsdetail?id=<%= item.news.id%>"><%= item.news.title%></a>
+                <%
+                    if (item.passportId === userId) {
+                        %>
+                <div class="owner">
+                    <span>关注</span>
+                </div>
+                <%
+                    } else {
+                        %>
+                <div data-id="<%= item.passportId %>" style="display: <%= parseInt(item.ifCollect) === 1  ? 'block' : 'none' %>" class="cancel-attention"><span>已关注</span></div>
+                <div data-id="<%= item.passportId %>" style="display: <%= parseInt(item.ifCollect) !== 1  ? 'block' : 'none' %>" class="attention"><span>+ 关注</span></div>
+                <%
+                    }
+                 %>
+            </div>
+            <%
+            })
+             %>
+            <!--<div class="list-author">
+                <div class="portrait-img">
+                    <a target="_blank" href="/newsauthor?userId=01a70568381235638aa28b000b913c26">
+                        <img src="http://static.huoxing24.com/usericon/01a70568381235638aa28b000b913c26/portrait/1522242525008419.png" alt="">
+                        <span class="v-ordinary"></span>
+                    </a>
+                    <div class="name-follower">
+                        <a target="_blank" class="author-call" title="王峰十问" href="/newsauthor?userId=01a70568381235638aa28b000b913c26">王峰十问</a>
+                        <p class="crowd">粉丝：<span>7077</span></p>
+                    </div>
+                </div>
+                <a target="_blank" class="article-title" href="/newsdetail?id=2018040921070199182">郑刚做客王峰十问：特斯拉穿越生死无数次，坚定看好电动汽车的未来</a>
+                <div class="cancel-attention"><span>已关注</span></div>
+            </div>-->
+            <!-- end -->
+        </div>
+    </div>
+</div>

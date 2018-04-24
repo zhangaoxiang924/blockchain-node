@@ -172,6 +172,27 @@ body {
     }
 }
 
+.block-style {
+    background: #fff;
+    border-radius: 3px;
+}
+
+.check-more-load {
+    padding-right: 15px;
+    background: url("../img/check-more.png") no-repeat right;
+    cursor: pointer;
+    height: 52px;
+    color: #828282;
+    font-size: 14px;
+    line-height: 52px;
+    text-align: right;
+
+    &:hover {
+        background: url("../img/check-more-hover.png") no-repeat right;
+        color: #1482f0;
+    }
+}
+
 @keyframes shake {
     0%,
     100% {

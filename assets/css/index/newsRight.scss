@@ -1,23 +1,8 @@
 /**
  * Author：zhoushuanglong
- * Time：2018-04-08 15:45
+ * Time：2017/8/10
  * Description：index
  */
-
-@import "./public/normalize";
-@import "./public/public";
-@import "./public/header";
-@import "./public/footer";
-@import "./public/newsList";
-@import "./modules/ad";
-@import "./index/adSwiper";
-@import "./index/newsCenter";
-@import "./index/newsLeft";
-@import "./index/newsRight";
-@import "./index/newsRightImg";
-@import "./index/realTimeNews";
-@import "./index/commentNews";
-@import "./index/newsAuthor";
 
 .index-news {
     width: 1200px;
@@ -30,11 +15,6 @@
         .index-news-center {
             margin-right: 15px;
             margin-left: 0;
-        }
-
-        .index-news-right {
-            width: 240px;
-            float: right;
         }
 
         .ad-contain {

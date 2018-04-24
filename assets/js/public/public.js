@@ -273,9 +273,9 @@ const getTimeContent = (publishTime, requestTime) => {
     if (limit < 60) {
         content = '刚刚'
     } else if (limit >= 60 && limit < 3600) {
-        content = Math.floor(limit / 60) + '分钟以前'
+        content = Math.floor(limit / 60) + '分钟前'
     } else if (limit >= 3600 && limit < 86400) {
-        content = Math.floor(limit / 3600) + '小时以前'
+        content = Math.floor(limit / 3600) + '小时前'
     } else {
         content = formatDate(publishTime)
     }
