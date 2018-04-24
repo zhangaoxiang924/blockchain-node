@@ -13,21 +13,21 @@
           minimum-scale=1.0,
           maximum-scale=1.0,
           user-scalable=no"/>
-    <link rel='icon' href='./img/icon.ico' type='image/x-ico'>
-    <title>火星社区</title>
+    <link rel='icon' href='../img/icon.ico' type='image/x-ico'>
+    <title><%= title %></title>
 
     <!-- rem to html font size -->
     <script src="http://static.huoxing24.com/assets/remset.js"></script>
 
-    <!-- plugin -->
-    <% for (var i = 0 in plugin) { %>
-    <link href="<%= plugin[i] %>" rel="stylesheet">
-    <% } %>
+    <!--plugin-->
+    @@for (var i = 0 in plugin) {
+    <link href="`+plugin[i]+`" rel="stylesheet">
+    }
 
-    <!-- private -->
-    <% for (var i = 0 in private) { %>
-    <link href="<%= private[i] %>" rel="stylesheet">
-    <% } %>
+    <!--private-->
+    @@for (var i = 0 in private) {
+    <link href="`+private[i]+`" rel="stylesheet">
+    }
 
 </head>
 <body>

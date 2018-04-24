@@ -4,11 +4,19 @@
  * Description：Description
  */
 
-import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString} from './public/public'
+import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
 
 $(function () {
+    if (isPc() === false) {
+        if (window.location.href.indexOf('newsdetail') !== -1) {
+            window.location.href = `http://m.huoxing24.com/details.html?id=${getQueryString('id')}`
+        } else {
+            window.location.href = 'http://m.huoxing24.com/'
+        }
+    }
+
     // 顶部行情
     const getRollMsg = () => {
         axiosAjax({

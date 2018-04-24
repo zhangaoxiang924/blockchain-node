@@ -22,17 +22,17 @@
     <script src="http://static.huoxing24.com/assets/browser-tips.js"></script>
     <![endif]-->
 
-    <!--publlic-->
+    <!--public-->
 
     <!--plugin-->
-    <% for (var i = 0 in plugin) { %>
-    <link href="<%= plugin[i] %>" rel="stylesheet">
-    <% } %>
+    @@for (var i = 0 in plugin) {
+    <link href="`+plugin[i]+`" rel="stylesheet">
+    }
 
     <!--private-->
-    <% for (var i = 0 in private) { %>
-    <link href="<%= private[i] %>" rel="stylesheet">
-    <% } %>
+    @@for (var i = 0 in private) {
+    <link href="`+private[i]+`" rel="stylesheet">
+    }
 
 </head>
 <body>

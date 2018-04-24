@@ -11,4 +11,6 @@ import {pageLoadingHide, publicFuncM} from './public/public'
 $(function () {
     pageLoadingHide()
     publicFuncM()
+
+    $('body').css('background', 'url("../img/icon.ico")')
 })

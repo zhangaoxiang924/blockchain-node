@@ -11,23 +11,45 @@ const runSequence = require('run-sequence')
 const connect = require('gulp-connect')
 const stylelint = require('gulp-stylelint')
 const imagemin = require('gulp-imagemin')
+const rev = require('gulp-rev')
+const revCollector = require('gulp-rev-collector')
+const fileinclude = require('gulp-file-include')
+const del = require('del')
+const gulpDel = require('./gulp-del')
 const strReplace = require('./gulp-str-replace')
 
 const webpackconfig = require('./webpack.config.js')
 const config = require('./config.js')
 
-/* ----------------------------------------处理css---------------------------------------- */
-// stylelint检测
+const publicPath = config.publicPath
+/* ----------------------------------------handle ejs---------------------------------------- */
+// ejs include
+gulp.task('includeEjs', () => {
+    return gulp.src('assets/ejs/*.ejs')
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
+        .pipe(strReplace({
+            '../../img': './img',
+            '../img': './img'
+        }))
+        .pipe(gulp.dest('views'))
+        .pipe(connect.reload())
+})
+
+/* ----------------------------------------handle css---------------------------------------- */
+// stylelint
 gulp.task('lintCss', () => {
-    return gulp
-        .src(['assets/css/*.scss', 'assets/css/*/*.scss'])
+    return gulp.src(['assets/css/*.scss', 'assets/css/*/*.scss'])
         .pipe(stylelint({
             reporters: [
                 {formatter: 'string', console: true}
             ]
         }))
 })
-// sass处理
+
+// sass
 gulp.task('sass', ['lintCss'], () => {
     return gulp.src('assets/css/*.scss')
         .pipe(sourcemaps.init())
@@ -36,41 +58,68 @@ gulp.task('sass', ['lintCss'], () => {
         .pipe(gulp.dest('public/css'))
         .pipe(connect.reload())
 })
-// postcss处理css
+
+// postcss
 gulp.task('postcss', ['sass'], () => {
     const plugins = [
         autoprefixer({browsers: ['last 2 versions', 'ie >= 8', '> 5% in CN']})
     ]
     return gulp.src('public/css/*.css')
+        .pipe(strReplace({
+            '../../img': '../img',
+            '../../fonts': '../fonts'
+        }))
         .pipe(sourcemaps.init())
         .pipe(postcss(plugins))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/css'))
         .pipe(connect.reload())
 })
-// 压缩css
-gulp.task('minifyCss', ['postcss'], () => {
+
+// minify css, add manifest
+gulp.task('hashCss', () => {
     return gulp.src('public/css/*.css')
+        .pipe(rev())
         .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe(strReplace({
-            '../../': config.publicPath,
-            '../': '../'
-        }))
         .pipe(gulp.dest('public/css'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('public/rev/css'))
 })
 
-/* ----------------------------------------处理js---------------------------------------- */
-// 引用webpack对js进行操作
+/* ----------------------------------------handle js---------------------------------------- */
+// import webpack build js
 gulp.task('buildJs', () => {
     return gulp.src('assets/js/*.js')
         .pipe(gulpWebpack(webpackconfig, webpack))
+        .pipe(strReplace({
+            '../../img': './img',
+            '../img': './img'
+        }))
         .pipe(gulp.dest('public'))
         .pipe(connect.reload())
 })
 
-/* ----------------------------------------处理img---------------------------------------- */
-gulp.task('minifyImg', () => {
-    return gulp.src(['assets/img/*', 'assets/img/*/*'])
+// add manifest
+gulp.task('hashJs', () => {
+    return gulp.src('public/js/*.*')
+        .pipe(rev())
+        .pipe(gulp.dest('public/js'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('public/rev/js'))
+})
+
+/* ----------------------------------------handle img---------------------------------------- */
+// copy img
+gulp.task('copyImg', () => {
+    return gulp.src(['assets/img/*', 'assets/img/*/*.*', 'assets/img-not-hash/*', 'assets/img-not-hash/*/*.*'])
+        .pipe(gulp.dest('public/img'))
+        .pipe(connect.reload())
+})
+
+// minify img, add manifest
+gulp.task('hashImg', () => {
+    return gulp.src(['public/img/*', 'public/img/*/*.*'])
+        .pipe(rev())
         .pipe(imagemin({
             optimizationLevel: 5,
             progressive: true,
@@ -78,36 +127,149 @@ gulp.task('minifyImg', () => {
             multipass: true
         }))
         .pipe(gulp.dest('public/img'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('public/rev/img'))
+})
+
+/* ----------------------------------------handle fonts---------------------------------------- */
+// copy fonts
+gulp.task('copyFontsDev', () => {
+    return gulp.src(['assets/fonts/*', 'assets/fonts/*/*'])
+        .pipe(gulp.dest('public/fonts'))
         .pipe(connect.reload())
 })
 
-/* ----------------------------------------清除public---------------------------------------- */
-// 清除public目录
+gulp.task('copyFontsBuild', () => {
+    return gulp.src(['assets/fonts/*', 'assets/fonts/*/*'])
+        .pipe(rev())
+        .pipe(gulp.dest('public/fonts'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('public/rev/fonts'))
+})
+
+/* ----------------------------------------clean public---------------------------------------- */
+// clean public folder
 gulp.task('cleanPublic', () => {
-    return gulp.src(['public/css', 'public/js', 'public/img'], {read: false})
+    return gulp.src(['public/css', 'public/js', 'public/img', 'public/rev', 'public/fonts', 'views'], {read: false})
+        .pipe(clean({force: true}))
+})
+// del manifest source file
+gulp.task('delManifestSourceFile', (callback) => {
+    return gulp.src('public/rev/*/*')
+        .pipe(gulpDel(function (fileArr) {
+            del(fileArr, callback)
+        }))
+})
+// clean public/rev folder
+gulp.task('cleanRev', () => {
+    return gulp.src(['public/rev'], {read: false})
         .pipe(clean({force: true}))
 })
 
-/* ----------------------------------------监控与启动服务---------------------------------------- */
+/* ----------------------------------------rev collector---------------------------------------- */
+gulp.task('revCssFonts', () => { // fonts in css
+    return gulp.src(['public/rev/fonts/*.json', 'public/css/*.css'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../fonts': publicPath + '/fonts',
+                '../fonts': publicPath + '/fonts'
+            }
+        }))
+        .pipe(gulp.dest('public/css'))
+})
+gulp.task('revCssImg', () => { // img in css
+    return gulp.src(['public/rev/img/*.json', 'public/css/*.css'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../img': publicPath + '/img',
+                '../img': publicPath + '/img'
+            }
+        }))
+        .pipe(gulp.dest('public/css'))
+})
+gulp.task('revJsImg', () => { // img in js
+    return gulp.src(['public/rev/img/*.json', 'public/js/*.js'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../img': publicPath + '/img',
+                '../img': publicPath + '/img'
+            }
+        }))
+        .pipe(gulp.dest('public/js'))
+})
+gulp.task('revHtmlImg', () => { // img in html
+    return gulp.src(['public/rev/img/*.json', 'views/*.ejs'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../img': publicPath + '/img',
+                '../img': publicPath + '/img'
+            }
+        }))
+        .pipe(gulp.dest('views'))
+})
+gulp.task('revHtmlCss', () => { // css in html
+    return gulp.src(['public/rev/css/*.json', 'views/*.ejs'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../css': publicPath + '/css',
+                '../css': publicPath + '/css'
+            }
+        }))
+        .pipe(gulp.dest('views'))
+})
+gulp.task('revHtmlJs', () => { // js in html
+    return gulp.src(['public/rev/js/*.json', 'views/*.ejs'])
+        .pipe(revCollector({
+            replaceReved: true,
+            dirReplacements: {
+                '../../js': publicPath + '/js',
+                '../js': publicPath + '/js'
+            }
+        }))
+        .pipe(gulp.dest('views'))
+})
+
+/* ----------------------------------------watch---------------------------------------- */
 gulp.task('connect', () => {
     connect.server({
-        root: ['public'],
+        root: ['public', 'views'],
         host: config.host,
         port: config.port,
         livereload: true
     })
 })
 gulp.task('watch', () => {
-    gulp.watch(['assets/css/*.scss', 'assets/css/*/*.scss'], ['minifyCss'])
+    gulp.watch(['assets/ejs/*.ejs', 'assets/css/*/*.ejs'], ['includeEjs'])
+    gulp.watch(['assets/css/*.scss', 'assets/css/*/*.scss'], ['postcss'])
     gulp.watch(['assets/js/*.js', 'assets/js/*/*.js'], ['buildJs'])
-    gulp.watch(['assets/img/*', 'assets/img/*/*'], ['minifyImg'])
+    gulp.watch(['assets/img/*', 'assets/img/*/*'], ['copyImg'])
+    gulp.watch(['assets/fonts/*', 'assets/fonts/*/*'], ['copyFonts'])
 })
 
-/* ----------------------------------------开发与打包---------------------------------------- */
-// 移动端
+/* ----------------------------------------dev build---------------------------------------- */
 gulp.task('dev', (callback) => runSequence(
     'cleanPublic',
-    ['buildJs', 'minifyCss', 'minifyImg'],
+    ['includeEjs', 'postcss', 'buildJs', 'copyImg', 'copyFontsDev'],
     ['watch', 'connect'],
+    callback
+))
+
+gulp.task('build', (callback) => runSequence(
+    'cleanPublic',
+    ['includeEjs', 'postcss', 'buildJs', 'copyImg', 'copyFontsBuild'],
+    ['hashCss', 'hashJs', 'hashImg'],
+    'revCssFonts',
+    'revJsImg',
+    'revCssImg',
+    'revHtmlImg',
+    'revHtmlCss',
+    'revHtmlJs',
+    'delManifestSourceFile',
+    'cleanRev',
     callback
 ))

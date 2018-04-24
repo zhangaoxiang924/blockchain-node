@@ -43,7 +43,10 @@ router.get('/', function (req, res, next) {
 
     newsDetailData().then((resData) => {
         if (resData.code === 1) {
-            res.render('newsDetail', {newsData: resData.obj})
+            res.render('newsDetail', {
+                newsData: resData.obj,
+                title: resData.obj.current.title
+            })
         } else {
             res.render('error', {
                 message: resData.msg,
