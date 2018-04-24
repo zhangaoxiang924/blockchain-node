@@ -1,15 +1,474 @@
 <!-- 公共头部 -->
-<%- include('./public/header', {
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="区块链，区块链项目，区块链是什么，区块链概念股，区块链论坛，区块链社区，区块链服务，区块链培训，区块链资讯，区块链活动，区块链市场，区块链投资，区块链百科，虚拟币，数字货币，挖矿，虚拟币是什么，数字货币是什么，怎么挖矿，挖矿是什么，coinmarketcap，比特币，比特币今日价格，比特币交易平台，莱特币，以太坊">
+    <meta name="description" content="火星财经是集新闻、资讯、行情、数据等区块链信息等专业服务平台，致力于为区块链创业者以及数字货币投资者提供最新最及时的项目报道、投资顾问、项目分析、市场行情">
+    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport"
+          content="
+          width=device-width,
+          initial-scale=1.0,
+          minimum-scale=1.0,
+          maximum-scale=1.0,
+          user-scalable=no"/>
+    <link rel='icon' href='./img/icon.ico' type='image/x-ico'>
+    <title><%= title %></title>
+
+    <!--[if lte IE 8]>
+    <script src="http://static.huoxing24.com/assets/browser-tips.js"></script>
+    <![endif]-->
+
+    <!--public-->
+
+    <!--plugin-->
+    
+    <link href="http://static.huoxing24.com/assets/swiper.min.css" rel="stylesheet">
+    
+
+    <!--private-->
+    
+    <link href="../css/index.css" rel="stylesheet">
+    
+
+</head>
+<body>
+
+<!-- page loading -->
+<div class="lk-loading active" id="pageLoading">
+    <div class="lk-loading-center">
+        <div class="lk-loading-center-absolute">
+            <div class="round round-one"></div>
+            <div class="round round-two"></div>
+            <div class="round round-three"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 行情滚动信息 -->
+<div class="header-roll-msg-wrap">
+    <div class="header-roll" id="coinInfo"></div>
+</div>
+
+<!-- 头部 -->
+<div class="header-nav-wrap">
+    <!-- 头部导航 -->
+    <div class="header-nav">
+        <iframe style="display: none;"></iframe>
+        <a class="logo-img" href="/">
+            <img src="./img/header/logo-last-new.svg"
+                 alt="" class="logo"><span>区块链先锋门户</span></a>
+        <ul class="nav-content">
+            <li class="nav-item "><a target="_blank" href="/index">首页</a></li>
+            <li class="nav-item "><a target="_blank" href="/news">新闻</a></li>
+            <li class="nav-item ">
+                <a target="_blank" href="/forum">火星社区</a>
+                <img class="new-icon" src="./img/header/beta-icon.png">
+            </li>
+            <li class="nav-item ">
+                <a target="_blank" href="/baike">百科</a>
+                <img class="new-icon" src="./img/header/new-icon.png">
+            </li>
+            <li class="nav-item "><a target="_blank" href="/livenews">快讯</a></li>
+            <li class="nav-item "><a target="_blank" href="/news?id=7">游戏</a></li>
+            <li class="nav-item "><a target="_blank" href="/markets">行情</a></li>
+            <!--<li class="nav-item "><a target="_blank" href="/app">APP</a></li>-->
+        </ul>
+        <div class="search-content-div">
+            <div class="search-box-btn">
+                <p class="search-content">
+                    <input type="text" class="search-input" placeholder="输入关键词" maxlength="20">
+                </p>
+            </div>
+            <span class="close"></span>
+        </div>
+        <p id="navLoginContent" class="login-content">
+            <span class="login show-login">登录</span>
+            <a style="display:none" class="login" title="LeonChou" href="/user">LeonCh...</a>
+            <span class="separation"> </span>
+            <span class="register show-register">注册</span>
+            <span style="display:none" id="loginOut">注销</span>
+        </p>
+        <div class="wx-ewm">
+            <div class="wx-ewm-img"><img src="./img/header/sw-ewm.png" alt=""><img src="./img/header/hx-ewm.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录 -->
+    <div id="loginBlock" class="login-mask" style="display: none;">
+        <div class="login-con">
+            <iframe src="" style="display: none;"></iframe>
+            <div id="registerModal" class="login-con-main" style="display: none;">
+                <h1>注册</h1>
+                <p class="error-msg "></p>
+                <div class="login-item">
+                <span>
+                    <img src="./img/login/login-phone-number.png">
+                </span>
+                    <input name="phone" placeholder="请输入手机号码">
+                </div>
+                <div class="login-item auth-code-item">
+                <span>
+                    <img src="./img/login/login-auth-code.png">
+                </span>
+                    <a id="getCodeBtn" style="display: block;">获取验证码</a>
+                    <a id="waitTime" class="auth-wait-time" style="display: none;">60S</a>
+                    <input name="code" placeholder="请输入手机验证码">
+                </div>
+                <div class="login-item">
+                <span><img src="./img/login/login-password.png">
+                </span>
+                    <input name="pwd" type="password" placeholder="请输入新密码">
+                </div>
+                <div class="login-item">
+                <span>
+                    <img src="./img/login/login-re-password.png">
+                </span>
+                    <input name="repwd" type="password" placeholder="请再次输入新密码">
+                </div>
+                <button>注册</button>
+                <div class="login-tips"><p>已有账号？<a class="show-login">立即登录</a></p></div>
+            </div>
+            <div id="loginModal" class="login-con-main" style="display: none;">
+                <h1>登录</h1>
+                <p class="login-error-msg "></p>
+                <div class="login-item">
+                <span>
+                    <img src="./img/login/login-phone-number.png">
+                </span>
+                    <input name="phone" placeholder="请输入手机号码">
+                </div>
+                <div class="login-item">
+                <span>
+                    <img src="./img/login/login-password.png">
+                </span>
+                    <input name="pwd" type="password" placeholder="请输入密码">
+                </div>
+                <button>登录</button>
+                <div class="login-tips clearfix">
+                    <p>没有账号？<a class="show-register">立即注册</a></p>
+                    <a class="forget-password">忘记密码</a>
+                </div>
+            </div>
+            <a class="login-close">
+                <img src="./img/login/login-close.png">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- 内容 -->
+<div class="hx-main-other">
+    <div>
+        <!-- 新闻轮播 -->
+        <div class="comment-news-content">
+            <div class="swiper-container">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-wrapper comment-news-div clearfix" style="transform: translateX(-2420px); width: 3630px;">
+                    <div class="swiper-slide comment-news">
+                        <a target="_blank" href="/newsdetail?id=2018042219091221342">
+                            <div class="img-div">
+                                <img class="news-img" src="http://static.huoxing24.com/images/2018/04/22/1524395310647054.jpg"alt="">
+                            </div>
+                            <span class="mode"></span>
+                            <p class="title">张首晟：区块链共识建立在数学之上</p>
+                        </a>
+                    </div>
+                    <div class="swiper-slide comment-news">
+                        <a target="_blank" href="/newsdetail?id=2018042216573632845">
+                            <div class="img-div">
+                                <img class="news-img" src="http://static.huoxing24.com/images/2018/04/22/1524387439578150.jpg" alt="">
+                            </div>
+                            <span class="mode"></span>
+                            <p class="title">陈伟星揭示区块链韭菜犯罪三种模式，曝柏拉图(PLATO)项目为“传销模型”</p>
+                        </a>
+                    </div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042215383538667">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/22/1524382706928862.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">显卡矿机 VS ASIC矿机：一场永不休止的挖矿争夺战</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042214382848249">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/22/1524379965777924.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">世界区块链大会组委会携手“三点钟无眠区块链”主办：第一届世界区块链大会（W...</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042120495304276">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/21/1524314886193135.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">从李笑来和BM的江湖往事，看EOS超级节点竞选的“盛世隐忧”</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042118502150748">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/21/1524307796733180.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">习近平：要发展数字经济，加快推动数字产业化</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018040920461067764">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/09/1523277660271514.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">40天，火星社群里的54场区块链主题分享全纪录（更新至4月21日）</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042023023754819">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524236550087420.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">中国区块链百强榜：行业分布广泛，个股表现优秀</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042017563856767">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524218158513498.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">CSDN蒋涛：DCO——区块链时代企业级服务的全新机会</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042017521778979">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524217911547460.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">数字货币交易所的“革命前夜”：交易机器人、黑客危机与天价收割</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042017054475911">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524216122004557.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">北美区块链扫描：硅谷打败华尔街 区块链能打败硅谷么</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042016415767776">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524213655847951.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">EOS权力之争，“温州帮”携40亿杀入</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042014284204388">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524205703147674.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">新华社：区块链如何带来个人数据保护“革命”</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042010185132955">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524190710947531.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">460余种传销币种与资金盘曝光</p></a></div>
+                    <div class="swiper-slide comment-news"><a target="_blank" href="/newsdetail?id=2018042009382186086">
+                            <div class="img-div"><img class="news-img"
+                                                      src="http://static.huoxing24.com/images/2018/04/20/1524188293430899.jpg"
+                                                      alt=""></div>
+                            <span class="mode"></span>
+                            <p class="title">对待加密货币的态度成为美国政客们的筹码</p></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inquire-img">
+        <!-- 广告 -->
+        <div class="news-img clearfix">
+            <a href="http://www.huoxing24.com/news?id=9" target="_blank" style="width: 100%; height: 100%;">
+                <img src="http://static.huoxing24.com/images/2018/04/09/1523258008348416.gif" alt="">
+                <span class=""></span>
+            </a>
+        </div>
+    </div>
+    <!-- 7*24小时快讯 -->
+    <div class="real-time-news">
+        <div class="real-time-top clearfix">
+            <div class="real-left">
+                <img src="/img/realTimeNews/icon-real-time.png" >
+                7x24小时快讯
+            </div>
+            <a class="real-right" target="_blank" href="/livenews">MORE&nbsp;&nbsp;&gt;</a>
+        </div>
+        <div class="real-time-bottom">
+            <div class="news-con-wrap active">
+                <!-- item -->
+                <div class="news-con clearfix">
+                    <p>
+                        <span>15:26</span>&nbsp;&nbsp;|&nbsp;&nbsp;【人民银行数字货币研究所所长姚前：不能容忍打着ICO名义的欺诈】人民银行数字货币研究所所长姚前表示，区块链技术在中国应用当中是出现过一些小的波折。比如曾经以ICO命名的，实际上是欺诈的活动，国家对这个是不能容忍的。但是国家对于底层的支撑技术本身它的整个创新的研究，无论是技术的研究，基础应用的研究，都是持非常鼓励和支持的态度。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 新闻主体内容 -->
+    <div class="index-news clearfix">
+        <!-- 左边新闻 -->
+        <%- include('./newsList', {data: data.newsData}) %>
+        <!-- 右边内容 -->
+        <div class="index-right-contain clearfix">
+            <!-- 广告 -->
+            <div class="ad-contain">
+                <div class="ad-box clearfix">
+                    <div class="ad-left">
+                        <div class="news-img clearfix">
+                            <a href="https://alax.io/cn/index.html" target="_blank" style="width: 100%; height: 100%;">
+                                <img src="http://static.huoxing24.com/images/2018/04/13/1523624956529109.png" alt="">
+                                <span class="active"></span>
+                            </a>
+                            <a href="https://tq.ultrapower.com.cn" target="_blank"
+                                                                     style="width: 100%; height: 100%;"><img
+                                        src="http://static.huoxing24.com/images/2018/03/27/1522140727036228.jpg" alt=""><span
+                                        class="active"></span></a><a href="http://www.dcc.finance" target="_blank"
+                                                                     style="width: 100%; height: 100%;"><img
+                                        src="http://static.huoxing24.com/images/2018/03/28/1522250015450849.jpg" alt=""><span
+                                        class="active"></span></a></div>
+                    </div>
+                    <div class="ad-right">
+                        <div class="news-right-img clearfix">
+                            <div class="news-img clearfix"><a href="http://www.extrade.com/cn/index.html"
+                                                              target="_blank" style="width: 100%; height: 100%;"><img
+                                            src="http://static.huoxing24.com/images/2018/03/07/1520416974156150.png"
+                                            alt=""><span class="active"></span></a><a href="http://www.xiaoqing.ai/"
+                                                                                      target="_blank"
+                                                                                      style="width: 100%; height: 100%;"><img
+                                            src="http://static.huoxing24.com/images/2018/03/07/1520433968911448.jpg"
+                                            alt=""><span class="active"></span></a><a
+                                        href="http://pixiecoin.io/index.html" target="_blank"
+                                        style="width: 100%; height: 100%;"><img
+                                            src="http://static.huoxing24.com/images/2018/03/04/1520105591967560.jpg"
+                                            alt=""><span class="active"></span></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ad-swiper-contain">
+                    <div id="adSwiper" class="ad-swiper swiper-container swiper-container-horizontal">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-pagination swiper-pagination-bullets"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 热门专题 -->
+            <%- include('./indexCenter', {data: data.hotColumn}) %>
+            <!-- 火星专栏 -->
+            <%- include('./indexRight', {data: data.authorList, userId: data.userId}) %>
+        </div>
+    </div>
+</div>
+
+<!-- 公共底部 -->
+<div class="footer-main">
+    <div class="footer-partner">
+        <div class="footer-share-con">
+            <div class="footer-share">
+                <div class="list l1">
+                    <div class="wx-fx">
+                        <div class="arrow_down"></div>
+                        <p><img src="./img/footer/tenques.png" alt=""><span>王峰十问</span></p>
+                        <p><img src="./img/footer/qrcode.jpg" alt=""><span>火星财经</span></p></div>
+                </div>
+                <div class="list l2"><a href="https://t.me/huoxing24" target="_blank"></a></div>
+                <div class="list l3"><a href="http://weibo.com/huoxing24" target="_blank"></a></div>
+            </div>
+        </div>
+        <div class="footer-partner-con"><h3>内容合作</h3>
+            <div class="ft-partner-link clearfix">
+                <a target="_blank" href="http://new.linekong.com/" class="linekong">蓝港互动<span></span></a>
+                <a target="_blank" href="http://www.xiaoqing.store" class="linekong">小青音箱<span></span></a>
+                <a target="_blank" href="https://niuyan.com/" class="linekong">牛眼<span></span></a>
+                <a target="_blank" href="https://www.csdn.net/" class="linekong">CSDN<span></span></a>
+                <a target="_blank" href="https://block.cc/" class="linekong">Block.cc<span></span></a>
+                <a target="_blank" href="http://www.163.com/" class="linekong">网易<span></span></a>
+                <a target="_blank" href="http://www.8btc.com/" class="linekong">巴比特<span></span></a>
+                <a target="_blank" href="http://www.jinse.com/" class="linekong">金色财经<span></span></a>
+                <a target="_blank" href="http://www.chaindd.com/" class="linekong">链得得<span></span></a>
+                <a target="_blank" href="http://www.fn.com" class="linekong">FN财经<span></span></a>
+                <a target="_blank" href="https://www.chainfor.com/" class="linekong">链向财经<span></span></a>
+                <a target="_blank" href="http://www.jinniu.cn/" class="linekong">金牛财经<span></span></a>
+                <a target="_blank" href="http://www.tuoluocaijing.com/" class="linekong">陀螺财经<span></span></a>
+                <a target="_blank" href="https://www.feixiaohao.com/" class="linekong">非小号<span></span></a>
+                <a target="_blank" href="https://www.bitask.org" class="linekong">币问<span></span></a>
+                <a target="_blank" href="http://bc.jrj.com.cn/" class="linekong">金融界区块链<span></span></a>
+                <a target="_blank" href="https://www.coinbull.one" class="linekong">币牛牛<span></span></a>
+                <a target="_blank" href="https://www.bitnews.vip" class="linekong">比特快讯<span></span></a>
+                <a target="_blank" href="https://www.yaofache.com/" class="linekong">要发车<span></span></a>
+                <a target="_blank" href="http://www.baijing.io" class="linekong">白鲸财经<span></span></a>
+            </div>
+            <div class="cooperation"><h4>广告合作</h4><h4>QQ：<span>133000693</span></h4><h4>手机：<span>&#8237;13133477779&#8236;</span>
+                </h4><h4>商务邮箱：<span>bd@huoxing24.com</span></h4><h4>投稿邮箱：<span>tougao@huoxing24.com</span></h4></div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="hot-label"><h5>热门标签</h5>
+            <ul>
+                <li><a target="_blank" href="/hot?tags=王峰十问">王峰十问</a></li>
+                <li><a target="_blank" href="/hot?tags=DAO">DAO</a></li>
+                <li><a target="_blank" href="/hot?tags=监管">监管</a></li>
+                <li><a target="_blank" href="/hot?tags=比特币">比特币</a></li>
+                <li><a target="_blank" href="/hot?tags=挖矿">挖矿</a></li>
+                <li><a target="_blank" href="/hot?tags=智能合约">智能合约</a></li>
+                <li><a target="_blank" href="/hot?tags=去中心化">去中心化</a></li>
+                <li><a target="_blank" href="/hot?tags=侧链">侧链</a></li>
+                <li><a target="_blank" href="/hot?tags=硬分叉">硬分叉</a></li>
+                <li><a target="_blank" href="/hot?tags=瑞波币">瑞波币</a></li>
+                <li><a target="_blank" href="/hot?tags=bitcoin">bitcoin</a></li>
+                <li><a target="_blank" href="/hot?tags=比特币扩容">比特币扩容</a></li>
+                <li><a target="_blank" href="/hot?tags=区块链">区块链</a></li>
+                <li><a target="_blank" href="/hot?tags=加密货币">加密货币</a></li>
+                <li><a target="_blank" href="/hot?tags=以太坊">以太坊</a></li>
+                <li><a target="_blank" href="/hot?tags=数字货币">数字货币</a></li>
+                <li><a target="_blank" href="/hot?tags=中本聪">中本聪</a></li>
+                <li><a target="_blank" href="/hot?tags=ETC">ETC</a></li>
+                <li><a target="_blank" href="/hot?tags=甲子光年">甲子光年</a></li>
+                <li><a target="_blank" href="/hot?tags=增加">增加</a></li>
+                <li><a target="_blank" href="/hot?tags=数字货币">数字货币</a></li>
+                <li><a target="_blank" href="/hot?tags=火星财经">火星财经</a></li>
+            </ul>
+        </div>
+        <div class="footer-copyright-con">Copyright ©2018 Huoxing24 Ltd. All Rights Reserved.</div>
+        <div class="fo-left clearfix"><a href="/about">关于我们</a><span class="cutline"></span><a
+                    href="/copyright">版权声明</a></div>
+    </div>
+</div>
+
+<!-- public -->
+<script src="http://static.huoxing24.com/assets/jquery-1.12.0.min.js"></script>
+
+<!-- plugin -->
+
+
+<!-- private -->
+<script src="../js/vendors.js"></script>
+
+<script src="../js/common.js"></script>
+
+<script src="../js/index.js"></script>
+
+
+<!-- statistics -->
+<div style="display: none">
+    <script src="https://s22.cnzz.com/z_stat.php?id=1272858809&web_id=1272858809" language="JavaScript"></script>
+</div>
+
+</body>
+</html>
+
+
+<!-- 公共头部 -->
+<!--<%- include('./public/header', {
 plugin: ['http://static.huoxing24.com/assets/swiper.min.css'],
 private: ['./css/index.css'],
 title: '火星财经-区块链先锋门户'
 }) %>
 
-<!-- 内容 -->
+&lt;!&ndash; 内容 &ndash;&gt;
 <%- include('./index/main', {data: data}) %>
 
-<!-- 公共底部 -->
+&lt;!&ndash; 公共底部 &ndash;&gt;
 <%- include('./public/footer', {
 plugin: ['http://static.huoxing24.com/assets/swiper.jquery.min.js'],
 private: ['./js/common.js', './js/index.js']
-}) %>
+}) %>-->
+
