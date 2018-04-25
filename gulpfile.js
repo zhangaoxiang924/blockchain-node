@@ -32,8 +32,7 @@ gulp.task('includeEjs', () => {
             basepath: '@file'
         }))
         .pipe(strReplace({
-            '../../img': './img',
-            '../img': './img'
+            '../../img': '../img'
         }))
         .pipe(gulp.dest(viewsFolder))
         .pipe(connect.reload())
@@ -93,8 +92,7 @@ gulp.task('buildJs', () => {
     return gulp.src('assets/js/*.js')
         .pipe(gulpWebpack(webpackconfig, webpack))
         .pipe(strReplace({
-            '../../img': './img',
-            '../img': './img'
+            '../../img': '../img'
         }))
         .pipe(gulp.dest('public'))
         .pipe(connect.reload())
