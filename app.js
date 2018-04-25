@@ -9,6 +9,7 @@ const fs = require('fs')
 const proxyRouter = require('./routes/proxy')
 const newsDetailRouter = require('./routes/newsDetail')
 const indexRouter = require('./routes/index')
+const newsRouter = require('./routes/news')
 
 const app = express()
 
@@ -43,13 +44,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/newsdetail', newsDetailRouter)
 app.use('/', indexRouter)
 app.use('/index', indexRouter)
+app.use('/news', newsRouter)
 
 // react-router browserhistory
 app.get([
     '/personal',
     '/livenews',
     '/markets',
-    '/news',
     '/newsauthor',
     '/primer',
     '/newsdetail',
