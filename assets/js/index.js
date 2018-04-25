@@ -117,6 +117,9 @@ $(function () {
                 layer.msg('关注已取消')
                 $(this).css({'display': 'none'})
                 $(this).siblings('.attention').css({'display': 'block'})
+                let crowd = $(this).closest('.list-author').find('.crowd span')
+                let count = parseInt(crowd.text()) - 1
+                crowd.html(count)
             } else {
                 layer.msg(res.msg)
             }
@@ -136,6 +139,9 @@ $(function () {
                 layer.msg('关注成功')
                 $(this).css({'display': 'none'})
                 $(this).siblings('.cancel-attention').css({'display': 'block'})
+                let crowd = $(this).closest('.list-author').find('.crowd span')
+                let count = parseInt(crowd.text()) + 1
+                crowd.html(count)
             } else if (res.code === 0) {
                 layer.msg(res.msg)
                 $(this).css({'display': 'none'})
