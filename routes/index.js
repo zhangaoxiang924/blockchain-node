@@ -14,14 +14,7 @@ const ajaxJavaUrl = utils.ajaxJavaUrl
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    // /info/topic/listall?currentPage=1&pageSize=20
-    // /info/author/showauthorlist?currentPage=1&pageSize=50&myPassportId=63cd65b00e584f9292074ced8cfd47fa
-    // /info/news/shownews?currentPage=&pageSize=25&channelId=0
     let userId = req.cookies.hx_user_id
-    // let hotColumn = null
-    // let authorList = null
-    // let newsData = null
-    // let adData = null
     const hotColumn = (resolve) => {
         axiosAjax({
             type: 'GET',
@@ -29,7 +22,6 @@ router.get('/', function (req, res, next) {
             params: {},
             res: res,
             fn: function (resData) {
-                console.log('111')
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = resData.obj.inforList
@@ -47,7 +39,6 @@ router.get('/', function (req, res, next) {
             params: {},
             res: res,
             fn: function (resData) {
-                console.log('222')
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = resData.obj.inforList
@@ -65,7 +56,6 @@ router.get('/', function (req, res, next) {
             params: {},
             res: res,
             fn: function (resData) {
-                console.log('333')
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = resData.obj
@@ -83,7 +73,6 @@ router.get('/', function (req, res, next) {
             params: {},
             res: res,
             fn: function (resData) {
-                console.log('444')
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = resData.obj
@@ -94,7 +83,6 @@ router.get('/', function (req, res, next) {
             }
         })
     }
-    console.log('======')
     async.parallel({
         hotColumn: function (callback) {
             // 处理逻辑
