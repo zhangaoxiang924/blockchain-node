@@ -67,6 +67,7 @@ const axiosAjax = (arg) => {
         }
     }).catch(function (err) {
         if (res) {
+            console.log(err)
             res.render('error', {
                 message: 'Request error',
                 error: {

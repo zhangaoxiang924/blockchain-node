@@ -8,11 +8,12 @@ import Cookies from 'js-cookie'
 import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent} from './public/public'
 import {ad} from './modules/index'
 import layer from 'layui-layer'
+import {NewsSwiper, RealTimeNews} from './index/index'
 
 $(function () {
     pageLoadingHide()
 
-    let mySwiper = new window.Swiper('#adSwiper', {
+    let mySwiper = new Swiper('#adSwiper', {
         loop: true,
         autoplay: 3000,
         // 如果需要分页器
@@ -163,4 +164,12 @@ $(function () {
             }
         })
     }
+
+    // 新闻轮播
+    let newsSwiper = new NewsSwiper($('.comment-news-content'))
+    newsSwiper.init()
+
+    // 快讯
+    let realTimeNews = new RealTimeNews($('.real-time-bottom'))
+    realTimeNews.init()
 })

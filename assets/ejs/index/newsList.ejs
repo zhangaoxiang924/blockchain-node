@@ -56,7 +56,7 @@ const getTimeContent = (publishTime, requestTime) => {
     <div class="block-style">
         <!-- news list item -->
         <div id="newsListContent">
-            <% data.inforList.map((item) => {%>
+            <% data.newsData.inforList.map((item) => {%>
             <div class="index-news-list">
                 <div class="list-left">
                     <a target="_blank" href="/newsdetail?id=<%= item.id %>">
@@ -75,7 +75,7 @@ const getTimeContent = (publishTime, requestTime) => {
                             </a>
                         </p>
                         <p class="name"><%= item.author %></p>
-                        <p class="lock-time"><%= getTimeContent(item.publishTime, data.currentTime)%></p>
+                        <p class="lock-time"><%= getTimeContent(item.publishTime, data.newsData.currentTime)%></p>
                         <p class="read-num main-read-num">
                             <span class="count-eye"></span>
                             <span class="read-count"><%= item.hotCounts %></span>
@@ -113,6 +113,6 @@ const getTimeContent = (publishTime, requestTime) => {
         </div>-->
         <!-- end -->
         <div class="clearfix"></div>
-        <div data-currpage="<%= data.currentPage %>" data-pagecount="<%= data.pageCount %>" class="check-more-load clearfix" style="display: block;">查看更多</div>
+        <div data-currpage="<%= data.newsData.currentPage %>" data-pagecount="<%= data.newsData.pageCount %>" class="check-more-load clearfix" style="display: block;">查看更多</div>
     </div>
 </div>

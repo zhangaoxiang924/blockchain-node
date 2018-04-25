@@ -5,7 +5,7 @@
             <p class="title">火星专栏</p>
             <!-- item  -->
             <%
-            data.map((item) => {
+            data.authorList.map((item) => {
                 %>
             <div class="list-author">
                 <div class="portrait-img">
@@ -34,7 +34,7 @@
                 </div>
                 <a target="_blank" class="article-title" href="/newsdetail?id=<%= item.news.id%>"><%= item.news.title%></a>
                 <%
-                    if (item.passportId === userId) {
+                    if (item.passportId === data.userId) {
                         %>
                 <div class="owner">
                     <span>关注</span>

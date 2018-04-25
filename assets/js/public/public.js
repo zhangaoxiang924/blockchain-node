@@ -281,6 +281,15 @@ const getTimeContent = (publishTime, requestTime) => {
     }
     return content
 }
+// 加0
+const add0 = (num) => {
+    return num >= 10 ? num : '0' + num
+}
+// 获取时分
+const getHourMinute = (time) => {
+    const timeTemp = new Date(time)
+    return `${add0(timeTemp.getHours())}:${add0(timeTemp.getMinutes())}`
+}
 
 const lang = 'zh'
 const proxyUrl = ''
@@ -303,5 +312,6 @@ export {
     cutString,
     formatDate,
     formatPrice,
-    getTimeContent
+    getTimeContent,
+    getHourMinute
 }
