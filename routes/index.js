@@ -120,7 +120,7 @@ router.get('/', function (req, res, next) {
             let adAndColumn = []
             for (let i = 0; i < hotColumnLen; i++) {
                 let ad = []
-                let hotColumnGroup = [result.hotColumn[2 * i], result.hotColumn[(2 * i) + 1]]
+                let hotColumnGroup = 2 * i === result.hotColumn.length - 1 ? [result.hotColumn[2 * i]] : [result.hotColumn[2 * i], result.hotColumn[(2 * i) + 1]]
                 if (adData8.length <= hotColumnLen) {
                     if (!adData8[i]) {
                         ad = []
