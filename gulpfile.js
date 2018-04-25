@@ -22,6 +22,7 @@ const webpackconfig = require('./webpack.config.js')
 const config = require('./config.js')
 
 const publicPath = config.publicPath
+const viewsFolder = 'views'
 /* ----------------------------------------handle ejs---------------------------------------- */
 // ejs include
 gulp.task('includeEjs', () => {
@@ -34,7 +35,7 @@ gulp.task('includeEjs', () => {
             '../../img': './img',
             '../img': './img'
         }))
-        .pipe(gulp.dest('views'))
+        .pipe(gulp.dest(viewsFolder))
         .pipe(connect.reload())
 })
 
@@ -150,7 +151,7 @@ gulp.task('copyFontsBuild', () => {
 /* ----------------------------------------clean public---------------------------------------- */
 // clean public folder
 gulp.task('cleanPublic', () => {
-    return gulp.src(['public/css', 'public/js', 'public/img', 'public/rev', 'public/fonts', 'views'], {read: false})
+    return gulp.src(['public/css', 'public/js', 'public/img', 'public/rev', 'public/fonts', viewsFolder], {read: false})
         .pipe(clean({force: true}))
 })
 // del manifest source file
@@ -204,7 +205,7 @@ gulp.task('revJsImg', () => { // img in js
         .pipe(gulp.dest('public/js'))
 })
 gulp.task('revHtmlImg', () => { // img in html
-    return gulp.src(['public/rev/img/*.json', 'views/*.ejs'])
+    return gulp.src(['public/rev/img/*.json', `${viewsFolder}/*.ejs`])
         .pipe(revCollector({
             replaceReved: true,
             dirReplacements: {
@@ -213,10 +214,10 @@ gulp.task('revHtmlImg', () => { // img in html
                 './img': publicPath + '/img'
             }
         }))
-        .pipe(gulp.dest('views'))
+        .pipe(gulp.dest(viewsFolder))
 })
 gulp.task('revHtmlCss', () => { // css in html
-    return gulp.src(['public/rev/css/*.json', 'views/*.ejs'])
+    return gulp.src(['public/rev/css/*.json', `${viewsFolder}/*.ejs`])
         .pipe(revCollector({
             replaceReved: true,
             dirReplacements: {
@@ -225,10 +226,10 @@ gulp.task('revHtmlCss', () => { // css in html
                 './css': publicPath + '/css'
             }
         }))
-        .pipe(gulp.dest('views'))
+        .pipe(gulp.dest(viewsFolder))
 })
 gulp.task('revHtmlJs', () => { // js in html
-    return gulp.src(['public/rev/js/*.json', 'views/*.ejs'])
+    return gulp.src(['public/rev/js/*.json', `${viewsFolder}/*.ejs`])
         .pipe(revCollector({
             replaceReved: true,
             dirReplacements: {
@@ -237,20 +238,20 @@ gulp.task('revHtmlJs', () => { // js in html
                 './js': publicPath + '/js'
             }
         }))
-        .pipe(gulp.dest('views'))
+        .pipe(gulp.dest(viewsFolder))
 })
 
 /* ----------------------------------------watch---------------------------------------- */
 gulp.task('connect', () => {
     connect.server({
-        root: ['public', 'views'],
+        root: ['public', viewsFolder],
         host: config.host,
         port: config.port,
         livereload: true
     })
 })
 gulp.task('watch', () => {
-    gulp.watch(['assets/ejs/*.ejs', 'assets/css/*/*.ejs'], ['includeEjs'])
+    gulp.watch(['assets/ejs/*.ejs', 'assets/ejs/*/*.ejs'], ['includeEjs'])
     gulp.watch(['assets/css/*.scss', 'assets/css/*/*.scss'], ['postcss'])
     gulp.watch(['assets/js/*.js', 'assets/js/*/*.js'], ['buildJs'])
     gulp.watch(['assets/img/*', 'assets/img/*/*'], ['copyImg'])
