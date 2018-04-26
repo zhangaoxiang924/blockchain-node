@@ -1,4 +1,11 @@
 <!-- 音频 -->
+<%
+var audioData = newsData.current.audio
+if (!!audioData) {
+    audioData = JSON.parse(audioData)
+if (audioData.length > 0) {
+    audioData = audioData[0]
+%>
 <div id="react-music-player" data-info="<%= JSON.stringify(audioData) %>" style="margin-bottom: 20px;">
     <div class="react-music-player-wrapper">
         <div class="react-music-player-inner">
@@ -24,3 +31,7 @@
         </div>
     </div>
 </div>
+<%
+}
+}
+%>

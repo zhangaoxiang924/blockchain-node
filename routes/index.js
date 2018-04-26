@@ -11,6 +11,7 @@ let async = require('async')
 
 const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
+const webInfo = utils.webInfo
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -128,7 +129,10 @@ router.get('/', function (req, res, next) {
             }
             let resData = {...result, userId: userId, adAndColumn: adAndColumn}
             // res.send(resData)
-            res.render('index', {data: resData, 'title': '火星财经-区块链先锋门户'})
+            res.render('index', {
+                data: resData,
+                webSiteInfo: webInfo
+            })
         } else {
             console.log(error)
             res.render('error', {
@@ -219,5 +223,45 @@ router.get('/', function (req, res, next) {
         } *!/
     })
 }) */
+
+router.get('/m', function (req, res, next) {
+    async function newsDetailData () {
+        const data = await new Promise((resolve) => {
+            let sendData = {
+                currentPage: 1,
+                pageSize: 20,
+                channelId: 0
+            }
+            axiosAjax({
+                type: 'GET',
+                url: ajaxJavaUrl + '/info/news/shownews',
+                params: sendData,
+                res: res,
+                fn: function (resData) {
+                    resolve(resData)
+                }
+            })
+        })
+
+        return data
+    }
+
+    newsDetailData().then((resData) => {
+        if (resData.code === 1) {
+            res.render('m-index', {
+                data: resData.obj,
+                webSiteInfo: webInfo
+            })
+        } else {
+            res.render('error', {
+                message: resData.msg,
+                error: {
+                    status: resData.code,
+                    stack: 'Please pass the correct parameters.'
+                }
+            })
+        }
+    })
+})
 
 module.exports = router

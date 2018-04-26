@@ -291,6 +291,89 @@ const getHourMinute = (time) => {
     return `${add0(timeTemp.getHours())}:${add0(timeTemp.getMinutes())}`
 }
 
+// 计算前7天日期
+const sevenDays = () => {
+    const formatDate = (y, m, d) => {
+        const newM = m < 10 ? `0${m + 1}` : m + 1
+        const newD = d < 10 ? `0${d}` : d
+
+        return `${y}-${newM}-${newD}`
+    }
+
+    let dateArray = []
+    for (let i = 0; i < 7; i++) {
+        const caDate = new Date()
+        caDate.setDate(caDate.getDate() - i)
+        dateArray.push(formatDate(caDate.getFullYear(), caDate.getMonth(), caDate.getDate()))
+    }
+
+    return dateArray
+}
+
+// 时间戳转日期
+const timestampToTime = (timestamp) => {
+    const date = new Date(timestamp) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    const Y = date.getFullYear() + '-'
+    const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    const D = date.getDate() + ' '
+    const h = date.getHours() + ':'
+    const m = date.getMinutes() + ':'
+    const s = date.getSeconds()
+    return Y + M + D + h + m + s
+}
+
+const formatDateMore = (time) => {
+    const timemap = new Date(time)
+    const y = timemap.getFullYear()
+    const m = timemap.getMonth() < 10 ? '0' + (timemap.getMonth() + 1) : timemap.getMonth() + 1
+    const d = timemap.getDate() < 10 ? '0' + timemap.getDate() : timemap.getDate()
+    const h = timemap.getHours() < 10 ? '0' + timemap.getHours() : timemap.getHours()
+    const mn = timemap.getMinutes() < 10 ? '0' + timemap.getMinutes() : timemap.getMinutes()
+    return `${y}-${m}-${d} ${h}:${mn}`
+}
+
+// 返回顶部
+const Animation = () => {
+    const timer = setInterval(() => {
+        let osTop = document.documentElement.scrollTop || document.body.scrollTop
+        document.documentElement.scrollTop = osTop - (osTop) / 8
+        document.body.scrollTop = osTop - (osTop) / 8
+        if (osTop <= 5) {
+            clearInterval(timer)
+        }
+    }, 10)
+}
+
+const ajaxGet = (url, data, fn) => {
+    const ajaxLoadingStr = `<div class="lk-loading ajax active" id="ajaxLoading">
+    <div class="lk-loading-center">
+        <div class="lk-loading-center-absolute">
+            <div class="round round-one"></div>
+            <div class="round round-two"></div>
+            <div class="round round-three"></div>
+        </div>
+    </div>
+</div>`
+
+    if ($('#ajaxLoading').length === 0) {
+        $('body').append(ajaxLoadingStr)
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        data: data,
+        error: function () {
+            console.log('error')
+        },
+        success: function (data) {
+            $('#ajaxLoading').remove()
+            fn.call(window, data, url)
+        }
+    })
+}
+
 const lang = 'zh'
 const proxyUrl = ''
 
@@ -313,5 +396,10 @@ export {
     formatDate,
     formatPrice,
     getTimeContent,
-    getHourMinute
+    getHourMinute,
+    sevenDays,
+    timestampToTime,
+    formatDateMore,
+    Animation,
+    ajaxGet
 }

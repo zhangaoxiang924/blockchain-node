@@ -1,0 +1,116 @@
+/**
+ * Author：zhoushuanglong
+ * Time：2017-08-29 19:30
+ * Description：index
+ */
+@import "../public/rem";
+
+.news-fash {
+    width: 100%;
+    height: auto;
+    color: #212121;
+    background: #f5f5f5;
+    margin-top: rem(10);
+
+    .fash-title {
+        width: rem(590);
+        height: rem(70);
+        padding: 0 rem(25);
+        line-height: rem(70);
+        font-size: rem(24);
+        margin: rem(10) auto;
+        background: #fff;
+        border-bottom: 1px #eee solid;
+
+        img,
+        span {
+            display: inline-block;
+            background-size: 100%;
+            float: left;
+            margin-right: rem(10);
+            height: rem(30);
+            vertical-align: top;
+            margin-top: rem(20);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        span {
+            margin: 0 rem(19);
+
+            &:first-child {
+                color: #00b0ff;
+            }
+
+            &.active {
+                color: #00b0ff;
+            }
+        }
+    }
+
+    .new-fash-list {
+        width: rem(590);
+        padding: rem(20) rem(25) rem(30);
+        margin-top: rem(10);
+        background: #fff;
+        border-bottom: 1px #eee solid;
+
+        .time-flash {
+            width: 100%;
+            height: rem(60);
+            line-height: rem(43);
+            color: #c9c9c9;
+
+            img {
+                width: rem(24);
+                height: rem(24);
+                margin-right: rem(5);
+                vertical-align: middle;
+                margin-bottom: rem(3);
+            }
+        }
+
+        .text-flash {
+            position: relative;
+            width: 100%;
+
+            p {
+                font-size: rem(26);
+                color: #212121;
+                line-height: rem(38);
+                margin: 0;
+                word-wrap: break-word;
+
+                &.red {
+                    color: red;
+                }
+
+                a {
+                    color: #00b0ff;
+                    font-size: rem(20);
+                    display: none;
+
+                    &.block {
+                        display: inline-block;
+                    }
+                }
+            }
+
+            .share {
+                position: absolute;
+                right: 0;
+                top: rem(-50);
+                width: rem(80);
+                height: rem(26);
+                background: url("../../img/m-img/share.png") no-repeat;
+                background-size: 100%;
+            }
+        }
+    }
+
+    .lives-box {
+        margin-bottom: rem(50);
+    }
+}

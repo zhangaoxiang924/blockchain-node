@@ -10,6 +10,7 @@ const utils = require('../utils/public')
 
 const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
+const webInfo = utils.webInfo
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -39,7 +40,7 @@ router.get('/', function (req, res, next) {
             // res.send(resData)
             res.render('news', {
                 newsData: resData.obj,
-                title: '火星财经-区块链先锋门户'
+                webSiteInfo: webInfo
             })
         } else {
             res.render('error', {

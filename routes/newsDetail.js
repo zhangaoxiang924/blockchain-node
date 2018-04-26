@@ -10,6 +10,7 @@ const utils = require('../utils/public')
 
 const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
+const webInfo = utils.webInfo
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -45,7 +46,11 @@ router.get('/', function (req, res, next) {
         if (resData.code === 1) {
             res.render('newsDetail', {
                 newsData: resData.obj,
-                title: resData.obj.current.title
+                webSiteInfo: {
+                    title: `${resData.obj.current.title}_火星财经`,
+                    keywords: `${resData.obj.current.tags}，${webInfo.keywords}`,
+                    description: resData.obj.current.synopsis
+                }
             })
         } else {
             res.render('error', {

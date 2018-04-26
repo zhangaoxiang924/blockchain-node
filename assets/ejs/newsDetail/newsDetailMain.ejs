@@ -46,17 +46,7 @@
                 <p><%= newsData.current.synopsis %></p>
             </div>
             <!-- 音频播放 -->
-            <%
-            var audioData = newsData.current.audio
-            if (!!audioData) {
-                audioData = JSON.parse(audioData)
-            if (audioData.length > 0) {
-            %>
-            <%- include('./audio', {audioData: audioData[0]}) %>
-            <%
-            }
-            }
-            %>
+            @@include('./audio.ejs')
             <!-- 视频播放 -->
             <%
             var videoData = newsData.current.video
