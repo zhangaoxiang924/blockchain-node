@@ -1,7 +1,7 @@
 module.exports = {
     host: '192.168.84.25',
     port: '8060',
-    publicPath: '../',
+    publicPath: '',
     vendors: [
         'babel-polyfill',
         'axios',
