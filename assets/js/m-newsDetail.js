@@ -27,6 +27,28 @@ $(function () {
         }
     })
 
+    // 音频
+    let audio = $('.audio-wrap').data('audio')
+    if (!audio) {} else {
+        let musicList = []
+        audio.map(function (item, index) {
+            musicList.push({
+                title: $.trim(item.fileName.split('.')[0]),
+                singer: '',
+                cover: '',
+                src: item.fileUrl,
+                lyric: null
+            })
+        })
+        const smusic = new SMusic({
+            musicList: musicList,
+            autoPlay: false,
+            defaultMode: 1,
+            callback: function (obj) {}
+        })
+        console.log(smusic)
+    }
+
     // 改变页面title
     /* let getDetails = (id) => {
         ajaxGet(url + '/getbyid', {
@@ -214,7 +236,7 @@ $(function () {
                 let time = getTimeContent(d.publishTime, timestamp)
                 let img = JSON.parse(d.coverPic)
                 newsList += `<div class="news-list-more ">
-                                <a href=${htmlPath + '/details.html?id=' + d.id}>
+                                <a href=${htmlPath + '/newsdetail/m?id=' + d.id}>
                                     <div class="title">${cutString(d.title, 60)}</div>
                                     <div class="list-text">
                                         <div class="author clearfix"><span>${d.author}</span></div>

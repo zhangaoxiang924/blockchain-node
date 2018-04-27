@@ -30,7 +30,7 @@ const getTimeContent = (publishTime, requestTime) => {
 }
  %>
 <div class="swiper-container wrap-box" id="hxwrap">
-    <div class="huoxing-top" id="huoxingTop"><a href="/"><img src="../img/m-img/top.jpg" alt=""></a></div>
+    <div class="huoxing-top" id="huoxingTop"><a href="/m"><img src="../img/m-img/top.jpg" alt=""></a></div>
     <div class="swiper-pagination body-wrap" id="hxWrapPage"></div>
     <div class="swiper-wrapper overall-box" id="overAllBox">
         <div class="swiper-slide out-box white-bg">
@@ -69,7 +69,7 @@ const getTimeContent = (publishTime, requestTime) => {
                             data.inforList.map((item) => {
                                 %>
                         <div class="news-list-more ">
-                            <a href="/details.html?id=<%= item.id %>">
+                            <a href="/newsdetail/m?id=<%= item.id %>">
                                 <div class="title"><%= item.title %></div>
                                 <div class="list-text">
                                     <div class="author read-number clearfix"><sapn><%= item.hotCounts %></sapn></div>

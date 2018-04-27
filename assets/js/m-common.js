@@ -27,4 +27,11 @@ $(function () {
             downLoad.attr('href', andUrl)
         }
     })
+
+    // 返回
+    $('.back-prev-page').on('click', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        window.history.back()
+    })
 })
