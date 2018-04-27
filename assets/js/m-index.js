@@ -53,59 +53,6 @@ const navIndex = [
 
 $(function () {
     pageLoadingHide()
-    // 微信朋友圈分享
-    $.ajax({
-        url: 'http://104.194.89.167:3000/signture',
-        type: 'GET',
-        dataType: 'jsonp',
-        // data: {url: encodeURIComponent(location.href.split('#')[0])},
-        data: {url: location.href.split('#')[0]},
-        success: function (res) {
-            console.log(res)
-            wx.config({
-                debug: false,
-                appId: 'wxec2dc083d4024311',
-                timestamp: res.timestamp,
-                nonceStr: res.nonceStr,
-                signature: res.signature,
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ'
-                ]
-            })
-            wx.ready(function () {
-                const shareData = {
-                    title: document.title,
-                    desc: getDesc(),
-                    link: res.url,
-                    imgUrl: getImage()
-                }
-                wx.onMenuShareAppMessage(shareData)
-                wx.onMenuShareTimeline(shareData)
-                wx.onMenuShareQQ(shareData)
-            })
-            wx.error(function (res) {
-                alert(res.errMsg) // 正式环境记得关闭啊！！！！
-            })
-        }
-    })
-
-    // 获取描述字段方法
-    function getDesc () {
-        let meta = document.getElementsByTagName('meta')
-        for (let i = 0; i < meta.length; i++) {
-            if (typeof meta[i].name !== 'undefined' && meta[i].name.toLowerCase() === 'description') {
-                return meta[i].content
-            }
-        }
-    }
-
-    // 获取图片
-    function getImage () {
-        return 'http://' + location.host + '/images/logo.jpg'
-    }
 
     if ($('#livesPage').length === 0) {
         // 初始化新闻列表
