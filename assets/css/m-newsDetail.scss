@@ -204,7 +204,7 @@
         z-index: 999999;
         width: rem(60);
         height: rem(60);
-        background: url("../img/backTop.png") #fff no-repeat;
+        background: url("../img/m-img/backTop.png") #fff no-repeat;
         border-radius: 100%;
         background-size: 100%;
         opacity: 0;
@@ -284,7 +284,7 @@
                 position: absolute;
                 right: rem(0);
                 padding-left: rem(45);
-                background: url("../img/read-number.svg") no-repeat left;
+                background: url("../img/m-img/read-number.svg") no-repeat left;
                 background-size: auto 140%;
                 height: rem(36);
                 line-height: rem(40);
@@ -296,7 +296,7 @@
                 top: rem(8);
                 width: rem(78);
                 height: rem(24);
-                background: url("../img/detail-share.png") no-repeat;
+                background: url("../img/m-img/detail-share.png") no-repeat;
                 background-size: 100%;
             }
 
@@ -332,6 +332,10 @@
                 max-width: rem(590);
                 height: auto !important;
             }
+        }
+
+        img {
+            width: 100%;
         }
     }
 
@@ -481,7 +485,7 @@
 
     p {
         padding: rem(35) 0 0 rem(56);
-        background: url("../img/details-synopsis-bg.png") no-repeat left rem(45);
+        background: url("../img/m-img/details-synopsis-bg.png") no-repeat left rem(45);
         background-size: rem(36) rem(26);
         border-top: 1px solid #f5f5f5;
         color: #a6a6a6;

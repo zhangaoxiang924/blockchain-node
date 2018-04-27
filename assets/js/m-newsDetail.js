@@ -49,121 +49,6 @@ $(function () {
         console.log(smusic)
     }
 
-    // 改变页面title
-    /* let getDetails = (id) => {
-        ajaxGet(url + '/getbyid', {
-            id: id,
-            channelId: 2
-        }, (data) => {
-            console.log(data)
-            let audio = data.obj.current.audio
-            let musicList = []
-            if (audio && audio !== '' && audio.indexOf('[') > -1) {
-                if (JSON.parse(audio).length !== 0) {
-                    JSON.parse(audio).map(function (item, index) {
-                        musicList.push({
-                            title: $.trim(item.fileName.split('.')[0]),
-                            singer: '',
-                            cover: '',
-                            src: item.fileUrl,
-                            lyric: null
-                        })
-                    })
-                    const smusic = new SMusic({
-                        musicList: musicList,
-                        autoPlay: false,
-                        defaultMode: 1,
-                        callback: function (obj) {
-                            /!*
-                             {title: "赤血长殷", singer: "王凯", cover: "http://data.smohan.net/upload/other/cxcy/cover.jpg", src: "http://data.smohan.net/upload/other/cxcy/music.mp3", index: 4}
-                             *!/
-                        }
-                    })
-                    console.log(smusic)
-                } else {
-                    $('.audio-wrap').css('display', 'none')
-                }
-            } else {
-                $('.audio-wrap').css('display', 'none')
-            }
-            let videoArr = []
-            let video = data.obj.current.video
-            if (video && video !== '' && audio.indexOf('[') > -1) {
-                if (JSON.parse(video).length !== 0) {
-                    JSON.parse(video).map(function (item, index) {
-                        videoArr.push({
-                            src: item.fileUrl,
-                            artist: '',
-                            name: $.trim(item.fileName.split('.')[0]),
-                            img: '',
-                            id: item.uid
-                        })
-                    })
-                }
-            }
-            if (videoArr.length !== 0) {
-                console.log(videoArr[0].src)
-                $('.video-wrap ').css('display', 'block')
-                $('.video-wrap video').attr(
-                    {
-                        'poster': JSON.parse(data.obj.current.coverPic).video_m,
-                        'src': videoArr.src
-                    }
-                )
-            } else {
-                $('.video-wrap').css('display', 'none')
-            }
-
-            $('.audio-list-btn').click(function () {
-                $('.m-music-list-wrap').toggle()
-            })
-            let cont = data.obj
-            $('title').html(cont.current.title)
-
-            // 设置时间
-            let originalDate = new Date($.ajax({async: false}).getResponseHeader('Date'))
-            let serve = originalDate + (3600000 * 8)
-            let date = new Date(serve)
-            let timestamp = date.getTime()
-            let time = getTimeContent(cont.current.publishTime, timestamp)
-            let shadeTime = timestampToTime(timestamp)
-            newsCorrelation(cont.current.tags, 5, cont.current.id)
-            let synopsis = data.obj.current.synopsis
-
-            const timer = compareCalendar('2018-02-10', formatDateMore(cont.current.createTime).split(' ')[0])
-            const $detailsSynopsis = $('#detailsSynopsis')
-            if (timer) {
-                $detailsSynopsis.addClass('active').children('p').text(synopsis)
-            }
-
-            // 作者信息备份
-            let author = `<div class="author clearfix">
-                                    <sapn>${cont.current.author}</sapn>
-                                </div>`
-            author = ''
-
-            let readNumber = `<div class="read-number">${cont.current.hotCounts}</div>`
-
-            let shareBtn = `<div
-                                class="share-btn"
-                                data-synopsis="${synopsis}"
-                                data-time="${formatDateMore(cont.current.publishTime)}"></div>
-                            </div>`
-            shareBtn = ''
-
-            let header = `<h6 data-time=${shadeTime} data-synopsis=${synopsis} id='flashNewsTime'>${cont.current.title}</h6>
-                            <div class="list-text">
-                                ${author}
-                                <div class="time clearfix"><span>${time}</span></div>
-                                ${readNumber + shareBtn}`
-
-            let content = cont.current.content
-            $('.details-header').html(header)
-            $('.details-cont').html(content)
-        })
-    }
-    getDetails(getQueryString('id')) */
-
     // 超出字数显示省略号
     const cutString = (str, len) => {
         // length属性读出来的汉字长度为1
@@ -188,37 +73,6 @@ $(function () {
         }
         return s
     }
-
-    /* const $shareBox = $('#shareBox')
-    const $shareTime = $('#shareTime')
-    const $shareCon = $('#shareCon')
-    const $imgWrap = $('#imgWrap')
-    const $imgCon = $('#imgCon')
-    const $imgConMask = $('#imgConMask')
-    const $articleTitle = $('#articleTitle')
-
-    $('.details-header').on('click', '.share-btn', function () {
-        $shareTime.text($(this).data('time'))
-        $articleTitle.text($('#flashNewsTime').html())
-        $shareCon.text($('#flashNewsTime').data('synopsis'))
-
-        setTimeout(function () {
-            $shareBox.show()
-            const conHeight = parseInt($shareBox.find('.share-cont').height())
-            const conPadding = parseInt($shareBox.find('.share-box').css('padding-top'))
-            $shareBox.height(conPadding + conHeight)
-
-            html2canvas(document.getElementById('shareBox')).then(canvas => {
-                let imgUri = canvas.toDataURL('image/jpeg') // 获取生成的图片的url
-                $imgCon.attr('src', imgUri)
-                $imgWrap.show()
-            })
-        }, 100)
-    })
-    $imgConMask.click(function () {
-        $shareBox.hide()
-        $imgWrap.hide()
-    }) */
 
     let newsCorrelation = (tags, newsCounds, id) => {
         ajaxGet(url + '/relatednews', {
@@ -250,7 +104,6 @@ $(function () {
         })
     }
 
-    console.log($('.details').data('tags'))
     newsCorrelation($('.details').data('tags'), 5, getQueryString('id'))
 
     // 广告
