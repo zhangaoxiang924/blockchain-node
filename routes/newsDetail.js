@@ -10,7 +10,7 @@ const utils = require('../utils/public')
 
 const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
-const webInfo = utils.webInfo
+// const webInfo = utils.webInfo
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
                 newsData: resData.obj,
                 webSiteInfo: {
                     title: `${resData.obj.current.title}_火星财经`,
-                    keywords: `${resData.obj.current.tags}，${webInfo.keywords}`,
+                    keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
                     description: resData.obj.current.synopsis
                 }
             })
@@ -104,7 +104,7 @@ router.get('/m', function (req, res, next) {
                 },
                 webSiteInfo: {
                     title: `${resData.obj.current.title}_火星财经`,
-                    keywords: `${resData.obj.current.tags}，${webInfo.keywords}`,
+                    keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
                     description: resData.obj.current.synopsis
                 }
             })

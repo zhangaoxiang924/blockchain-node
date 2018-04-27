@@ -229,12 +229,6 @@
         </div>
         <div class="real-time-bottom">
             <div class="news-con-wrap active">
-                <!-- item -->
-                <!--<div class="news-con clearfix">
-                    <p>
-                        <span>15:26</span>&nbsp;&nbsp;|&nbsp;&nbsp;【人民银行数字货币研究所所长姚前：不能容忍打着ICO名义的欺诈】人民银行数字货币研究所所长姚前表示，区块链技术在中国应用当中是出现过一些小的波折。比如曾经以ICO命名的，实际上是欺诈的活动，国家对这个是不能容忍的。但是国家对于底层的支撑技术本身它的整个创新的研究，无论是技术的研究，基础应用的研究，都是持非常鼓励和支持的态度。
-                    </p>
-                </div>-->
             </div>
         </div>
     </div>
@@ -297,7 +291,6 @@ const getTimeContent = (publishTime, requestTime) => {
         %>
     </ul>
     <div class="block-style">
-        <!-- news list item -->
         <div id="newsListContent">
             <% data.newsData.inforList.map((item) => {%>
             <div class="index-news-list">
@@ -328,33 +321,6 @@ const getTimeContent = (publishTime, requestTime) => {
             </div>
             <%}) %>
         </div>
-        <!--<div class="index-news-list" id="newsList">
-            <div class="list-left">
-                <a target="_blank" href="/newsdetail?id=2018042314322640777">
-                    <img src="http://static.huoxing24.com/images/2018/04/23/1524465122315185.jpg" alt="">
-                </a>
-            </div>
-            <div class="list-right" style="width: 350px;">
-                <a target="_blank" href="/newsdetail?id=2018042314322640777">
-                    <h6 class="headline">区块链女性从业者生存宣言：“我们拒绝脱衣舞派对！”</h6>
-                    <div class="details">这是一篇区块链行业女性生存速写。</div>
-                </a>
-                <div class="list-bottom index-mian clearfix">
-                    <p class="portrait">
-                        <a target="_blank" href="/newsauthor?userId=fff9d400cb94444fadaefd429516c276">
-                            <img alt="" src="http://static.huoxing24.com/usericon/01a70e76781235638aa28b000b913c26/portrait/1522242402596504.png">
-                        </a>
-                    </p>
-                    <p class="name">责任编辑：zora</p>
-                    <p class="lock-time">56分钟前</p>
-                    <p class="read-num main-read-num">
-                        <span class="count-eye"></span>
-                        <span class="read-count">11993</span>
-                    </p>
-                </div>
-            </div>
-        </div>-->
-        <!-- end -->
         <div class="clearfix"></div>
         <div data-currpage="<%= data.newsData.currentPage %>" data-pagecount="<%= data.newsData.pageCount %>" class="check-more-load clearfix" style="display: block;">查看更多</div>
     </div>
@@ -422,7 +388,6 @@ const getTimeContent = (publishTime, requestTime) => {
 <div class="index-news-center">
     <div class="subject-h5">热门专题</div>
     <div class="subject-tab clearfix">
-        <!--专题 item-->
         <%
         data.adAndColumn.map((d) => {
             d.hotColumnGroup.map((item) => {
@@ -472,34 +437,6 @@ const getTimeContent = (publishTime, requestTime) => {
         <%
         })
         %>
-        <!--<div class="subject-box clearfix">
-            <div class="subject-first">
-                <a target="_blank"  href="/hot?tags=投资快报&amp;id=2018041621053574731">
-                    <img src="http://static.huoxing24.com/images/2018/04/16/1523883921237550.jpg" alt="">
-                </a>
-            </div>
-            <div class="subject-ul clearfix">
-                <li class="clearfix">
-                    <span></span>
-                    <a href="http://www.huoxing24.com/newsdetail?id=2018040913030951570" target="_blank">
-                        “公链+联盟链+跨链”三位一体，分布式智能价值网络VNT获得了得资本投资
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <span></span>
-                    <a href="http://www.huoxing24.com/newsdetail?id=2018041315321236484" target="_blank">
-                        第一个实现去中心化的全球另类基金投资平台，DMC获得千万美元投资
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <span></span>
-                    <a href="http://www.huoxing24.com/newsdetail?id=2018041401331754453" target="_blank">
-                        分布式资本战略投资区块链创新企业Merculet
-                    </a>
-                </li>
-            </div>
-        </div>-->
-        <!-- end -->
     </div>
     <div class="news-center-img clearfix">
         <div class="news-img clearfix">
@@ -522,7 +459,6 @@ const getTimeContent = (publishTime, requestTime) => {
     <div class="news-author clearfix">
         <div class="box-author clearfix">
             <p class="title">火星专栏</p>
-            <!-- item  -->
             <%
             data.authorList.map((item) => {
                 %>
@@ -570,21 +506,6 @@ const getTimeContent = (publishTime, requestTime) => {
             <%
             })
              %>
-            <!--<div class="list-author">
-                <div class="portrait-img">
-                    <a target="_blank" href="/newsauthor?userId=01a70568381235638aa28b000b913c26">
-                        <img src="http://static.huoxing24.com/usericon/01a70568381235638aa28b000b913c26/portrait/1522242525008419.png" alt="">
-                        <span class="v-ordinary"></span>
-                    </a>
-                    <div class="name-follower">
-                        <a target="_blank" class="author-call" title="王峰十问" href="/newsauthor?userId=01a70568381235638aa28b000b913c26">王峰十问</a>
-                        <p class="crowd">粉丝：<span>7077</span></p>
-                    </div>
-                </div>
-                <a target="_blank" class="article-title" href="/newsdetail?id=2018040921070199182">郑刚做客王峰十问：特斯拉穿越生死无数次，坚定看好电动汽车的未来</a>
-                <div class="cancel-attention"><span>已关注</span></div>
-            </div>-->
-            <!-- end -->
         </div>
     </div>
 </div>

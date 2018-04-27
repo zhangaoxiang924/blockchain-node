@@ -54,7 +54,6 @@ const getTimeContent = (publishTime, requestTime) => {
         %>
     </ul>
     <div class="block-style">
-        <!-- news list item -->
         <div id="newsListContent">
             <% data.newsData.inforList.map((item) => {%>
             <div class="index-news-list">
@@ -85,33 +84,6 @@ const getTimeContent = (publishTime, requestTime) => {
             </div>
             <%}) %>
         </div>
-        <!--<div class="index-news-list" id="newsList">
-            <div class="list-left">
-                <a target="_blank" href="/newsdetail?id=2018042314322640777">
-                    <img src="http://static.huoxing24.com/images/2018/04/23/1524465122315185.jpg" alt="">
-                </a>
-            </div>
-            <div class="list-right" style="width: 350px;">
-                <a target="_blank" href="/newsdetail?id=2018042314322640777">
-                    <h6 class="headline">区块链女性从业者生存宣言：“我们拒绝脱衣舞派对！”</h6>
-                    <div class="details">这是一篇区块链行业女性生存速写。</div>
-                </a>
-                <div class="list-bottom index-mian clearfix">
-                    <p class="portrait">
-                        <a target="_blank" href="/newsauthor?userId=fff9d400cb94444fadaefd429516c276">
-                            <img alt="" src="http://static.huoxing24.com/usericon/01a70e76781235638aa28b000b913c26/portrait/1522242402596504.png">
-                        </a>
-                    </p>
-                    <p class="name">责任编辑：zora</p>
-                    <p class="lock-time">56分钟前</p>
-                    <p class="read-num main-read-num">
-                        <span class="count-eye"></span>
-                        <span class="read-count">11993</span>
-                    </p>
-                </div>
-            </div>
-        </div>-->
-        <!-- end -->
         <div class="clearfix"></div>
         <div data-currpage="<%= data.newsData.currentPage %>" data-pagecount="<%= data.newsData.pageCount %>" class="check-more-load clearfix" style="display: block;">查看更多</div>
     </div>
