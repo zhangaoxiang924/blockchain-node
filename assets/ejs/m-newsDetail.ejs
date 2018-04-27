@@ -1,0 +1,14 @@
+<!-- 公共头部 -->
+@@include('public/m-header.ejs', {
+"plugin": ["http://static.huoxing24.com/assets/smusic/smusic.css"],
+"private": ["../css/m-newsDetail.css"]
+})
+
+<!-- 内容 -->
+@@include('m-newsDetail/main.ejs')
+
+<!-- 公共底部 -->
+@@include('public/m-footer.ejs', {
+"plugin": ["http://static.huoxing24.com/assets/smusic/smusic.js"],
+"private": ["../js/m-common.js", "../js/m-newsDetail.js"]
+})

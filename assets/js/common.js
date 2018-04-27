@@ -74,7 +74,16 @@ $(function () {
     if (pathname.indexOf('/user') > -1) {
         $('#navLoginContent a.login').addClass('login-active')
     }
-
+    function getImgBtn () {
+        axiosAjax({
+            type: 'POST',
+            url: `${proxyUrl}/passport/account/getGraphCode`,
+            params: {},
+            fn: function (resData) {
+                $('#codeImg').attr('src', '/passport/account/getGraphCode')
+            }
+        })
+    }
     function isLogin (flag, nickName) {
         let navLoginContent = $('#navLoginContent')
         if (!flag) {
@@ -203,13 +212,34 @@ $(function () {
         // $('#waitTime').css({'display': 'block'})
     })
 
+    $('#codeBtn').on('click', function () {
+        setPhoneCode()
+    })
+
+    $('.refresh').on('click', function () {
+        getImgBtn()
+    })
+
+    $('#verificationImg .close-img').on('click', function () {
+        isShowImgModal(false)
+    })
+
+    function isShowImgModal (isShow) {
+        if (!isShow) {
+            $('.code-shade').removeClass('show')
+            $('.verification-img').removeClass('show')
+        } else {
+            $('.code-shade').addClass('show')
+            $('.verification-img').addClass('show')
+        }
+    }
+
     function etAuthCode () {
         let thisModal = $('#registerModal')
         const phoneNumber = $.trim(thisModal.find('input[name="phone"]').val())
         let hasError = false
         let hasErrorEl = thisModal.find('.error-msg')
         let errorMsg = ''
-        let param = null
         if (phoneNumber === '') {
             hasError = true
             errorMsg = '手机号不能为空'
@@ -220,18 +250,32 @@ $(function () {
             hasError = false
             errorMsg = ''
         }
-        let codeType = verifcategory
-        param = {
-            'phonenum': phoneNumber,
-            'countrycode': '86',
-            'verifcategory': codeType
-        }
-        let paramStr = fomartQuery(param)
         // param = `countrycode=86&&phonenum=${phoneNumber.toString()}&&verifcategory=${codeType}`
         if (hasError) {
             showErrorMsg(hasError, errorMsg, hasErrorEl)
             return
         }
+        isShowImgModal(true)
+        getImgBtn()
+    }
+
+    function setPhoneCode () {
+        isShowImgModal(false)
+        let thisModal = $('#registerModal')
+        const phoneNumber = $.trim(thisModal.find('input[name="phone"]').val())
+        let hasError = false
+        let hasErrorEl = thisModal.find('.error-msg')
+        let errorMsg = ''
+        let param = null
+        let codeType = verifcategory
+        let codeVal = $('input.code-text').val()
+        param = {
+            'phonenum': phoneNumber,
+            'countrycode': '86',
+            'verifcategory': codeType,
+            'graphcode': codeVal
+        }
+        let paramStr = fomartQuery(param)
         axiosAjax({
             type: 'post',
             url: `${proxyUrl}/passport/account/getverifcode?${paramStr}`,

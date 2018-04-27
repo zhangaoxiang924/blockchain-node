@@ -1,4 +1,19 @@
 <%
+const formatDate = (date, str) => {
+    let _str = !str ? '-' : str
+    const zero = (m) => {
+        return m < 10 ? '0' + m : m
+    }
+    let time = new Date(date)
+    let y = time.getFullYear()
+    let m = time.getMonth() + 1
+    let d = time.getDate()
+    if (date) {
+        return y + _str + zero(m) + _str + zero(d)
+    } else {
+        return ''
+    }
+}
 const getTimeContent = (publishTime, requestTime) => {
     let limit = parseInt((requestTime - publishTime)) / 1000
     let content = ''

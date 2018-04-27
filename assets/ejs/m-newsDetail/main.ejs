@@ -1,0 +1,116 @@
+<%
+const formatDate = (date, str) => {
+    let _str = !str ? '-' : str
+    const zero = (m) => {
+        return m < 10 ? '0' + m : m
+    }
+    let time = new Date(date)
+    let y = time.getFullYear()
+    let m = time.getMonth() + 1
+    let d = time.getDate()
+    if (date) {
+        return y + _str + zero(m) + _str + zero(d)
+    } else {
+        return ''
+    }
+}
+const getTimeContent = (publishTime, requestTime) => {
+    let limit = parseInt((requestTime - publishTime)) / 1000
+    let content = ''
+    if (limit < 60) {
+        content = '刚刚'
+    } else if (limit >= 60 && limit < 3600) {
+        content = Math.floor(limit / 60) + '分钟前'
+    } else if (limit >= 3600 && limit < 86400) {
+        content = Math.floor(limit / 3600) + '小时前'
+    } else {
+        content = formatDate(publishTime)
+    }
+    return content
+}
+ %>
+<div class="details" data-tags="<%= newsData.current.tags %>">
+    <!--<div class="back-top"></div>-->
+    <div class="huoxing-top" id="huoxingTop">
+        <a href="javascript:;" class="back-prev-page">
+            <img src="../img/m-img/back-prev-page.png" alt="">
+        </a>
+        <a href="/"><img src="../img/m-img/top.jpg" alt=""></a>
+    </div>
+    <div class="details-header">
+        <h6  id="flashNewsTime"><%= newsData.current.title %></h6>
+        <div class="list-text">
+            <div class="time clearfix"><span><%= getTimeContent(newsData.current.publishTime, newsData.timestamp) %></span></div>
+            <div class="read-number"><%= newsData.current.hotCounts %></div>
+        </div>
+    </div>
+
+    <div class="<%= !newsData.current.synopsis ? 'details-synopsis' : 'details-synopsis active' %>" id="detailsSynopsis">
+        <p>
+            <%= newsData.current.synopsis %>
+        </p>
+    </div>
+    <%
+    let notAudio = !newsData.current.audio || newsData.current.audio.indexOf('[{') || !JSON.parse(newsData.current.audio)[0].fileUrl
+    let notVideo = !newsData.current.video || newsData.current.video.indexOf('[{') || !JSON.parse(newsData.current.video)[0].fileUrl
+     %>
+    <div class="audio-wrap" data-audio="<%= !notAudio ? newsData.current.audio : null %>">
+        <%
+        if (!notAudio) {
+            %>
+        @@include('./smusic.ejs')
+        <%
+        }
+         %>
+    </div>
+
+    <div class="video-wrap" style="display: <%= !notVideo ? 'block' : 'none' %>">
+        <video poster="" src="<%= !notVideo ? JSON.parse(newsData.current.video)[0].fileUrl : '' %>" controls="controls" preload="metadata"></video>
+    </div>
+
+    <div class="simditor">
+        <div class="details-cont simditbaor-body">
+            <%- newsData.current.content %>
+            <!--<p>疲弱的经济数据和美国政治前景不确定性加剧了美元跌势。周二公布的数据显示，美国1月里奇蒙德制造业指数自2017年11月历史高位30大幅下跌至14，连续两个月跌幅创2006年以来最大幅度。</p>-->
+        </div>
+    </div>
+
+    <!--广告-->
+    <div class="advertising">
+        <!-- <div class="block-ad">
+            <div class="block-ad-title">
+                <h3 id="adTitle"></h3>
+                <span>广告</span>
+            </div>
+            <div class="block-ad-con">
+                <a id="adUrl" href=""><img id="adArc" src="" alt=""></a>
+            </div>
+        </div> -->
+    </div>
+    <div class="news-correlation">
+        <h6><span></span>相关新闻</h6>
+        <div class="news-list-box">
+            <!--<div class="news-list-more ">
+                <div class="title">作为全球首个区块链搜索引擎，星云链致力于发掘区块链世界价值新维度</div>
+                <div class="list-text">
+                    <div class="author clearfix">作者:
+                        <sapn>风怒的小鸟</sapn>
+                    </div>
+                    <div class="time clearfix">时间: <span>2018-12-12</span></div>
+                </div>
+                <div class="cover-img-sma"><img src="../../img/m-img/list.jpg" alt=""></div>
+            </div>-->
+        </div>
+    </div>
+    <div class="bottom-down">
+        <div class="b-logo">
+            <p><img src="../img/m-img/bottom-log.png" alt=""></p>
+            <p>
+                <span>火星财经APP</span>
+                <br/>
+                <span>区块链先锋门户</span>
+            </p>
+        </div>
+        <a class="b-down">立即下载</a>
+    </div>
+</div>

@@ -29,9 +29,22 @@
 
     <!--private-->
     
-    <link href="..//css/newsDetail-ed501666a2.css" rel="stylesheet">
+    <link href="..//css/newsDetail-9df1fe691b.css" rel="stylesheet">
     
-
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
 </head>
 <body>
 
@@ -63,11 +76,11 @@
             <li class="nav-item "><a target="_blank" href="/index">首页</a></li>
             <li class="nav-item "><a target="_blank" href="/news">新闻</a></li>
             <li class="nav-item ">
-                <a target="_blank" href="/forum">火星社区</a>
+                <a target="_blank" href="http://bbs.huoxing24.com/">火星社区</a>
                 <img class="new-icon" src="..//img/header/beta-icon-20c529e94b.png">
             </li>
             <li class="nav-item ">
-                <a target="_blank" href="/baike">百科</a>
+                <a target="_blank" href="http://baike.huoxing24.com/">百科</a>
                 <img class="new-icon" src="..//img/header/new-icon-3c5a20675a.png">
             </li>
             <li class="nav-item "><a target="_blank" href="/livenews">快讯</a></li>
@@ -95,7 +108,22 @@
             </div>
         </div>
     </div>
-
+    <!-- 图形验证 -->
+    <div class="code-shade"></div>
+    <div class="verification-img" id="verificationImg">
+        <div class="close-img">
+            <img src="..//img/login/login-close-8f16a29f2d.png" alt="">
+        </div>
+        <h5>验证</h5>
+        <input type="text" class="code-text">
+        <p>
+            <img id="codeImg" src="/passport/account/getGraphCode" alt="">
+        </p>
+        <div class="refresh">
+            <img src="..//img/login/refresh-66180df5fa.png" alt="">
+        </div>
+        <button id="codeBtn">确定</button>
+    </div>
     <!-- 登录 -->
     <div id="loginBlock" class="login-mask" style="display: none;">
         <div class="login-con">
@@ -694,11 +722,11 @@ if (audioData.length > 0) {
 
 
 <!-- private -->
-<script src="..//js/vendors-0b4f9a3ccf.js"></script>
+<script src="..//js/vendors-b491e0e5c8.js"></script>
 
-<script src="..//js/common-08fc2493ab.js"></script>
+<script src="..//js/common-35088cb304.js"></script>
 
-<script src="..//js/newsDetail-96d9ee4270.js"></script>
+<script src="..//js/newsDetail-fc76192afc.js"></script>
 
 
 <!-- statistics -->

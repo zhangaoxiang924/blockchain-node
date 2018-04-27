@@ -5,7 +5,7 @@
  */
 
 import '../../node_modules/layui-layer/dist/layer.js'
-import {pageLoadingHide, isPc, isIos, isAndroid, isWeixin, getQueryString, getTimeContent, sevenDays, timestampToTime, formatDateMore, Animation, ajaxGet} from '../js/public/public'
+import {pageLoadingHide, isPc, getQueryString, getTimeContent, sevenDays, timestampToTime, formatDateMore, Animation, ajaxGet} from '../js/public/public'
 import html2canvas from 'html2canvas'
 // import swal from 'sweetalert2'
 
@@ -587,20 +587,6 @@ $(function () {
             }
         })
     }
-
-    // 下载
-    let iosUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.linekong.mars24'
-    let andUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.linekong.mars24'
-    let downLoad = $('.b-down')
-
-    downLoad.on('click', function () {
-        if (isIos()) {
-            downLoad.attr('href', iosUrl)
-        }
-        if (isAndroid() || isWeixin()) {
-            downLoad.attr('href', andUrl)
-        }
-    })
 
     // $('.hint').on('click', function () {
     //     $('.hint').hide()

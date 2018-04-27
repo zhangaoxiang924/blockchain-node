@@ -26,9 +26,22 @@
 
     <!--private-->
     
-    <link href="..//css/m-index-965a4531bf.css" rel="stylesheet">
+    <link href="..//css/m-index-9924309daa.css" rel="stylesheet">
     
-
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
 </head>
 <body>
 <div class="lk-loading active" id="pageLoading">
@@ -49,6 +62,21 @@
 
 <div class="clearfix">
     <%
+const formatDate = (date, str) => {
+    let _str = !str ? '-' : str
+    const zero = (m) => {
+        return m < 10 ? '0' + m : m
+    }
+    let time = new Date(date)
+    let y = time.getFullYear()
+    let m = time.getMonth() + 1
+    let d = time.getDate()
+    if (date) {
+        return y + _str + zero(m) + _str + zero(d)
+    } else {
+        return ''
+    }
+}
 const getTimeContent = (publishTime, requestTime) => {
     let limit = parseInt((requestTime - publishTime)) / 1000
     let content = ''
@@ -253,9 +281,11 @@ const getTimeContent = (publishTime, requestTime) => {
 
 
 <!-- private -->
-<script src="..//js/vendors-0b4f9a3ccf.js"></script>
+<script src="..//js/vendors-b491e0e5c8.js"></script>
 
-<script src="..//js/m-index-335ad53aa5.js"></script>
+<script src="..//js/m-common-6a1095e237.js"></script>
+
+<script src=" ..//js/m-index-cebc86f8c5.js"></script>
 
 
 <footer>
