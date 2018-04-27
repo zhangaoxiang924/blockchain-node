@@ -121,8 +121,8 @@ const mRes = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    const url = req.connection.remoteAddress
-    if (url.indexOf('m.huoxing24.com') > -1) {
+    const url = req.headers.host
+    if (url.indexOf(utils.onlineMUrl) > -1) {
         mRes(req, res, next)
     } else {
         pcRes(req, res, next)

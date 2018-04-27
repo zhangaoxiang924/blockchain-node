@@ -39,10 +39,12 @@ app.use(logger('common', {stream: accessLogStream}))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public'), {
+    index: false
+}))
 
-app.use('/newsdetail', newsDetailRouter)
 app.use('/', indexRouter)
+app.use('/newsdetail', newsDetailRouter)
 app.use('/index', indexRouter)
 app.use('/news', newsRouter)
 
