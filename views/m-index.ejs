@@ -20,14 +20,14 @@
     <script src="http://static.huoxing24.com/assets/remset.js"></script>
 
     <!--plugin-->
-    
+
     <link href="http://static.huoxing24.com/assets/swiperv4/swiper.min.css" rel="stylesheet">
-    
+
 
     <!--private-->
-    
+
     <link href="../css/m-index.css" rel="stylesheet">
-    
+
     <script>
         (function(){
             var bp = document.createElement('script');
@@ -129,7 +129,7 @@ const getTimeContent = (publishTime, requestTime) => {
                             data.inforList.map((item) => {
                                 %>
                         <div class="news-list-more ">
-                            <a href="/newsdetail/m?id=<%= item.id %>">
+                            <a href="/newsdetail?id=<%= item.id %>">
                                 <div class="title"><%= item.title %></div>
                                 <div class="list-text">
                                     <div class="author read-number clearfix"><sapn><%= item.hotCounts %></sapn></div>

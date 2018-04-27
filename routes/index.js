@@ -13,8 +13,7 @@ const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
 const webInfo = utils.webInfo
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+const pcRes = (req, res, next) => {
     let userId = req.cookies.hx_user_id
     const hotColumn = (resolve) => {
         axiosAjax({
@@ -144,7 +143,58 @@ router.get('/', function (req, res, next) {
             })
         }
     })
+}
+
+const mRes = (req, res, next) => {
+    async function newsDetailData () {
+        const data = await new Promise((resolve) => {
+            let sendData = {
+                currentPage: 1,
+                pageSize: 20,
+                channelId: 0
+            }
+            axiosAjax({
+                type: 'GET',
+                url: ajaxJavaUrl + '/info/news/shownews',
+                params: sendData,
+                res: res,
+                fn: function (resData) {
+                    resolve(resData)
+                }
+            })
+        })
+
+        return data
+    }
+
+    newsDetailData().then((resData) => {
+        if (resData.code === 1) {
+            res.render('m-index', {
+                data: resData.obj,
+                webSiteInfo: webInfo
+            })
+        } else {
+            res.render('error', {
+                message: resData.msg,
+                error: {
+                    status: resData.code,
+                    stack: 'Please pass the correct parameters.'
+                }
+            })
+        }
+    })
+}
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+    const url = req.connection.remoteAddress
+    if (url.indexOf('m.huoxing24.com') > -1) {
+        mRes(req, res, next)
+    } else {
+        pcRes(req, res, next)
+    }
 })
+
 /* router.get('/', function (req, res, next) {
     // /info/topic/listall?currentPage=1&pageSize=20
     // /info/author/showauthorlist?currentPage=1&pageSize=50&myPassportId=63cd65b00e584f9292074ced8cfd47fa
@@ -225,43 +275,7 @@ router.get('/', function (req, res, next) {
 }) */
 
 router.get('/m', function (req, res, next) {
-    async function newsDetailData () {
-        const data = await new Promise((resolve) => {
-            let sendData = {
-                currentPage: 1,
-                pageSize: 20,
-                channelId: 0
-            }
-            axiosAjax({
-                type: 'GET',
-                url: ajaxJavaUrl + '/info/news/shownews',
-                params: sendData,
-                res: res,
-                fn: function (resData) {
-                    resolve(resData)
-                }
-            })
-        })
 
-        return data
-    }
-
-    newsDetailData().then((resData) => {
-        if (resData.code === 1) {
-            res.render('m-index', {
-                data: resData.obj,
-                webSiteInfo: webInfo
-            })
-        } else {
-            res.render('error', {
-                message: resData.msg,
-                error: {
-                    status: resData.code,
-                    stack: 'Please pass the correct parameters.'
-                }
-            })
-        }
-    })
 })
 
 module.exports = router
