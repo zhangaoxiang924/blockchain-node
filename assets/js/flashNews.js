@@ -4,6 +4,7 @@
  * Description：Description
  */
 import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getHourMinute, sevenDays} from './public/public'
+import {relatedNews} from './modules/index'
 import Cookies from 'js-cookie'
 import layer from 'layui-layer'
 $(function () {
@@ -46,6 +47,7 @@ $(function () {
     })
 
     // 利好/利空
+    bindJudgeProfit()
     function bindJudgeProfit () {
         $('.judge-profit').on('click', 'p', function () {
             let $this = $(this)
@@ -152,5 +154,53 @@ $(function () {
                 }
             }
         })
+    }
+
+    // 相关新闻
+    axiosAjax({
+        type: 'get',
+        url: `${proxyUrl}/info/news/hotnews?${fomartQuery({
+            lastDays: 3,
+            readCounts: 50,
+            newsCounts: 10
+        })}`,
+        formData: false,
+        params: {},
+        fn: function (res) {
+            if (res.code === 1) {
+                let data = res.obj.inforList
+                // let bottom = relatedNews(data, 'bottom')
+                let right = relatedNews(data, 'right')
+                $('.hot-news-wrap .news-recommend').html(right)
+                // $('.bottom-recommend-news .news-contain').html(bottom)
+            }
+        }
+    })
+    // 新闻排行
+    axiosAjax({
+        type: 'get',
+        url: `${proxyUrl}/info/news/recommend?${fomartQuery({
+            lastDays: 3,
+            readCounts: 50,
+            newsCounts: 10
+        })}`,
+        formData: false,
+        params: {},
+        fn: function (res) {
+            if (res.code === 1) {
+                let data = res.obj.inforList
+                // let bottom = relatedNews(data, 'bottom')
+                let str = getSortNewsStr(data)
+                $('.hot-news-wrap .news-sort-box').html(str)
+                // $('.bottom-recommend-news .news-contain').html(bottom)
+            }
+        }
+    })
+    function getSortNewsStr (arr) {
+        let str = ''
+        arr.map((item, index) => {
+            str += `<div class="list-box clearfix"><span>${index + 1}</span><a target="_blank" class="right-text" href="/newsdetail?id=${item.id}">${item.title}</a></div>`
+        })
+        return str
     }
 })
