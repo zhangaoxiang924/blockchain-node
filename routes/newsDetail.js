@@ -12,8 +12,7 @@ const axiosAjax = utils.axiosAjax
 const ajaxJavaUrl = utils.ajaxJavaUrl
 // const webInfo = utils.webInfo
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+const pcRes = (req, res, next) => {
     let newsId = req.query.id
 
     async function newsDetailData () {
@@ -62,9 +61,9 @@ router.get('/', function (req, res, next) {
             })
         }
     })
-})
+}
 
-router.get('/m', function (req, res, next) {
+const mRes = (req, res, next) => {
     let newsId = req.query.id
 
     async function newsDetailData () {
@@ -118,6 +117,16 @@ router.get('/m', function (req, res, next) {
             })
         }
     })
+}
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+    const url = req.headers.host
+    if (url.indexOf(utils.onlineMUrl) > -1) {
+        mRes(req, res, next)
+    } else {
+        pcRes(req, res, next)
+    }
 })
 
 module.exports = router

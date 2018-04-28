@@ -29,7 +29,8 @@
     "$": true,
     "wx": true,
     "Swiper": true,
-    "layer": true
+    "layer": true,
+    "SMusic": true
   },
   "env": {
     "browser": true,

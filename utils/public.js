@@ -98,9 +98,13 @@ const webInfo = {
     description: '火星财经是集新闻、资讯、行情、数据等区块链信息等专业服务平台，致力于为区块链创业者以及数字货币投资者提供最新最及时的项目报道、投资顾问、项目分析、市场行情'
 }
 
+const onlineMUrl = 'm.huoxing24.com'
+// const onlineMUrl = 'm.huoxing24.vip'
+
 module.exports = {
     ajaxJavaUrl,
     proxyJavaApi,
     axiosAjax,
-    webInfo
+    webInfo,
+    onlineMUrl
 }

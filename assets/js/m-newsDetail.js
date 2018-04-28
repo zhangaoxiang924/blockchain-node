@@ -90,7 +90,7 @@ $(function () {
                 let time = getTimeContent(d.publishTime, timestamp)
                 let img = JSON.parse(d.coverPic)
                 newsList += `<div class="news-list-more ">
-                                <a href=${htmlPath + '/newsdetail/m?id=' + d.id}>
+                                <a href=${htmlPath + '/newsdetail?id=' + d.id}>
                                     <div class="title">${cutString(d.title, 60)}</div>
                                     <div class="list-text">
                                         <div class="author clearfix"><span>${d.author}</span></div>
