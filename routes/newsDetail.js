@@ -120,8 +120,10 @@ const mRes = (req, res, next) => {
 }
 
 /* GET home page. */
+// router.get('/:id', function (req, res, next) {
 router.get('/', function (req, res, next) {
     const url = req.headers.host
+    // const id = req.param.id
     if (url.indexOf(utils.onlineMUrl) > -1) {
         mRes(req, res, next)
     } else {

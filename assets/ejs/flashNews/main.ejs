@@ -1,67 +1,64 @@
 <%
 // 加0
-export const add0 = (num) => {
+const add0 = (num) => {
     return num >= 10 ? num : '0' + num
 }
 
 // 获取时分
-export const getHourMinute = (time) => {
+const getHourMinute = (time) => {
     const timeTemp = new Date(time)
     return `${add0(timeTemp.getHours())}:${add0(timeTemp.getMinutes())}`
 }
 %>
-<div class="flash-news-content">
+<div class="flash-news-content clearfix">
     <div class="flash-news-list">
-        <div class="news-head"><em class="active">全部</em><em data-channelid="1" class="">监管动态</em><em data-channelid="2"
-                                                                                                      class="">交易所公告</em><em
-                    data-channelid="3" class="">重大行情</em><em data-channelid="4" class="">观点</em></div>
-        <ul class="news-date">
-            <li class="date-item active" data-date="1524787200000">27日</li>
-            <li class="date-item " data-date="1524700800000">26日</li>
-            <li class="date-item " data-date="1524614400000">25日</li>
-            <li class="date-item " data-date="1524528000000">24日</li>
-            <li class="date-item " data-date="1524441600000">23日</li>
-            <li class="date-item " data-date="1524355200000">22日</li>
-            <li class="date-item " data-date="1524268800000">21日</li>
-            <p class="update-num" style="display: none;"><span>更新</span><span class="num"> 1 </span><span><span>条</span></span>
-            </p></ul>
-        <ul class="flash-news-list">
+        <div class="news-head">
+            <em class="active">全部</em>
+            <em data-channelid="1" class="">监管动态</em>
+            <em data-channelid="2" class="">交易所公告</em>
+            <em data-channelid="3" class="">重大行情</em>
+            <em data-channelid="4" class="">观点</em>
+        </div>
+        <!-- 前7天 -->
+        <ul class="news-date"></ul>
+        <ul id="liveNewsContain" class="flash-news-list">
             <%
             data.inforList.map((item) => {
             %>
             <li class="flash-news">
                 <div class="news-item">
-                    <span class="<%= item.tag === 2 ? 'important-news' : '' %>"> </span>
-                    <span class="new-time">getHourMinute(item.createdTime)</span>
-                    <p class="news-detail" style="color: <%= item.tag === 2 && 'red' %>">
+                    <span class="<%= parseInt(item.tag) === 2 ? 'important-news' : '' %>"> </span>
+                    <span class="new-time"><%= getHourMinute(item.createdTime) %></span>
+                    <p class="news-detail" style="color: <%= parseInt(item.tag) === 2 && 'red' %>">
                         <%= item.content %>
                         <%
-                        if (!item.url) {%>
-                        <%} else {%>
+                        if (!item.url) { %>
+                        <% } else { %>
                         <a href="<%= item.url %>" style="color: #1482f0" target="_blank"> 「查看原文」</a>
-                        <%}
-                         %>
+                        <% }
+                        %>
                     </p>
                     <div class="judge-profit">
-                        <p class="good-profit active">
+                        <p data-status="1" data-id="<%= item.id %>"
+                           class="good-profit <%= parseInt(item.type) === 1 ? 'active' : '' %>">
                             <span>利好</span>
-                            <span> 2 </span>
-                            <span class="event-click" data-id="2018042721373359458" data-index="0"></span>
+                            <span class="num"> <%= item.upCounts %> </span>
                         </p>
-                        <p class="bad-profit ">
+                        <p  data-status="0" data-id="<%= item.id %>" class="bad-profit <%= parseInt(item.type) === 0 ? 'active' : '' %>">
                             <span>利空</span>
-                            <span> 0 </span>
-                            <span class="event-click" data-id="2018042721373359458" data-index="0"></span>
+                            <span class="num"> <%= item.downCounts %> </span>
                         </p>
                     </div>
                 </div>
             </li>
             <%
             })
-             %>
+            %>
         </ul>
         <div class="clearfix"></div>
-        <div class="check-more-load clearfix">查看更多</div>
+        <div data-currpage="<%= data.currentPage %>" data-pagecount="<%= data.pageCount %>"
+             class="check-more-load clearfix">查看更多
+        </div>
     </div>
     <div class="hot-news-wrap">
         <div class="aside-section">
