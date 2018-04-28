@@ -20,6 +20,7 @@ class NewsSwiper {
             loop: true,
             autoplay: 6000,
             slidesPerView: 5,
+            preventClicks: false,
             slidesPerGroup: 5,
             width: (232 + 8) * 5,
             initialSlide: 1,
