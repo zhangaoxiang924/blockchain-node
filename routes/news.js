@@ -14,12 +14,13 @@ const webInfo = utils.webInfo
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    let searchId = !req.query.id ? 0 : req.query.id
     async function getData () {
         const data = await new Promise((resolve) => {
             let sendData = {
                 currentPage: 1,
                 pageSize: 10,
-                channelId: 0
+                channelId: searchId
             }
             axiosAjax({
                 type: 'GET',
@@ -39,7 +40,7 @@ router.get('/', function (req, res, next) {
         if (resData.code === 1) {
             // res.send(resData)
             res.render('news', {
-                newsData: resData.obj,
+                newsData: {...resData.obj, searchId: searchId},
                 webSiteInfo: webInfo
             })
         } else {

@@ -46,9 +46,17 @@ const getTimeContent = (publishTime, requestTime) => {
                 {label: '八点', value: '8'},
                 {label: '王峰十问', value: '9'}
             ]
+//            let query = window.location.search
+//            let id = 0
+//            if (query.indexOf('id=') !== -1) {
+//                id = query.substring(query.indexOf('id=') + 1)
+//                if (query.indexOf('&') !== -1) {
+//                    id = id.substring(0, query.indexOf('&'))
+//                }
+//            }
             titleArr.map((item) => {
             %>
-            <a data-id="<%= item.value %>" class="<%= parseInt(item.value) === 0 ? 'active' : '' %>"><%= item.label %><font class="<%= parseInt(item.value) === 0 ? 'active' : '' %>"></font></a>
+            <a data-id="<%= item.value %>" class="<%= parseInt(item.value) === parseInt(newsData.searchId) ? 'active' : '' %>"><%= item.label %><font class="<%= parseInt(item.value) === 0 ? 'active' : '' %>"></font></a>
             <%
             })
             %>
