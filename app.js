@@ -10,7 +10,7 @@ const proxyRouter = require('./routes/proxy')
 const newsDetailRouter = require('./routes/newsDetail')
 const indexRouter = require('./routes/index')
 const newsRouter = require('./routes/news')
-// const liveNewsRouter = require('./routes/flashNews')
+const liveNewsRouter = require('./routes/flashNews')
 
 const app = express()
 
@@ -48,7 +48,7 @@ app.use('/', indexRouter)
 app.use('/newsdetail', newsDetailRouter)
 app.use('/index', indexRouter)
 app.use('/news', newsRouter)
-// app.use('/livenews', liveNewsRouter)
+app.use('/livenews', liveNewsRouter)
 
 // react-router browserhistory
 app.get([
@@ -56,7 +56,6 @@ app.get([
     '/markets',
     '/newsauthor',
     '/primer',
-    '/livenews',
     '/newsdetail',
     '/newcoins',
     '/newcoinsList',
