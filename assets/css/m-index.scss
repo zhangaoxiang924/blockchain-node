@@ -104,7 +104,7 @@ body,
 
         $itemWidth: 620/7;
 
-        $bodyWrapWidth: (8 * $itemWidth + 130);
+        $bodyWrapWidth: (9 * $itemWidth + 130 * 2);
 
         position: inherit;
         top: 0;
@@ -127,7 +127,8 @@ body,
             height: 100%;
             background: none;
 
-            &:nth-child(4) {
+            &:nth-child(4),
+            &:nth-child(5) {
                 width: rem(125);
             }
 
@@ -211,7 +212,7 @@ body,
             }
 
             &:nth-child(3) {
-                background: url("../img/m-img/bta.jpg") no-repeat;
+                background: url("../img/m-img/list-03.jpg") no-repeat;
                 background-size: 100%;
             }
 

@@ -187,6 +187,7 @@ const mRes = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    // mRes(req, res, next)
     const url = req.headers.host
     if (url.indexOf(utils.onlineMUrl) > -1) {
         mRes(req, res, next)
