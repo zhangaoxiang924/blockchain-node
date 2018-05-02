@@ -40,7 +40,7 @@ $(function () {
         type: 'get',
         url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
             passportId: newsDataInfo.createdBy,
-            myPassportId: Cookies.get('hx_user_id')
+            myPassportId: !Cookies.get('hx_user_id') ? '' : Cookies.get('hx_user_id')
         })}`,
         formData: false,
         params: {},

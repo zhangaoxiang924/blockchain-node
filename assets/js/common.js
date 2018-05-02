@@ -7,6 +7,7 @@
 import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
+import {NewsAuthor} from './modules/index'
 
 $(function () {
     if (isPc() === false) {
@@ -174,6 +175,38 @@ $(function () {
                         let newsId = getQueryString('id')
                         let reply = new Reply($('#replyBox'), newsId)
                         reply.init()
+                    }
+
+                    if (window.location.href.indexOf('/newsdetail') !== -1 || window.location.href.indexOf('/newsauthor') !== -1) {
+                        // 作者信息
+                        let passportId = ''
+                        if (window.location.href.indexOf('/newsdetail') !== -1) {
+                            let newsDataInfo = $('.news-detail').data('info')
+                            passportId = newsDataInfo.createdBy
+                        } else {
+                            passportId = getQueryString('userId')
+                        }
+                        axiosAjax({
+                            type: 'get',
+                            url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+                                passportId: passportId
+                            })}`,
+                            formData: false,
+                            params: {},
+                            fn: function (res) {
+                                if (res.code === 1) {
+                                    let author = new NewsAuthor(res.obj)
+                                    if (window.location.href.indexOf('/newsdetail') !== -1) {
+                                        author.init($('.authorinfo'), 'right')
+                                        author.init($('.authorinfo-bottom'), 'bottom')
+                                    } else {
+                                        author.init($('.news-author'), 'right')
+                                    }
+                                    // let bottom = new newsAuthor($('.authorinfo-bottom'), res.obj, 'bottom')
+                                    // bottom.init()
+                                }
+                            }
+                        })
                     }
                 }
             }
@@ -348,6 +381,37 @@ $(function () {
             let newsId = getQueryString('id')
             let reply = new Reply($('#replyBox'), newsId)
             reply.init()
+        }
+
+        if (window.location.href.indexOf('/newsdetail') !== -1 || window.location.href.indexOf('/newsauthor') !== -1) {
+            // 作者信息
+            let passportId = ''
+            if (window.location.href.indexOf('/newsdetail') !== -1) {
+                let newsDataInfo = $('.news-detail').data('info')
+                passportId = newsDataInfo.createdBy
+            } else {
+                passportId = getQueryString('userId')
+            }
+            axiosAjax({
+                type: 'get',
+                url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+                    passportId: passportId,
+                    myPassportId: res.obj.passportId
+                })}`,
+                formData: false,
+                params: {},
+                fn: function (res) {
+                    if (res.code === 1) {
+                        let author = new NewsAuthor(res.obj)
+                        if (window.location.href.indexOf('/newsdetail') !== -1) {
+                            author.init($('.authorinfo'), 'right')
+                            author.init($('.authorinfo-bottom'), 'bottom')
+                        } else {
+                            author.init($('.news-author'), 'right')
+                        }
+                    }
+                }
+            })
         }
     }
 
