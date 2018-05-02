@@ -492,5 +492,6 @@ export {
     Animation,
     ajaxGet,
     compareCalendar,
-    scrollDirect
+    scrollDirect,
+    add0
 }

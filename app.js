@@ -11,6 +11,7 @@ const newsDetailRouter = require('./routes/newsDetail')
 const indexRouter = require('./routes/index')
 const newsRouter = require('./routes/news')
 const liveNewsRouter = require('./routes/flashNews')
+const hotNewsRouter = require('./routes/hotNews')
 
 const app = express()
 
@@ -49,6 +50,7 @@ app.use('/newsdetail', newsDetailRouter)
 app.use('/index', indexRouter)
 app.use('/news', newsRouter)
 app.use('/livenews', liveNewsRouter)
+app.use('/hot', hotNewsRouter)
 
 // react-router browserhistory
 app.get([
@@ -84,7 +86,7 @@ app.get([
     '/live/liveList',
     '/live/liveDetails',
     '/app',
-    '/hot',
+    // '/hot',
     '/showSpecial',
     '/showSpecialNews',
     '/wbcworld',

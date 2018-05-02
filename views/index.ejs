@@ -395,7 +395,7 @@ const getTimeContent = (publishTime, requestTime) => {
         <div class="subject-box clearfix">
             <div class="subject-first">
                 <%
-                    let aUrl = !item.topic.typeLink ? `/hot?tags=${!item.topic.tags ? '区块链' : item.topic.tags}&id=${item.topic.id}` : item.topic.typeLink
+                    let aUrl = !item.topic.typeLink ? `/hot?tags=${encodeURIComponent(!item.topic.tags ? '区块链' : item.topic.tags)}&id=${item.topic.id}` : item.topic.typeLink
                 %>
                 <a target="_blank"  href="<%= aUrl %>">
                     <img src="<%= item.topic.pcImgSrc %>" alt="">
