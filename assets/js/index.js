@@ -57,7 +57,7 @@ $(function () {
             return
         }
         let currPage = 1
-        let pageSize = 25
+        let pageSize = 35
         let id = $(this).data('id')
         getNewsList(currPage, pageSize, id, (res) => {
             $('#newsListContent').html(getNewsStr(res.obj))
@@ -92,7 +92,7 @@ $(function () {
     function getNewsList (currPage, pageSize, id, fn) {
         let sendData = {
             currentPage: !currPage ? 1 : currPage,
-            pageSize: !pageSize ? 25 : pageSize,
+            pageSize: !pageSize ? 35 : pageSize,
             channelId: !id ? 0 : id
         }
         axiosAjax({
