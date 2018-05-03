@@ -11,7 +11,7 @@ import {Reply} from './newsDetail/index'
 $(function () {
     if (isPc() === false) {
         if (window.location.href.indexOf('newsdetail') !== -1) {
-            window.location.href = `http://m.huoxing24.com/details.html?id=${getQueryString('id')}`
+            window.location.href = `http://m.huoxing24.com/newsdetail?id=${getQueryString('id')}`
         } else {
             window.location.href = 'http://m.huoxing24.com/'
         }

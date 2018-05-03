@@ -8,7 +8,7 @@ import {isPc, isIos, isAndroid, isWeixin, getQueryString} from '../js/public/pub
 $(function () {
     if (isPc()) {
         if (window.location.href.indexOf('newsdetail') !== -1) {
-            window.location.href = `/newsdetail?id=${getQueryString('id')}`
+            window.location.href = `http://www.huoxing24.com/newsdetail?id=${getQueryString('id')}`
         } else {
             window.location.href = '/'
         }
