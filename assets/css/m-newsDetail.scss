@@ -3,7 +3,6 @@
  * Time：2018/4/27
  * Description：Description
  */
-
 @import "./public/normalize";
 @import "./public/m-public";
 @import "./public/m-header";
@@ -324,7 +323,7 @@
             margin: 0 0 rem(25) 0;
             line-height: rem(50); // 规范编辑
             word-wrap: break-word;
-            word-break: break-all;
+            // word-break: break-all;
             text-align: justify;
             font-size: rem(30) !important; // 规范编辑
 

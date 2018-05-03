@@ -31,8 +31,14 @@ const navIndex = [
         title: '产业',
         channelId: '2'
     }, {
+        title: '投资快报',
+        channelId: '14'
+    }, {
         title: '王峰十问',
         channelId: '9'
+    }, {
+        title: '挖矿',
+        channelId: '13'
     }, {
         title: '技术',
         channelId: '6'
@@ -156,14 +162,15 @@ $(function () {
                     return '<span class="' + className + ' column-nav" data-type="' + navIndex[8].channelId + '">' + navIndex[8].title + '<i></i></span>'
                 } else if (index === 9) {
                     return '<span class="' + className + ' column-nav" data-type="' + navIndex[9].channelId + '">' + navIndex[9].title + '<i></i></span>'
+                } else if (index === 10) {
+                    return '<span class="' + className + ' column-nav" data-type="' + navIndex[10].channelId + '">' + navIndex[10].title + '<i></i></span>'
                 }
             }
         },
         on: {
             slideChangeTransitionStart: function () {
                 $('.body-wrap .swiper-pagination-bullet').eq(this.activeIndex).children('i').addClass('active').parent().siblings().children('i').removeClass('active')
-
-                if (this.activeIndex >= 4) {
+                if (this.activeIndex >= 5) {
                     $('#hxWrapPage').addClass('active')
                 } else {
                     $('#hxWrapPage').removeClass('active')
@@ -229,10 +236,9 @@ $(function () {
     $('#tenQuestions').on('click', function () {
         swiper.slideTo(4)
     })
-    $('#twoSessions').on('click', function () {
-        swiper.slideTo(2)
+    $('#otherColumn').on('click', function () {
+        swiper.slideTo(5)
     })
-
     /* ---------------记载更多--------------- */
     let flashCurrentPage = null
     let flashPage = $('.btn-more-flash').data('type')

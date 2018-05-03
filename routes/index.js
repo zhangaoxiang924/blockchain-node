@@ -52,7 +52,7 @@ const pcRes = (req, res, next) => {
     const newsData = (resolve) => {
         axiosAjax({
             type: 'GET',
-            url: ajaxJavaUrl + '/info/news/shownews?currentPage=&pageSize=25&channelId=0',
+            url: ajaxJavaUrl + '/info/news/shownews?currentPage=&pageSize=35&channelId=0',
             params: {},
             res: res,
             fn: function (resData) {
@@ -187,6 +187,7 @@ const mRes = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    // mRes(req, res, next)
     const url = req.headers.host
     if (url.indexOf(utils.onlineMUrl) > -1) {
         mRes(req, res, next)

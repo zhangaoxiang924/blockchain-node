@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>火星财经</title>
+        <description>区块链第一先锋门户</description>
+        <link>https://lindexi.gitee.io/lindexi/</link>
+        <pubDate>Thu, 07 Dec 2017 11:02:39 +0800</pubDate>
+        <lastBuildDate>Thu, 07 Dec 2017 11:02:39 +0800</lastBuildDate>
+        <generator>Jekyll v3.4.3</generator>
+        <item>
+            <title>第一篇</title>
+            <description>摘要</description>
+            <author>作者</author>
+            <pubDate>发布时间</pubDate>
+            <link>链接</link>
+            <guid>链接</guid>
+        </item>
+        <item>
+            <title>第二篇</title>
+            <description>摘要</description>
+            <author>作者</author>
+            <pubDate>Wed, 29 Nov 2017 00:00:00 +0800</pubDate>
+            <category>uwp</category>
+            <link>链接</link>
+            <guid>链接</guid>
+        </item>
+    </channel>
+</rss>
