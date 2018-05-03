@@ -103,9 +103,9 @@ const pageLoadingHide = () => {
     })
  */
 const axiosAjax = (arg) => {
-    const {type, url, params, contentType, formData, fn} = arg
+    const {type, url, params, contentType, formData, fn, noloading} = arg
 
-    const ajaxLoadingStr = `<div class="lk-loading ajax active" id="ajaxLoading">
+    let ajaxLoadingStr = `<div class="lk-loading ajax active" id="ajaxLoading">
     <div class="lk-loading-center">
         <div class="lk-loading-center-absolute">
             <div class="round round-one"></div>
@@ -114,6 +114,10 @@ const axiosAjax = (arg) => {
         </div>
     </div>
 </div>`
+
+    if (noloading) {
+        ajaxLoadingStr = '<div id="ajaxLoading"></div>'
+    }
 
     if ($('#ajaxLoading').length === 0) {
         $('body').append(ajaxLoadingStr)
@@ -463,6 +467,28 @@ const scrollDirect = (fn) => {
     }, false)
 }
 
+// 展示登陆注册弹框
+const showLogin = (type, title) => {
+    if (type === 'close') {
+        $('#loginBlock').css({'display': 'none'})
+    } else {
+        $('#loginBlock').css({'display': 'block'})
+        if (type === 'login') {
+            $('#loginModal h1').html(title)
+            $('#registerModal').css({'display': 'none'})
+            $('#loginModal').css({'display': 'block'})
+        } else {
+            $('#registerModal h1').html(title)
+            $('#registerModal').css({'display': 'block'})
+            $('#loginModal').css({'display': 'none'})
+            $('#registerModal button').html('注册')
+            if (type === 'retrievePassword') {
+                $('#registerModal button').html('找回密码')
+            }
+        }
+    }
+}
+
 const lang = 'zh'
 const proxyUrl = ''
 
@@ -492,5 +518,6 @@ export {
     Animation,
     ajaxGet,
     compareCalendar,
-    scrollDirect
+    scrollDirect,
+    showLogin
 }

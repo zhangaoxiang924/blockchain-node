@@ -4,7 +4,18 @@
  * Description：Description
  */
 
-import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc} from './public/public'
+import {
+    axiosAjax,
+    proxyUrl,
+    lang,
+    outputdollars,
+    isPoneAvailable,
+    getQueryString,
+    fomartQuery,
+    cutString,
+    isPc,
+    showLogin
+} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
 
@@ -24,6 +35,7 @@ $(function () {
             url: `${proxyUrl}/market/coin/total`,
             contentType: 'application/x-www-form-urlencoded',
             formData: false,
+            noloading: true,
             params: {},
             fn: function (res) {
                 let coinArr = res.data.coin
@@ -33,6 +45,7 @@ $(function () {
                         url: `${proxyUrl}/market/coin/financerate`,
                         contentType: 'application/x-www-form-urlencoded',
                         formData: false,
+                        noloading: true,
                         params: {},
                         fn: function (resData) {
                             let str = ''
@@ -74,6 +87,7 @@ $(function () {
     if (pathname.indexOf('/user') > -1) {
         $('#navLoginContent a.login').addClass('login-active')
     }
+
     function getImgBtn () {
         axiosAjax({
             type: 'POST',
@@ -84,6 +98,7 @@ $(function () {
             }
         })
     }
+
     function isLogin (flag, nickName) {
         let navLoginContent = $('#navLoginContent')
         if (!flag) {
@@ -149,6 +164,7 @@ $(function () {
     $('#loginOut').on('click', function () {
         loginOut()
     })
+
     function loginOut () {
         axiosAjax({
             type: 'get',
@@ -183,27 +199,6 @@ $(function () {
     $('#loginBlock .login-close').on('click', function () {
         showLogin('close')
     })
-
-    function showLogin (type, title) {
-        if (type === 'close') {
-            $('#loginBlock').css({'display': 'none'})
-        } else {
-            $('#loginBlock').css({'display': 'block'})
-            if (type === 'login') {
-                $('#loginModal h1').html(title)
-                $('#registerModal').css({'display': 'none'})
-                $('#loginModal').css({'display': 'block'})
-            } else {
-                $('#registerModal h1').html(title)
-                $('#registerModal').css({'display': 'block'})
-                $('#loginModal').css({'display': 'none'})
-                $('#registerModal button').html('注册')
-                if (type === 'retrievePassword') {
-                    $('#registerModal button').html('找回密码')
-                }
-            }
-        }
-    }
 
     // 获取验证吗
     $('#getCodeBtn').on('click', function () {
@@ -306,6 +301,7 @@ $(function () {
             }
         })
     }
+
     // 登录提交
     $('#loginModal button').on('click', function (e) {
         signinSubmit(e, 'login')
@@ -328,6 +324,7 @@ $(function () {
             el.addClass('show')
         }
     }
+
     function loginSub (res) {
         $('iframe').attr('src', res.obj.bbsLogin)
         Cookies.set('hx_user_realAuth', res.obj.realAuth, {expires: 7})
