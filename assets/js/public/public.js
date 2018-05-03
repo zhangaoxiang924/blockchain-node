@@ -205,6 +205,16 @@ const formatPrice = (val) => {
     return price
 }
 
+const numTrans = (num) => {
+    if (num > 99999999) {
+        return {value: (num / 100000000).toFixed(3), label: '亿'}
+    } else if (num > 9999 && num < 99999999) {
+        return {value: (num / 10000).toFixed(3), label: '万'}
+    } else {
+        return {value: num, label: ''}
+    }
+}
+
 // 手机号码验证
 const isPoneAvailable = (pone) => {
     const myreg = /^[1][3,4,5,7,8][0-9]{9}$/
@@ -463,6 +473,28 @@ const scrollDirect = (fn) => {
     }, false)
 }
 
+// 显示/关闭登录，注册弹窗
+function showLogin (type, title) {
+    if (type === 'close') {
+        $('#loginBlock').css({'display': 'none'})
+    } else {
+        $('#loginBlock').css({'display': 'block'})
+        if (type === 'login') {
+            $('#loginModal h1').html(title)
+            $('#registerModal').css({'display': 'none'})
+            $('#loginModal').css({'display': 'block'})
+        } else {
+            $('#registerModal h1').html(title)
+            $('#registerModal').css({'display': 'block'})
+            $('#loginModal').css({'display': 'none'})
+            $('#registerModal button').html('注册')
+            if (type === 'retrievePassword') {
+                $('#registerModal button').html('找回密码')
+            }
+        }
+    }
+}
+
 const lang = 'zh'
 const proxyUrl = ''
 
@@ -493,5 +525,7 @@ export {
     ajaxGet,
     compareCalendar,
     scrollDirect,
-    add0
+    add0,
+    numTrans,
+    showLogin
 }

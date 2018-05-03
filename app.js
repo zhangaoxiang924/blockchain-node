@@ -13,6 +13,7 @@ const newsRouter = require('./routes/news')
 const liveNewsRouter = require('./routes/flashNews')
 const hotNewsRouter = require('./routes/hotNews')
 const newsAutnorRouter = require('./routes/newsAuthor')
+const marketsRouter = require('./routes/markets')
 
 const app = express()
 
@@ -53,11 +54,11 @@ app.use('/news', newsRouter)
 app.use('/livenews', liveNewsRouter)
 app.use('/hot', hotNewsRouter)
 app.use('/newsauthor', newsAutnorRouter)
+app.use('/markets', marketsRouter)
 
 // react-router browserhistory
 app.get([
     '/personal',
-    '/markets',
     '/primer',
     '/newcoins',
     '/newcoinsList',

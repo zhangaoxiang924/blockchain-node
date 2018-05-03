@@ -4,7 +4,7 @@
  * Description：Description
  */
 
-import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc} from './public/public'
+import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc, showLogin} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
 import {NewsAuthor} from './modules/index'
@@ -217,7 +217,7 @@ $(function () {
         showLogin('close')
     })
 
-    function showLogin (type, title) {
+    /* function showLogin (type, title) {
         if (type === 'close') {
             $('#loginBlock').css({'display': 'none'})
         } else {
@@ -236,7 +236,7 @@ $(function () {
                 }
             }
         }
-    }
+    } */
 
     // 获取验证吗
     $('#getCodeBtn').on('click', function () {

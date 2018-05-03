@@ -1,8 +1,14 @@
 /**
  * Author：zhoushuanglong
- * Time：2017/8/10
- * Description：market
+ * Time：2018-04-08 15:45
+ * Description：index
  */
+
+@import "./public/normalize";
+@import "./public/public";
+@import "./public/header";
+@import "./public/footer";
+@import "./public/Pagination";
 
 .market-column-box {
     width: 1200px;
@@ -107,7 +113,7 @@
                         background: url("../img/market/attention-img.png") center no-repeat;
 
                         &.active {
-                            background: url("./img/market/attention-img2.png") center no-repeat;
+                            background: url("../img/market/attention-img2.png") center no-repeat;
                         }
                     }
 
@@ -133,7 +139,7 @@
                     }
 
                     &:nth-child(2) {
-                        width: 120px !important;
+                        width: 100px !important;
                     }
 
                     font {
@@ -262,3 +268,4 @@
         padding: 100px 0;
     }
 }
+
