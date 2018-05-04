@@ -103,9 +103,9 @@ const pageLoadingHide = () => {
     })
  */
 const axiosAjax = (arg) => {
-    const {type, url, params, contentType, formData, fn} = arg
+    const {type, url, params, contentType, formData, fn, noloading} = arg
 
-    const ajaxLoadingStr = `<div class="lk-loading ajax active" id="ajaxLoading">
+    let ajaxLoadingStr = `<div class="lk-loading ajax active" id="ajaxLoading">
     <div class="lk-loading-center">
         <div class="lk-loading-center-absolute">
             <div class="round round-one"></div>
@@ -114,6 +114,10 @@ const axiosAjax = (arg) => {
         </div>
     </div>
 </div>`
+
+    if (noloading) {
+        ajaxLoadingStr = '<div id="ajaxLoading"></div>'
+    }
 
     if ($('#ajaxLoading').length === 0) {
         $('body').append(ajaxLoadingStr)
@@ -473,8 +477,8 @@ const scrollDirect = (fn) => {
     }, false)
 }
 
-// 显示/关闭登录，注册弹窗
-function showLogin (type, title) {
+// 展示登陆注册弹框
+const showLogin = (type, title) => {
     if (type === 'close') {
         $('#loginBlock').css({'display': 'none'})
     } else {
