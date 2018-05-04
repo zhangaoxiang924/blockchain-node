@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas'
 // import swal from 'sweetalert2'
 
 if (isPc()) {
-    window.location.href = 'http://www.huoxing24.com'
+    window.location.href = 'http://www.huoxing24.vip'
 }
 
 let url = '/info/news'
