@@ -211,11 +211,11 @@ const formatPrice = (val) => {
 
 const numTrans = (num) => {
     if (num > 99999999) {
-        return {value: (num / 100000000).toFixed(3), label: '亿'}
+        return {value: formatPrice(num / 100000000), label: '亿'}
     } else if (num > 9999 && num < 99999999) {
-        return {value: (num / 10000).toFixed(3), label: '万'}
+        return {value: formatPrice(num / 10000), label: '万'}
     } else {
-        return {value: num, label: ''}
+        return {value: formatPrice(num), label: ''}
     }
 }
 
