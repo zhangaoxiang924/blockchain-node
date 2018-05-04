@@ -3,14 +3,16 @@
  * Time：2018/4/27
  * Description：Description
  */
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getHourMinute, sevenDays} from './public/public'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getHourMinute, sevenDays, showLogin} from './public/public'
 import {relatedNews} from './modules/index'
 import Cookies from 'js-cookie'
 import layer from 'layui-layer'
+
 $(function () {
     pageLoadingHide()
     // 前7天
     setSevenDays()
+
     function setSevenDays (time) {
         let str = ''
         let days = sevenDays()
@@ -23,6 +25,7 @@ $(function () {
         })
         $('.news-date').html(str)
     }
+
     $('.news-date').on('click', '.date-item', function () {
         let dateTime = $(this).data('date')
         getNewsList({
@@ -48,6 +51,7 @@ $(function () {
 
     // 利好/利空
     bindJudgeProfit()
+
     function bindJudgeProfit () {
         $('.judge-profit').on('click', 'p', function () {
             let $this = $(this)
@@ -59,30 +63,35 @@ $(function () {
                 status: status,
                 id: id
             }
-            axiosAjax({
-                type: 'get',
-                url: proxyUrl + `/info/lives/upordown?${fomartQuery(sendData)}`,
-                formData: false,
-                params: {},
-                fn: function (res) {
-                    if (res.code === 1) {
-                        let num = parseInt($this.find('.num').html())
-                        if ($this.hasClass('active')) {
-                            $this.find('.num').html(num - 1)
-                            $this.removeClass('active')
-                        } else {
-                            $this.find('.num').html(num + 1)
-                            $this.addClass('active')
-                            let $other = $this.siblings('p')
-                            if ($other.hasClass('active')) {
-                                let otnerNum = $other.find('.num').html()
-                                $other.find('.num').html(otnerNum - 1)
-                                $other.removeClass('active')
+            if (!Cookies.get('hx_user_id')) {
+                showLogin('login', '登录')
+            } else {
+                axiosAjax({
+                    type: 'get',
+                    url: proxyUrl + `/info/lives/upordown?${fomartQuery(sendData)}`,
+                    formData: false,
+                    params: {},
+                    fn: function (res) {
+                        console.log(res)
+                        if (res.code === 1) {
+                            let num = parseInt($this.find('.num').html())
+                            if ($this.hasClass('active')) {
+                                $this.find('.num').html(num - 1)
+                                $this.removeClass('active')
+                            } else {
+                                $this.find('.num').html(num + 1)
+                                $this.addClass('active')
+                                let $other = $this.siblings('p')
+                                if ($other.hasClass('active')) {
+                                    let otnerNum = $other.find('.num').html()
+                                    $other.find('.num').html(otnerNum - 1)
+                                    $other.removeClass('active')
+                                }
                             }
                         }
                     }
-                }
-            })
+                })
+            }
         })
     }
 
@@ -104,16 +113,18 @@ $(function () {
             $('#liveNewsContain').append(getNewsStr(res.obj))
         })
     })
+
     function getNewsStr (obj) {
         let arr = obj.inforList
         // let currentTime = obj.currentTime
         let str = ''
         arr.map((item) => {
+            let cont = !item.title ? item.content : `【${item.title}】${item.content}`
             str += `<li class="flash-news">
                 <div class="news-item">
                     <span class="${parseInt(item.tag) === 2 ? 'important-news' : ''}"></span>
                     <span class="new-time">${getHourMinute(item.createdTime)}</span>
-                    <p class="news-detail" style="color: ${parseInt(item.tag) === 2 && 'red'};">${item.content}</p>
+                    <p class="news-detail" style="color: ${parseInt(item.tag) === 2 && 'red'};">${cont}</p>
                     ${!item.url ? '' : `<a href="${item.url}" style="color: #1482f0" target="_blank"> 「查看原文」</a>`}
                     <div class="judge-profit">
                         <p  data-status="1" data-id="${item.id}" class="${parseInt(item.type) === 1 ? 'good-profit active' : 'good-profit'}">
@@ -130,6 +141,7 @@ $(function () {
         })
         return str
     }
+
     function getNewsList (query, fn) {
         let id = !$('.news-head em.active').data('channelid') ? '' : $('.news-head em.active').data('channelid')
         let queryTime = $('.news-date .date-item.active').data('date')
@@ -196,6 +208,7 @@ $(function () {
             }
         }
     })
+
     function getSortNewsStr (arr) {
         let str = ''
         arr.map((item, index) => {

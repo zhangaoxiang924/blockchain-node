@@ -5,40 +5,24 @@
  */
 
 // import Cookies from 'js-cookie'
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent} from './public/public'
-import {relatedNews} from './modules/index'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent, getQueryString} from './public/public'
+import {relatedNews, NewsAuthor} from './modules/index'
 import layer from 'layui-layer'
+import Cookies from 'js-cookie'
 
 $(function () {
     pageLoadingHide()
-
-    // 新闻
-    $('.nav-box a').on('click', function () {
-        if ($(this).hasClass('active')) {
-            return
-        }
-        let currPage = 1
-        let pageSize = 10
-        let id = $(this).data('id')
-        getNewsList(currPage, pageSize, id, (res) => {
-            $('#newsListContent').html(getNewsStr(res.obj))
-            $('.nav-box a').removeClass('active')
-            $(this).addClass('active')
-        })
-    })
     // 加载更多
     $('.check-more-load').on('click', function () {
         let pageCount = $(this).data('pagecount')
         let currPage = $(this).data('currpage')
-        let id = $('.nav-box a.active').data('id')
         currPage = parseInt(currPage) + 1
         // console.log(pageCount, currPage)
         if (currPage > pageCount) {
             layer.msg('暂无更多新闻 !')
             return
         }
-        getNewsList(currPage, 10, id, (res) => {
-            console.log($('#newsListContent'))
+        getNewsList(currPage, 10, (res) => {
             $('#newsListContent').append(getNewsStr(res.obj))
         })
     })
@@ -51,15 +35,16 @@ $(function () {
         })
         return str
     }
-    function getNewsList (currPage, pageSize, id, fn) {
+    function getNewsList (currPage, pageSize, fn) {
         let sendData = {
             currentPage: !currPage ? 1 : currPage,
             pageSize: !pageSize ? 10 : pageSize,
-            channelId: !id ? 0 : id
+            passportId: getQueryString('userId'),
+            status: 1
         }
         axiosAjax({
             type: 'get',
-            url: proxyUrl + `/info/news/shownews?${fomartQuery(sendData)}`,
+            url: proxyUrl + `/info/news/showcolumnlist?${fomartQuery(sendData)}`,
             formData: false,
             params: {},
             fn: function (res) {
@@ -88,6 +73,25 @@ $(function () {
                 let right = relatedNews(data, 'right')
                 $('.ad-recomend .news-recommend').html(right)
                 // $('.bottom-recommend-news .news-contain').html(bottom)
+            }
+        }
+    })
+
+    // 作者信息
+    axiosAjax({
+        type: 'get',
+        url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+            passportId: getQueryString('userId'),
+            myPassportId: !Cookies.get('hx_user_id') ? '' : Cookies.get('hx_user_id')
+        })}`,
+        formData: false,
+        params: {},
+        fn: function (res) {
+            if (res.code === 1) {
+                let author = new NewsAuthor(res.obj)
+                author.init($('.news-author'), 'right')
+                // let bottom = new newsAuthor($('.authorinfo-bottom'), res.obj, 'bottom')
+                // bottom.init()
             }
         }
     })

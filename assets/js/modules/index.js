@@ -50,6 +50,13 @@ class NewsAuthor {
         warp.html(this.getStr(dir))
         warp.find('.attention').on('click', function () {
             // let type = 'add'
+            if (!Cookies.get('hx_user_token')) {
+                $('#loginBlock').css({'display': 'block'})
+                $('#loginModal h1').html('登录')
+                $('#registerModal').css({'display': 'none'})
+                $('#loginModal').css({'display': 'block'})
+                return
+            }
             let ifCollect = parseInt(self.info.ifCollect)
             let infoData = self.info
             let type = ifCollect === 1 ? 'delete' : 'add'
@@ -91,8 +98,8 @@ class NewsAuthor {
 
     attention (type, fun) {
         let sendData = {
-            'passportid': Cookies.get('hx_user_id'),
-            'token': Cookies.get('hx_user_token'),
+            'passportid': !Cookies.get('hx_user_id') ? '' : Cookies.get('hx_user_id'),
+            'token': !Cookies.get('hx_user_token') ? '' : Cookies.get('hx_user_token'),
             'authorId': this.info.passportId
         }
         let url = `${proxyUrl}/info/follow/author/${type}?${fomartQuery(sendData)}`

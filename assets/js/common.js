@@ -3,15 +3,15 @@
  * Time：2018/4/9
  * Description：Description
  */
-
-import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc} from './public/public'
+import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc, showLogin} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
+import {NewsAuthor} from './modules/index'
 
 $(function () {
     if (isPc() === false) {
         if (window.location.href.indexOf('newsdetail') !== -1) {
-            window.location.href = `http://m.huoxing24.com/details.html?id=${getQueryString('id')}`
+            window.location.href = `http://m.huoxing24.com/newsdetail?id=${getQueryString('id')}`
         } else {
             window.location.href = 'http://m.huoxing24.com/'
         }
@@ -24,6 +24,7 @@ $(function () {
             url: `${proxyUrl}/market/coin/total`,
             contentType: 'application/x-www-form-urlencoded',
             formData: false,
+            noloading: true,
             params: {},
             fn: function (res) {
                 let coinArr = res.data.coin
@@ -33,6 +34,7 @@ $(function () {
                         url: `${proxyUrl}/market/coin/financerate`,
                         contentType: 'application/x-www-form-urlencoded',
                         formData: false,
+                        noloading: true,
                         params: {},
                         fn: function (resData) {
                             let str = ''
@@ -74,6 +76,7 @@ $(function () {
     if (pathname.indexOf('/user') > -1) {
         $('#navLoginContent a.login').addClass('login-active')
     }
+
     function getImgBtn () {
         axiosAjax({
             type: 'POST',
@@ -84,6 +87,7 @@ $(function () {
             }
         })
     }
+
     function isLogin (flag, nickName) {
         let navLoginContent = $('#navLoginContent')
         if (!flag) {
@@ -149,6 +153,7 @@ $(function () {
     $('#loginOut').on('click', function () {
         loginOut()
     })
+
     function loginOut () {
         axiosAjax({
             type: 'get',
@@ -175,6 +180,38 @@ $(function () {
                         let reply = new Reply($('#replyBox'), newsId)
                         reply.init()
                     }
+
+                    if (window.location.href.indexOf('/newsdetail') !== -1 || window.location.href.indexOf('/newsauthor') !== -1) {
+                        // 作者信息
+                        let passportId = ''
+                        if (window.location.href.indexOf('/newsdetail') !== -1) {
+                            let newsDataInfo = $('.news-detail').data('info')
+                            passportId = newsDataInfo.createdBy
+                        } else {
+                            passportId = getQueryString('userId')
+                        }
+                        axiosAjax({
+                            type: 'get',
+                            url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+                                passportId: passportId
+                            })}`,
+                            formData: false,
+                            params: {},
+                            fn: function (res) {
+                                if (res.code === 1) {
+                                    let author = new NewsAuthor(res.obj)
+                                    if (window.location.href.indexOf('/newsdetail') !== -1) {
+                                        author.init($('.authorinfo'), 'right')
+                                        author.init($('.authorinfo-bottom'), 'bottom')
+                                    } else {
+                                        author.init($('.news-author'), 'right')
+                                    }
+                                    // let bottom = new newsAuthor($('.authorinfo-bottom'), res.obj, 'bottom')
+                                    // bottom.init()
+                                }
+                            }
+                        })
+                    }
                 }
             }
         })
@@ -183,8 +220,7 @@ $(function () {
     $('#loginBlock .login-close').on('click', function () {
         showLogin('close')
     })
-
-    function showLogin (type, title) {
+    /* function showLogin (type, title) {
         if (type === 'close') {
             $('#loginBlock').css({'display': 'none'})
         } else {
@@ -203,8 +239,7 @@ $(function () {
                 }
             }
         }
-    }
-
+    } */
     // 获取验证吗
     $('#getCodeBtn').on('click', function () {
         etAuthCode()
@@ -306,6 +341,7 @@ $(function () {
             }
         })
     }
+
     // 登录提交
     $('#loginModal button').on('click', function (e) {
         signinSubmit(e, 'login')
@@ -328,6 +364,7 @@ $(function () {
             el.addClass('show')
         }
     }
+
     function loginSub (res) {
         $('iframe').attr('src', res.obj.bbsLogin)
         Cookies.set('hx_user_realAuth', res.obj.realAuth, {expires: 7})
@@ -348,6 +385,37 @@ $(function () {
             let newsId = getQueryString('id')
             let reply = new Reply($('#replyBox'), newsId)
             reply.init()
+        }
+
+        if (window.location.href.indexOf('/newsdetail') !== -1 || window.location.href.indexOf('/newsauthor') !== -1) {
+            // 作者信息
+            let passportId = ''
+            if (window.location.href.indexOf('/newsdetail') !== -1) {
+                let newsDataInfo = $('.news-detail').data('info')
+                passportId = newsDataInfo.createdBy
+            } else {
+                passportId = getQueryString('userId')
+            }
+            axiosAjax({
+                type: 'get',
+                url: `${proxyUrl}/info/news/getauthorinfo?${fomartQuery({
+                    passportId: passportId,
+                    myPassportId: res.obj.passportId
+                })}`,
+                formData: false,
+                params: {},
+                fn: function (res) {
+                    if (res.code === 1) {
+                        let author = new NewsAuthor(res.obj)
+                        if (window.location.href.indexOf('/newsdetail') !== -1) {
+                            author.init($('.authorinfo'), 'right')
+                            author.init($('.authorinfo-bottom'), 'bottom')
+                        } else {
+                            author.init($('.news-author'), 'right')
+                        }
+                    }
+                }
+            })
         }
     }
 

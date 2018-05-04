@@ -24,13 +24,14 @@ const getHourMinute = (time) => {
         <ul id="liveNewsContain" class="flash-news-list">
             <%
             data.inforList.map((item) => {
+                let cont = !item.title ? item.content : `【${item.title}】${item.content}`
             %>
             <li class="flash-news">
                 <div class="news-item">
                     <span class="<%= parseInt(item.tag) === 2 ? 'important-news' : '' %>"> </span>
                     <span class="new-time"><%= getHourMinute(item.createdTime) %></span>
                     <p class="news-detail" style="color: <%= parseInt(item.tag) === 2 && 'red' %>">
-                        <%= item.content %>
+                        <%= cont %>
                         <%
                         if (!item.url) { %>
                         <% } else { %>

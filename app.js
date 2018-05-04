@@ -11,6 +11,10 @@ const newsDetailRouter = require('./routes/newsDetail')
 const indexRouter = require('./routes/index')
 const newsRouter = require('./routes/news')
 const liveNewsRouter = require('./routes/flashNews')
+const hotNewsRouter = require('./routes/hotNews')
+const newsAutnorRouter = require('./routes/newsAuthor')
+const marketsRouter = require('./routes/markets')
+const exchangeListRouter = require('./routes/exchangeList')
 
 const app = express()
 
@@ -49,14 +53,15 @@ app.use('/newsdetail', newsDetailRouter)
 app.use('/index', indexRouter)
 app.use('/news', newsRouter)
 app.use('/livenews', liveNewsRouter)
+app.use('/hot', hotNewsRouter)
+app.use('/newsauthor', newsAutnorRouter)
+app.use('/markets', marketsRouter)
+app.use('/exchangelist', exchangeListRouter)
 
 // react-router browserhistory
 app.get([
     '/personal',
-    '/markets',
-    '/newsauthor',
     '/primer',
-    '/newsdetail',
     '/newcoins',
     '/newcoinsList',
     '/newcoinsDetail',
@@ -64,7 +69,7 @@ app.get([
     '/projectInfo',
     '/projectProjectmaterial',
     '/projectRelatenews',
-    '/exchangelist',
+    // '/exchangelist',
     '/copyright',
     '/about',
     '/user',
@@ -84,7 +89,6 @@ app.get([
     '/live/liveList',
     '/live/liveDetails',
     '/app',
-    '/hot',
     '/showSpecial',
     '/showSpecialNews',
     '/wbcworld',
