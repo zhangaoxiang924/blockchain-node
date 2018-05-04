@@ -109,11 +109,12 @@ $(function () {
         // let currentTime = obj.currentTime
         let str = ''
         arr.map((item) => {
+            let cont = !item.title ? item.content : `【${item.title}】${item.content}`
             str += `<li class="flash-news">
                 <div class="news-item">
                     <span class="${parseInt(item.tag) === 2 ? 'important-news' : ''}"></span>
                     <span class="new-time">${getHourMinute(item.createdTime)}</span>
-                    <p class="news-detail" style="color: ${parseInt(item.tag) === 2 && 'red'};">${item.content}</p>
+                    <p class="news-detail" style="color: ${parseInt(item.tag) === 2 && 'red'};">${cont}</p>
                     ${!item.url ? '' : `<a href="${item.url}" style="color: #1482f0" target="_blank"> 「查看原文」</a>`}
                     <div class="judge-profit">
                         <p  data-status="1" data-id="${item.id}" class="${parseInt(item.type) === 1 ? 'good-profit active' : 'good-profit'}">

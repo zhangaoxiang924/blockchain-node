@@ -90,9 +90,10 @@ class RealTimeNews {
     getItemStr (data) {
         let str = ''
         data.map((d) => {
+            let cont = !d.title ? d.content : `【${d.title}】${d.content}`
             str += `<div class="news-con clearfix">
                     <p>
-                        <span>${getHourMinute(d.createdTime)}</span>&nbsp;&nbsp;|&nbsp;&nbsp;${d.content}
+                        <span>${getHourMinute(d.createdTime)}</span>&nbsp;&nbsp;|&nbsp;&nbsp;${cont}
                     </p>
                 </div>`
         })
