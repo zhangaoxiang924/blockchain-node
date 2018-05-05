@@ -24,7 +24,7 @@ $(function () {
         if (window.location.href.indexOf('newsdetail') !== -1) {
             window.location.href = `http://m.huoxing24.com/newsdetail?id=${getQueryString('id')}`
         } else {
-            window.location.href = 'http://m.huoxing24.com/'
+            window.location.href = 'http://m.huoxing24.com'
         }
     }
 
