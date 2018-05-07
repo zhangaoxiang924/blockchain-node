@@ -15,6 +15,7 @@ const hotNewsRouter = require('./routes/hotNews')
 const newsAutnorRouter = require('./routes/newsAuthor')
 const marketsRouter = require('./routes/markets')
 const exchangeListRouter = require('./routes/exchangeList')
+const projectRouter = require('./routes/marketsProject')
 
 const app = express()
 
@@ -57,6 +58,8 @@ app.use('/hot', hotNewsRouter)
 app.use('/newsauthor', newsAutnorRouter)
 app.use('/markets', marketsRouter)
 app.use('/exchangelist', exchangeListRouter)
+app.use('/projectProjectmaterial', projectRouter)
+app.use('/project', projectRouter)
 
 // react-router browserhistory
 app.get([
@@ -65,9 +68,9 @@ app.get([
     '/newcoins',
     '/newcoinsList',
     '/newcoinsDetail',
-    '/project',
+    // '/project',
     '/projectInfo',
-    '/projectProjectmaterial',
+    // '/projectProjectmaterial',
     '/projectRelatenews',
     // '/exchangelist',
     '/copyright',

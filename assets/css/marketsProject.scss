@@ -8,18 +8,14 @@
 @import "./public/public";
 @import "./public/header";
 @import "./public/footer";
-@import "./public/Pagination";
-@import "./markets/bazaaryMarket";
 @import "./markets/messageBanner";
+@import "./markets/projectMaterial";
+@import "./markets/infoHeader";
 
-.exchange-list-wrap {
-    margin: 40px auto 0;
-    padding: 20px 20px 0;
-    width: 1160px;
-
-    .bazaary-market,
-    .market-tab-box {
-        height: auto;
-    }
+.project-classify {
+    border-radius: 0 0 5px 5px;
+    margin: 0 auto;
+    background: #fff;
+    width: 1200px;
 }
 
