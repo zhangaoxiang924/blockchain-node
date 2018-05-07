@@ -196,4 +196,8 @@ router.get('/', function (req, res, next) {
     }
 })
 
+// router.get('/m', function (req, res, next) {
+//     mRes(req, res, next)
+// })
+
 module.exports = router

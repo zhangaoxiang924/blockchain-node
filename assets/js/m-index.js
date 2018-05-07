@@ -237,7 +237,8 @@ $(function () {
         swiper.slideTo(4)
     })
     $('#otherColumn').on('click', function () {
-        swiper.slideTo(5)
+        // swiper.slideTo(5)
+        location.href = 'http://bbs.huoxing24.com'
     })
     /* ---------------记载更多--------------- */
     let flashCurrentPage = null
