@@ -71,12 +71,13 @@ $(function () {
         let currPage = $(this).data('currpage')
         let id = $('#newsTabs li.active').data('id')
         currPage = parseInt(currPage) + 1
+        let lastTime = $(this).data('time')
         // console.log(pageCount, currPage)
         if (currPage > pageCount) {
             layer.msg('暂无更多新闻 !')
             return
         }
-        getNewsList(currPage, 25, id, (res) => {
+        getNewsList(currPage, 35, id, lastTime, (res) => {
             $('#newsListContent').append(getNewsStr(res.obj))
         })
     })
@@ -89,11 +90,12 @@ $(function () {
         })
         return str
     }
-    function getNewsList (currPage, pageSize, id, fn) {
+    function getNewsList (currPage, pageSize, id, lastTime, fn) {
         let sendData = {
             currentPage: !currPage ? 1 : currPage,
             pageSize: !pageSize ? 35 : pageSize,
-            channelId: !id ? 0 : id
+            channelId: !id ? 0 : id,
+            refreshTime: lastTime
         }
         axiosAjax({
             type: 'get',
@@ -103,7 +105,8 @@ $(function () {
             fn: function (res) {
                 if (res.code === 1) {
                     fn(res)
-                    $('.check-more-load').data('pagecount', res.obj.pageCount).data('currpage', sendData.currentPage)
+                    let list = res.obj.inforList
+                    $('.check-more-load').data('pagecount', res.obj.pageCount).data('currpage', sendData.currentPage).data('time', list[list.length - 1].publishTime)
                 }
             }
         })

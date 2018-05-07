@@ -20,7 +20,7 @@ $(function () {
         let currPage = 1
         let pageSize = 10
         let id = $(this).data('id')
-        getNewsList(currPage, pageSize, id, (res) => {
+        getNewsList(currPage, pageSize, id, '', (res) => {
             $('#newsListContent').html(getNewsStr(res.obj))
             $('.nav-box a').removeClass('active')
             $(this).addClass('active')
@@ -30,6 +30,7 @@ $(function () {
     $('.check-more-load').on('click', function () {
         let pageCount = $(this).data('pagecount')
         let currPage = $(this).data('currpage')
+        let lastTime = $(this).data('time')
         let id = $('.nav-box a.active').data('id')
         currPage = parseInt(currPage) + 1
         // console.log(pageCount, currPage)
@@ -37,8 +38,7 @@ $(function () {
             layer.msg('暂无更多新闻 !')
             return
         }
-        getNewsList(currPage, 10, id, (res) => {
-            console.log($('#newsListContent'))
+        getNewsList(currPage, 10, id, lastTime, (res) => {
             $('#newsListContent').append(getNewsStr(res.obj))
         })
     })
@@ -51,11 +51,12 @@ $(function () {
         })
         return str
     }
-    function getNewsList (currPage, pageSize, id, fn) {
+    function getNewsList (currPage, pageSize, id, lastTime, fn) {
         let sendData = {
             currentPage: !currPage ? 1 : currPage,
             pageSize: !pageSize ? 10 : pageSize,
-            channelId: !id ? 0 : id
+            channelId: !id ? 0 : id,
+            refreshTime: lastTime
         }
         axiosAjax({
             type: 'get',
@@ -65,7 +66,8 @@ $(function () {
             fn: function (res) {
                 if (res.code === 1) {
                     fn(res)
-                    $('.check-more-load').data('pagecount', res.obj.pageCount).data('currpage', sendData.currentPage)
+                    let list = res.obj.inforList
+                    $('.check-more-load').data('pagecount', res.obj.pageCount).data('currpage', sendData.currentPage).data('time', list[list.length - 1].publishTime)
                 }
             }
         })

@@ -95,7 +95,7 @@ const getTimeContent = (publishTime, requestTime) => {
                 <%}) %>
             </div>
             <div class="clearfix"></div>
-            <div data-currpage="<%= newsData.currentPage %>" data-pagecount="<%= newsData.pageCount %>" class="check-more-load clearfix">查看更多</div>
+            <div data-time="<%= newsData.inforList[newsData.inforList.length - 1].publishTime %>" data-currpage="<%= newsData.currentPage %>" data-pagecount="<%= newsData.pageCount %>" class="check-more-load clearfix">查看更多</div>
         </div>
         <div class="new-right">
             <div class="ad-recomend">
