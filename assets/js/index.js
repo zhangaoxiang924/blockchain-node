@@ -76,7 +76,7 @@ $(function () {
             layer.msg('暂无更多新闻 !')
             return
         }
-        getNewsList(currPage, 25, id, (res) => {
+        getNewsList(currPage, 35, id, (res) => {
             $('#newsListContent').append(getNewsStr(res.obj))
         })
     })
