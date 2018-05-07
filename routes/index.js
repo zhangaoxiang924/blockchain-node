@@ -187,13 +187,19 @@ const mRes = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    // mRes(req, res, next)
-    const url = req.headers.host
-    if (url.indexOf(utils.onlineMUrl) > -1) {
-        mRes(req, res, next)
-    } else {
+    if (utils.isPc(req.headers['user-agent'])) {
         pcRes(req, res, next)
+    } else {
+        mRes(req, res, next)
     }
+
+    // mRes(req, res, next)
+    // const url = req.headers.host
+    // if (url.indexOf(utils.onlineMUrl) > -1) {
+    //     mRes(req, res, next)
+    // } else {
+    //     pcRes(req, res, next)
+    // }
 })
 
 module.exports = router

@@ -7,6 +7,23 @@
 const axios = require('axios')
 
 /**
+ * JS：isPc('userAgentStr')
+ */
+const isPc = (userAgentStr) => {
+    const userAgent = userAgentStr.toLowerCase()
+
+    const Agents = ['android', 'iphone', 'ipod', 'windows phone']
+    let flag = true
+    for (let i = 0; i < Agents.length; i++) {
+        if (userAgent.indexOf(Agents[i]) > -1) {
+            flag = false
+            break
+        }
+    }
+    return flag
+}
+
+/**
  * JS：axiosAjax({
         type: 'post',
         url: '/info/news/columnadd',
@@ -106,5 +123,6 @@ module.exports = {
     proxyJavaApi,
     axiosAjax,
     webInfo,
-    onlineMUrl
+    onlineMUrl,
+    isPc
 }
