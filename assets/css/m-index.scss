@@ -214,6 +214,10 @@ body,
             &:nth-child(3) {
                 background: url("../img/m-img/list-03.jpg") no-repeat;
                 background-size: 100%;
+
+                .price-number {
+                    background: rgba(0, 0, 0, 0.3);
+                }
             }
 
             .price-number {
