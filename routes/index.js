@@ -6,12 +6,14 @@
 
 const express = require('express')
 const router = express.Router()
-const utils = require('../utils/public')
 let async = require('async')
 
-const axiosAjax = utils.axiosAjax
-const ajaxJavaUrl = utils.ajaxJavaUrl
-const webInfo = utils.webInfo
+const {
+    axiosAjax,
+    ajaxJavaUrl,
+    webInfo,
+    pageRender
+} = require('../utils/public')
 
 const pcRes = (req, res, next) => {
     let userId = req.cookies.hx_user_id
@@ -185,7 +187,7 @@ const mRes = (req, res, next) => {
 }
 
 router.get('/', function (req, res, next) {
-    utils.pageRender({
+    pageRender({
         req: req,
         res: res,
         mRender: function () {
