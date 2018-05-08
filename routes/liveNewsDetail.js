@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
             } else {
                 sendData = {
                     id: newsId,
-                    passportId: req.cookies.hx_user_id
+                    passportid: req.cookies.hx_user_id
                 }
             }
             // console.log(sendData)
