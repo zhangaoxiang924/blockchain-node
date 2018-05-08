@@ -7,9 +7,14 @@ import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getHourMinute, sevenD
 import {relatedNews} from './modules/index'
 import Cookies from 'js-cookie'
 import layer from 'layui-layer'
+import {AsideMarked} from './newsDetail/index'
 
 $(function () {
     pageLoadingHide()
+
+    // 行情
+    let marked = new AsideMarked($('.market'))
+    marked.init()
     // 前7天
     setSevenDays()
 
@@ -125,9 +130,6 @@ $(function () {
     })
 
     function getNewsStr (obj) {
-        if (!obj.inforList) {
-            return ''
-        }
         let arr = obj.inforList
         // let currentTime = obj.currentTime
         let str = ''
@@ -143,13 +145,13 @@ $(function () {
                     
                     </p>
                     <div class="judge-profit">
-                        <p  data-status="1" data-id="${item.id}" class="${!item.type || parseInt(item.type) !== 1 ? 'good-profit' : 'good-profit active'}">
+                        <p  data-status="1" data-id="${item.id}" class="${parseInt(item.type) === 1 ? 'good-profit active' : 'good-profit'}">
                             <span>利好</span>
-                            <span class="num"> ${!item.upCounts ? 0 : item.upCounts} </span>
+                            <span class="num"> ${item.upCounts} </span>
                         </p>
                         <p  data-status="0" data-id="${item.id}" class="${parseInt(item.type) === 0 ? 'bad-profit active' : 'bad-profit'} ">
                             <span>利空</span>
-                            <span class="num"> ${!item.downCounts ? 0 : item.downCounts} </span>
+                            <span class="num"> ${item.downCounts} </span>
                         </p>
                     </div>
                 </div>

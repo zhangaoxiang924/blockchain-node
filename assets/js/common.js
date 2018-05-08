@@ -93,13 +93,13 @@ $(function () {
         if (!flag) {
             // 没有登录
             navLoginContent.find('span.login').css({'display': 'inline-block'})
-            navLoginContent.find('a.login').html('').css({'display': 'none'})
+            navLoginContent.find('a.login').html('').css({'display': 'none'}).attr('title', '')
             navLoginContent.find('#loginOut').css({'display': 'none'})
             navLoginContent.find('.register').css({'display': 'inline-block'})
         } else {
             // 登录
             navLoginContent.find('span.login').css({'display': 'none'})
-            navLoginContent.find('a.login').html(cutString(nickName, 8)).css({'display': 'inline-block'})
+            navLoginContent.find('a.login').html(cutString(nickName, 8)).css({'display': 'inline-block'}).attr('title', nickName)
             navLoginContent.find('#loginOut').css({'display': 'inline-block'})
             navLoginContent.find('.register').css({'display': 'none'})
         }

@@ -82,8 +82,8 @@ const axiosAjax = (arg) => {
 /**
  * java: pc接口代理
  */
-// const ajaxJavaUrl = 'http://www.huoxing24.vip'
-const ajaxJavaUrl = 'http://www.huoxing24.com'
+const ajaxJavaUrl = 'http://www.huoxing24.vip'
+// const ajaxJavaUrl = 'http://www.huoxing24.com'
 const proxyJavaApi = [
     '/*',
     '/*/*',

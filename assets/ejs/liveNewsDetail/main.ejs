@@ -1,0 +1,42 @@
+<%
+    let title = ''
+    let content = ''
+    if (!data.title) {
+     if (!data.content) {
+         title = ''
+         content = ''
+     } else {
+         let startIndex = data.content.indexOf('【') === -1 ? 0 : data.content.indexOf('【')
+         let endIndex = data.content.indexOf('】') === -1 ? 0 : data.content.indexOf('】')
+         title = data.content.substring(startIndex, endIndex + 1)
+         content = data.content.substring(endIndex + 1)
+     }
+    } else {
+        title = data.title
+        content = data.content
+    }
+ %>
+<div class="flash-news-content clearfix">
+    <div class="flash-news-list">
+        <div></div>
+        <div class="live-news-contain">
+            <h3><%= title %></h3>
+            <p><%= content %></p>
+            <img src="http://static.huoxing24.com/images/2018/05/08/1525768344942633.jpg"/>
+            <div class="judge-profit">
+                <p data-status="1" data-id="<%= data.id %>"
+                   class="good-profit <%= !data.type || parseInt(data.type) !== 1 ? '' : 'active' %>">
+                    <span>利好</span>
+                    <span class="num"> <%= !data.upCounts ? 0 : data.upCounts %> </span>
+                </p>
+                <p  data-status="0" data-id="<%= data.id %>" class="bad-profit <%= parseInt(data.type) === 0 ? 'active' : '' %>">
+                    <span>利空</span>
+                    <span class="num"> <%= !data.downCounts ? 0 : data.downCounts %> </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="hot-news-wrap">
+        <div class="market"></div>
+    </div>
+</div>

@@ -30,24 +30,24 @@ const getHourMinute = (time) => {
                 <div class="news-item">
                     <span class="<%= parseInt(item.tag) === 2 ? 'important-news' : '' %>"> </span>
                     <span class="new-time"><%= getHourMinute(item.createdTime) %></span>
-                    <p class="news-detail" style="color: <%= parseInt(item.tag) === 2 && 'red' %>">
+                    <p data-id="<%= item.id%>" class="news-detail" style="color: <%= parseInt(item.tag) === 2 && 'red' %>">
                         <%= cont %>
                         <%
                         if (!item.url) { %>
                         <% } else { %>
-                        <a href="<%= item.url %>" style="color: #1482f0" target="_blank"> 「查看原文」</a>
+                        <a href="javascript:void(0)" data-url="<%= item.url %>" style="color: #1482f0" target="_blank"> 「查看原文」</a>
                         <% }
                         %>
                     </p>
                     <div class="judge-profit">
                         <p data-status="1" data-id="<%= item.id %>"
-                           class="good-profit <%= parseInt(item.type) === 1 ? 'active' : '' %>">
+                           class="good-profit <%= !item.type || parseInt(item.type) !== 1 ? '' : 'active' %>">
                             <span>利好</span>
-                            <span class="num"> <%= item.upCounts %> </span>
+                            <span class="num"> <%= !item.upCounts ? 0 : item.upCounts %> </span>
                         </p>
                         <p  data-status="0" data-id="<%= item.id %>" class="bad-profit <%= parseInt(item.type) === 0 ? 'active' : '' %>">
                             <span>利空</span>
-                            <span class="num"> <%= item.downCounts %> </span>
+                            <span class="num"> <%= !item.downCounts ? 0 : item.downCounts %> </span>
                         </p>
                     </div>
                 </div>
