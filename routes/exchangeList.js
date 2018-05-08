@@ -72,7 +72,6 @@ router.get('/', function (req, res, next) {
                 webSiteInfo: webInfo
             })
         } else {
-            console.log(error)
             res.render('error', {
                 message: error.message,
                 error: {

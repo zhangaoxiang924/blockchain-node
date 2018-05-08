@@ -119,16 +119,18 @@ const mRes = (req, res, next) => {
     })
 }
 
-/* GET home page. */
 // router.get('/:id', function (req, res, next) {
 router.get('/', function (req, res, next) {
-    const url = req.headers.host
-    // const id = req.param.id
-    if (url.indexOf(utils.onlineMUrl) > -1) {
-        mRes(req, res, next)
-    } else {
-        pcRes(req, res, next)
-    }
+    utils.pageRender({
+        req: req,
+        res: res,
+        mRender: function () {
+            mRes(req, res, next)
+        },
+        pcRender: function () {
+            pcRes(req, res, next)
+        }
+    })
 })
 
 module.exports = router

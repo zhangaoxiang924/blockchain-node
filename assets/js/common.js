@@ -3,18 +3,25 @@
  * Time：2018/4/9
  * Description：Description
  */
-import {axiosAjax, proxyUrl, lang, outputdollars, isPoneAvailable, getQueryString, fomartQuery, cutString, isPc, showLogin} from './public/public'
+import {
+    axiosAjax,
+    proxyUrl,
+    lang,
+    outputdollars,
+    isPoneAvailable,
+    getQueryString,
+    fomartQuery,
+    cutString,
+    isPc,
+    showLogin
+} from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
 import {NewsAuthor} from './modules/index'
 
 $(function () {
     if (isPc() === false) {
-        if (window.location.href.indexOf('newsdetail') !== -1) {
-            window.location.href = `http://m.huoxing24.com/newsdetail?id=${getQueryString('id')}`
-        } else {
-            window.location.href = 'http://m.huoxing24.com'
-        }
+        window.location.href = 'http://m.huoxing24.com'
     }
 
     // 顶部行情
