@@ -4,8 +4,7 @@
  * Description：Description
  */
 
-// import Cookies from 'js-cookie'
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getQueryString} from './public/public'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getQueryString, formatDate} from './public/public'
 import {MessageBanner} from './markets/index'
 import Echarts from 'echarts'
 import Highcharts from 'highcharts/highstock'
@@ -16,19 +15,44 @@ $(function () {
     pageLoadingHide()
     const coinId = getQueryString('coinid')
     const rateData = $('#containMain').data('rate')
+    let coinName = ''
+    let newsLen = 0
 
     // 上边详情
     let messageBanner = new MessageBanner(coinId, rateData)
     messageBanner.init()
 
     // 查看更多
-    $('.check-more-load').on('click', function () {
+    $('.project-table-more').on('click', function () {
         let record = $(this).data('record')
         let len = $(this).data('len')
         if (record > len) {
             window.open(`/exchangelist?coinid=${coinId}`, '_blank')
         } else {
             layer.msg('暂无更多数据！')
+        }
+    })
+
+    // tab切换
+    $('.info-head').on('click', 'a', function () {
+        let type = $(this).data('type')
+        if ($(this).hasClass('active')) {
+            return
+        }
+        $(this).siblings('a').removeClass('active')
+        $(this).addClass('active')
+        if (type === 'news') {
+            $('.market-correlation-news').css({'display': 'block'})
+            $('.project-material').css({'display': 'none'})
+            if (!newsLen) {
+                coinName = $('.currency-title').data('name')
+                getNewsList({tags: coinName}, (res) => {
+                    newsLen = !res.obj.inforList ? 0 : res.obj.inforList.length
+                })
+            }
+        } else {
+            $('.market-correlation-news').css({'display': 'none'})
+            $('.project-material').css({'display': 'block'})
         }
     })
 
@@ -301,4 +325,122 @@ $(function () {
     }
     let priceCharts = new PriceHighCharts()
     priceCharts.init()
+
+    // 相关新闻
+    setTimeout(() => {
+        coinName = $('.currency-title').data('name')
+        getNewsList({tags: coinName}, (res) => {
+            newsLen = !res.obj.inforList ? 0 : res.obj.inforList.length
+        })
+    }, 1000)
+    // 加载更多
+    $('#newsMore').on('click', function () {
+        let pageCount = $(this).data('pagecount')
+        let currPage = $(this).data('currpage')
+        // let tags = getQueryString('tags')
+        currPage = parseInt(currPage) + 1
+        // console.log(pageCount, currPage)
+        if (currPage > pageCount) {
+            layer.msg('暂无更多新闻 !')
+            return
+        }
+        let sendData = {
+            currentPage: currPage
+        }
+        getNewsList(sendData)
+    })
+    function getNewsStr (obj) {
+        let arr = obj.inforList
+        // let currentTime = $('.news-hot-label').data('currtime')
+        let str = ''
+        arr.map((item) => {
+            str += `<div class="index-news-list"><div class="list-left"><a target="_blank" href="/newsdetail?id=${item.id}"><img src="${(!item.coverPic || !JSON.parse(item.coverPic).pc) ? `http://static.huoxing24.com/images/2018/03/05/1520243882098653.svg` : JSON.parse(item.coverPic).pc}" alt=""></a></div><div class="list-right" style="width: 440px;"><a target="_blank" href="/newsdetail?id=${item.id}"><h6 class="headline">${item.title}</h6><div class="details">${item.synopsis}</div></a><div class="list-bottom index-mian clearfix"><p class="portrait"><a target="_blank" href="/newsauthor?userId=${item.passportId}"><img alt="" src="${item.iconUrl}"></a></p><p class="name">${item.author}</p><p class="lock-time">${formatDate(item.publishTime)}</p><p class="read-num main-read-num"><span class="count-eye"> </span><span class="read-count">${item.hotCounts}</span></p></div></div></div>`
+        })
+        return str
+    }
+    function getNewsList (sendData, fn) {
+        let data = {
+            tags: !coinName ? coinId : coinName,
+            currentPage: 1,
+            pageSize: 10,
+            ...sendData
+        }
+        axiosAjax({
+            type: 'get',
+            url: proxyUrl + `/info/news/relatednews1?${fomartQuery(data)}`,
+            formData: false,
+            contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+            params: {},
+            fn: function (res) {
+                if (res.code === 1) {
+                    if (fn) {
+                        fn(res)
+                    }
+                    let str = getNewsStr(res.obj)
+                    if (parseInt(data.currentPage) === 1) {
+                        $('#newsListContent').html(str)
+                    } else {
+                        $('#newsListContent').append(str)
+                    }
+                    $('#newsMore').data('pagecount', res.obj.pageCount).data('currpage', data.currentPage)
+                }
+            }
+        })
+    }
+
+    // 右侧table
+    getMarketsData()
+    function getMarketsData (obj, fn) {
+        let sendData = {
+            currentpage: 1,
+            pagesize: 10,
+            coinid: coinId
+        }
+        sendData = !obj ? sendData : {...sendData, ...obj}
+        axiosAjax({
+            type: 'get',
+            url: `${proxyUrl}market/coin/exchange?${fomartQuery(sendData)}`,
+            formData: false,
+            params: {},
+            fn: function (res) {
+                if (res.code === 1) {
+                    if (fn) {
+                        fn(res.data.inforList)
+                    }
+                    appendTableTr(res.data.inforList)
+                    $('.market-correlation-list .check-more-load').data('record', res.data.recordCount).data('len', res.data.inforList.length)
+                }
+            }
+        })
+    }
+    function appendTableTr (arr, rateType) {
+        if (!arr.length) {
+            $('.market-correlation-list tbody').html(`<tr><td colspan="4">暂无数据！</td></tr>`)
+            return
+        }
+        rateType = !rateType ? 1 : rateType
+        let str = ''
+        // let rateData = $('#containMain').data('rate')
+        let rate = rateData.CNY
+        let symbol = '￥'
+        if (parseInt(rateType) === 1) {
+            rate = rateData.CNY
+            symbol = '￥'
+        } else {
+            rate = rateData.USD
+            symbol = '＄'
+        }
+        arr.map((exchangeItem) => {
+            str += `
+           <tr>
+                    <td>${exchangeItem.exchange_name}</td>
+                    <td>${exchangeItem.pair}</td>
+                    <td>${symbol}${parseInt(parseFloat(exchangeItem.price * rate))}</td>
+                    <td>${exchangeItem.volume_rate_24h}%</td>
+                </tr>
+            `
+        })
+        // str = `<div class="market-tab-list"><table><tbody>${str}</tbody></table></div>`
+        $('.market-correlation-list tbody').html(str)
+    }
 })

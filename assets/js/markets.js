@@ -46,6 +46,9 @@ $(function () {
                         $this.addClass('active')
                     }
                 } else {
+                    if (res.code === -2) {
+                        $this.addClass('active')
+                    }
                     layer.msg(res.msg)
                 }
             }

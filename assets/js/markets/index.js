@@ -110,7 +110,7 @@ class MessageBanner {
         let websites = particularsCont.websites.split(',')
         let explorer = particularsCont.explorer.split(',')
         let str = `
-        <div class="currency-title">
+        <div class="currency-title" data-name="${!particularsCont.cn_name ? particularsCont.en_name : particularsCont.cn_name}">
                 <span>
                     <img src="${particularsCont.icon}" alt="">
                 </span>
