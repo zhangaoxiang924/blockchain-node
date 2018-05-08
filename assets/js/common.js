@@ -19,9 +19,11 @@ import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
 import {NewsAuthor} from './modules/index'
 
+const {mUrl} = require('../../config')
+
 $(function () {
     if (isPc() === false) {
-        window.location.href = 'http://m.huoxing24.com'
+        window.location.href = `http://${mUrl}`
     }
 
     // 顶部行情

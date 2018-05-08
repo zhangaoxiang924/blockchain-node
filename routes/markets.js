@@ -6,12 +6,13 @@
 
 const express = require('express')
 const router = express.Router()
-const utils = require('../utils/public')
 let async = require('async')
 
-const axiosAjax = utils.axiosAjax
-const ajaxJavaUrl = utils.ajaxJavaUrl
-const webInfo = utils.webInfo
+const {
+    axiosAjax,
+    ajaxJavaUrl,
+    webInfo
+} = require('../utils/public')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

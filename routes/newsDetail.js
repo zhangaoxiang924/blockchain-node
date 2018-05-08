@@ -6,11 +6,12 @@
 
 const express = require('express')
 const router = express.Router()
-const utils = require('../utils/public')
 
-const axiosAjax = utils.axiosAjax
-const ajaxJavaUrl = utils.ajaxJavaUrl
-// const webInfo = utils.webInfo
+const {
+    axiosAjax,
+    ajaxJavaUrl,
+    pageRender
+} = require('../utils/public')
 
 const pcRes = (req, res, next) => {
     let newsId = req.query.id
@@ -121,7 +122,7 @@ const mRes = (req, res, next) => {
 
 // router.get('/:id', function (req, res, next) {
 router.get('/', function (req, res, next) {
-    utils.pageRender({
+    pageRender({
         req: req,
         res: res,
         mRender: function () {

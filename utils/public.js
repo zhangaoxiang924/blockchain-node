@@ -6,6 +6,11 @@
 
 const axios = require('axios')
 
+const {
+    mUrl,
+    pcUrl
+} = require('../config')
+
 /**
  * JS：axiosAjax({
         type: 'post',
@@ -82,8 +87,7 @@ const axiosAjax = (arg) => {
 /**
  * java: pc接口代理
  */
-const ajaxJavaUrl = 'http://www.huoxing24.vip'
-// const ajaxJavaUrl = 'http://www.huoxing24.com'
+const ajaxJavaUrl = `http://${pcUrl}`
 const proxyJavaApi = [
     '/*',
     '/*/*',
@@ -107,10 +111,8 @@ const webInfo = {
  * })
  */
 
-// const onlineMUrl = 'm.huoxing24.com'
-const onlineMUrl = 'm.huoxing24.vip'
-// const onlinePcUrl = 'www.huoxing24.com'
-const onlinePcUrl = 'www.huoxing24.vip'
+const onlineMUrl = mUrl
+const onlinePcUrl = pcUrl
 
 const isPc = (userAgentStr) => {
     const userAgent = userAgentStr.toLowerCase()
