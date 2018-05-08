@@ -65,3 +65,6 @@ src/containers/Main/HeaderNav/index.jsx
 src/locale/zh.js
 config.js
 views/index.ejs
+views/newsDetail.ejs
+views/newsDetail.ejs
+views/index.ejs
