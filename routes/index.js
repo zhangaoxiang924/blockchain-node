@@ -24,7 +24,7 @@ const pcRes = (req, res, next) => {
             fn: function (resData) {
                 let thisData = []
                 if (resData.code === 1) {
-                    thisData = resData.obj.inforList
+                    thisData = !resData.obj.inforList ? [] : resData.obj.inforList
                 } else {
                     thisData = []
                 }
@@ -103,6 +103,7 @@ const pcRes = (req, res, next) => {
         }
     }, function (error, result) {
         if (!error) {
+            console.log(result)
             let adData8 = result.adData[8]
             let hotColumnLen = Math.ceil(result.hotColumn.length / 2)
             let adAndColumn = []

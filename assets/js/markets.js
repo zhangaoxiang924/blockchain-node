@@ -14,6 +14,7 @@ import Cookies from 'js-cookie'
 $(function () {
     pageLoadingHide()
     let currList = []
+    let cTimeId = 0
     $('#tableContain').on('click', 'tr', function () {
         let coinId = $(this).data('id')
         window.open(`/project?coinid=${coinId}`, '_blank')
@@ -54,6 +55,10 @@ $(function () {
             }
         })
     })
+
+    cTimeId = setInterval(() => {
+        getMarketsData()
+    }, 60000)
 
     // 分页
     let pageTotal = $('#pagination').data('total')
@@ -158,6 +163,7 @@ $(function () {
             },
             ...obj
         }
+        clearInterval(cTimeId)
         axiosAjax({
             type: 'post',
             url: `${proxyUrl}/market/coin/querycoins`,
@@ -182,6 +188,9 @@ $(function () {
                     })
                     pag.init()
                 }
+                cTimeId = setInterval(() => {
+                    getMarketsData()
+                }, 60000)
             }
         })
     }

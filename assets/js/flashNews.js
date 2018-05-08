@@ -82,7 +82,6 @@ $(function () {
                     formData: false,
                     params: {},
                     fn: function (res) {
-                        console.log(res)
                         if (res.code === 1) {
                             let num = parseInt($this.find('.num').html())
                             if ($this.hasClass('active')) {
@@ -98,6 +97,8 @@ $(function () {
                                     $other.removeClass('active')
                                 }
                             }
+                        } else {
+                            layer.msg(res.msg)
                         }
                     }
                 })
