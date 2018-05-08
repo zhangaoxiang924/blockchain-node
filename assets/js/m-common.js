@@ -5,9 +5,11 @@
  */
 import {isPc, isIos, isAndroid, isWeixin} from '../js/public/public'
 
+const {pcUrl} = require('../../config')
+
 $(function () {
     if (isPc()) {
-        window.location.href = 'http://www.huoxing24.com'
+        window.location.href = `http://${pcUrl}`
     }
 
     // 下载
