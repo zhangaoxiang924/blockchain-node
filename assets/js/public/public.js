@@ -10,7 +10,8 @@ import layer from 'layui-layer'
 const isPc = () => {
     const userAgent = window.navigator.userAgent.toLowerCase()
 
-    const Agents = ['android', 'iphone', 'ipad', 'ipod', 'windows phone']
+    // const Agents = ['android', 'iphone', 'ipad', 'ipod', 'windows phone']
+    const Agents = ['android', 'iphone', 'ipod', 'windows phone']
     let flag = true
     for (let i = 0; i < Agents.length; i++) {
         if (userAgent.indexOf(Agents[i]) > -1) {

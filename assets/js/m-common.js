@@ -3,15 +3,11 @@
  * Time：2018/4/27
  * Description：Description
  */
-import {isPc, isIos, isAndroid, isWeixin, getQueryString} from '../js/public/public'
+import {isPc, isIos, isAndroid, isWeixin} from '../js/public/public'
 
 $(function () {
     if (isPc()) {
-        if (window.location.href.indexOf('newsdetail') !== -1) {
-            window.location.href = `http://www.huoxing24.com/newsdetail?id=${getQueryString('id')}`
-        } else {
-            window.location.href = 'http://www.huoxing24.com'
-        }
+        window.location.href = 'http://www.huoxing24.com'
     }
 
     // 下载

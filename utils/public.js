@@ -7,23 +7,6 @@
 const axios = require('axios')
 
 /**
- * JS：isPc('userAgentStr')
- */
-const isPc = (userAgentStr) => {
-    const userAgent = userAgentStr.toLowerCase()
-
-    const Agents = ['android', 'iphone', 'ipod', 'windows phone']
-    let flag = true
-    for (let i = 0; i < Agents.length; i++) {
-        if (userAgent.indexOf(Agents[i]) > -1) {
-            flag = false
-            break
-        }
-    }
-    return flag
-}
-
-/**
  * JS：axiosAjax({
         type: 'post',
         url: '/info/news/columnadd',
@@ -99,8 +82,8 @@ const axiosAjax = (arg) => {
 /**
  * java: pc接口代理
  */
-// const ajaxJavaUrl = 'http://www.huoxing24.vip'
-const ajaxJavaUrl = 'http://www.huoxing24.com'
+const ajaxJavaUrl = 'http://www.huoxing24.vip'
+// const ajaxJavaUrl = 'http://www.huoxing24.com'
 const proxyJavaApi = [
     '/*',
     '/*/*',
@@ -115,14 +98,81 @@ const webInfo = {
     description: '火星财经是集新闻、资讯、行情、数据等区块链信息等专业服务平台，致力于为区块链创业者以及数字货币投资者提供最新最及时的项目报道、投资顾问、项目分析、市场行情'
 }
 
-const onlineMUrl = 'm.huoxing24.com'
-// const onlineMUrl = 'm.huoxing24.vip'
+/**
+ * JS：pageRender({
+ *     req: req,
+ *     res: res,
+ *     mRender: function(){},
+ *     pcRender: function(){}
+ * })
+ */
+
+// const onlineMUrl = 'm.huoxing24.com'
+const onlineMUrl = 'm.huoxing24.vip'
+// const onlinePcUrl = 'www.huoxing24.com'
+const onlinePcUrl = 'www.huoxing24.vip'
+
+const isPc = (userAgentStr) => {
+    const userAgent = userAgentStr.toLowerCase()
+
+    const Agents = ['android', 'iphone', 'ipod', 'windows phone']
+    let flag = true
+    for (let i = 0; i < Agents.length; i++) {
+        if (userAgent.indexOf(Agents[i]) > -1) {
+            flag = false
+            break
+        }
+    }
+    return flag
+}
+
+const routerPcM = [
+    'newsdetail'
+]
+
+const pageRender = (arg) => {
+    const {req, res, mRender, pcRender} = arg
+    const domain = req.headers.host
+    const userAgent = req.headers['user-agent']
+    const originalUrl = req.originalUrl
+
+    let isRouterPcM = false
+    for (let value of routerPcM) {
+        if (originalUrl.indexOf(value) > -1) {
+            isRouterPcM = true
+            break
+        }
+    }
+
+    if (isPc(userAgent)) {
+        if (domain.indexOf(onlineMUrl) > -1) {
+            if (isRouterPcM) {
+                res.redirect('//' + onlinePcUrl + originalUrl)
+            } else {
+                res.redirect('//' + onlinePcUrl)
+            }
+        }
+        if (pcRender) {
+            pcRender()
+        }
+    } else {
+        if (domain.indexOf(onlinePcUrl) > -1) {
+            if (isRouterPcM) {
+                res.redirect('//' + onlineMUrl + originalUrl)
+            } else {
+                res.redirect('//' + onlineMUrl)
+            }
+        }
+        if (mRender) {
+            mRender()
+        }
+    }
+}
 
 module.exports = {
     ajaxJavaUrl,
     proxyJavaApi,
     axiosAjax,
     webInfo,
-    onlineMUrl,
-    isPc
+    pageRender
 }

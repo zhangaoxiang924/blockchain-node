@@ -133,7 +133,6 @@ const pcRes = (req, res, next) => {
                 webSiteInfo: webInfo
             })
         } else {
-            console.log(error)
             res.render('error', {
                 message: error.message,
                 error: {
@@ -185,25 +184,17 @@ const mRes = (req, res, next) => {
     })
 }
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
-    if (utils.isPc(req.headers['user-agent'])) {
-        pcRes(req, res, next)
-    } else {
-        mRes(req, res, next)
-    }
-
-    // mRes(req, res, next)
-    // const url = req.headers.host
-    // if (url.indexOf(utils.onlineMUrl) > -1) {
-    //     mRes(req, res, next)
-    // } else {
-    //     pcRes(req, res, next)
-    // }
+    utils.pageRender({
+        req: req,
+        res: res,
+        mRender: function () {
+            mRes(req, res, next)
+        },
+        pcRender: function () {
+            pcRes(req, res, next)
+        }
+    })
 })
-
-// router.get('/m', function (req, res, next) {
-//     mRes(req, res, next)
-// })
 
 module.exports = router
