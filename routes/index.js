@@ -103,7 +103,6 @@ const pcRes = (req, res, next) => {
         }
     }, function (error, result) {
         if (!error) {
-            console.log(result)
             let adData8 = result.adData[8]
             let hotColumnLen = Math.ceil(result.hotColumn.length / 2)
             let adAndColumn = []
