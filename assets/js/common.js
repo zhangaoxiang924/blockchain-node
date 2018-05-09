@@ -13,7 +13,8 @@ import {
     fomartQuery,
     cutString,
     isPc,
-    showLogin
+    showLogin,
+    NavTitle
 } from './public/public'
 import Cookies from 'js-cookie'
 import {Reply} from './newsDetail/index'
@@ -25,6 +26,27 @@ $(function () {
     if (isPc() === false) {
         window.location.href = `http://${mUrl}`
     }
+
+    // 导航
+    function renderNav (navArr) {
+        let str = ''
+        let pathName = location.pathname
+        let searchQuery = location.search
+        let pathStr = !searchQuery ? pathName : `${pathName}${searchQuery}`
+        navArr.map((item) => {
+            if (item.id === 'bta') {
+                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="./img/header/beta-icon.png"></li>`
+            } else if (item.id === 'baike') {
+                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="./img/header/new-icon.png"></li>`
+            } else if (item.id === 'index') {
+                str += ` <li class="nav-item  ${pathStr === item.path || pathStr === '/' || pathStr === '' ? 'active' : ''}"><a target="_blank" href="${item.path}">${item.name}</a></li>`
+            } else {
+                str += ` <li class="nav-item  ${pathStr === item.path ? 'active' : ''}"><a target="_blank" href="${item.path}">${item.name}</a></li>`
+            }
+        })
+        $('#HeaderNav').html(str)
+    }
+    renderNav(NavTitle)
 
     // 顶部行情
     const getRollMsg = () => {

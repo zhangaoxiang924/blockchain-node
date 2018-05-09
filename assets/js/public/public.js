@@ -516,6 +516,22 @@ const newsTitleArr = [
     {label: '王峰十问', value: '9'}
 ]
 
+const NavTitle = [
+    {name: '首页', index: 0, path: '/index', id: 'index'},
+    {name: '新闻', index: 1, path: '/news', id: 'news'},
+    // {name: '火星社区', index: 5, path: '/forum', id: 'bta'},
+    {name: '火星社区', index: 5, path: 'http://bbs.huoxing24.com', id: 'bta'},
+    // {name: '百科', index: 7, path: '/baike', id: 'baike'},
+    {name: '百科', index: 7, path: 'http://baike.huoxing24.com/', id: 'baike'},
+    {name: '快讯', index: 2, path: '/livenews', id: 'flashNews'},
+    {name: '游戏', index: 8, path: '/news?id=7', id: 'game'},
+    // {name: '技术', index: 3, path: '/news?id=6', id: 'skill'},
+    {name: '行情', index: 4, path: '/markets', id: 'market'},
+    {name: 'APP', index: 6, path: '/app', id: 'app'}
+    // {name: '项目动态', index: 8, path: '/newcoins', id: 'newCoins'}
+    // {name: '新手入门', index: 8, path: '/primer', id: 'primer'}
+]
+
 export {
     isPc,
     isIos,
@@ -546,5 +562,6 @@ export {
     add0,
     numTrans,
     showLogin,
-    newsTitleArr
+    newsTitleArr,
+    NavTitle
 }
