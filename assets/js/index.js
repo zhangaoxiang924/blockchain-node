@@ -65,7 +65,7 @@ $(function () {
             return
         }
         let currPage = 1
-        let pageSize = 35
+        let pageSize = 40
         let id = $(this).data('id')
         getNewsList(currPage, pageSize, id, (res) => {
             $('#newsListContent').html(getNewsStr(res.obj))
@@ -85,7 +85,7 @@ $(function () {
             layer.msg('暂无更多新闻 !')
             return
         }
-        getNewsList(currPage, 35, id, lastTime, (res) => {
+        getNewsList(currPage, 40, id, lastTime, (res) => {
             $('#newsListContent').append(getNewsStr(res.obj))
         })
     })
@@ -103,12 +103,14 @@ $(function () {
         if (typeof lastTime === 'function') {
             sendData = {
                 currentPage: !currPage ? 1 : currPage,
-                pageSize: !pageSize ? 35 : pageSize,
+                pageSize: !pageSize ? 40 : pageSize,
                 channelId: !id ? 0 : id
             }
         } else {
             sendData = {
-                ...sendData,
+                currentPage: !currPage ? 1 : currPage,
+                pageSize: !pageSize ? 40 : pageSize,
+                channelId: !id ? 0 : id,
                 refreshTime: lastTime
             }
         }

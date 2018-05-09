@@ -57,7 +57,7 @@ const pcRes = (req, res, next) => {
     const newsData = (resolve) => {
         axiosAjax({
             type: 'GET',
-            url: ajaxJavaUrl + '/info/news/shownews?currentPage=&pageSize=35&channelId=0',
+            url: ajaxJavaUrl + '/info/news/shownews?currentPage=1&pageSize=40&channelId=0',
             params: {},
             res: res,
             fn: function (resData) {

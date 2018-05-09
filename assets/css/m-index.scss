@@ -128,7 +128,7 @@ body,
             background: none;
 
             &:nth-child(4),
-            &:nth-child(5) {
+            &:nth-child(11) {
                 width: rem(125);
             }
 
@@ -385,6 +385,11 @@ body,
         font-size: rem(28);
         color: #212121;
         padding-bottom: rem(25);
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        height: rem(106);
     }
 
     .list-text {
