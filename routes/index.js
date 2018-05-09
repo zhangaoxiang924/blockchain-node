@@ -20,10 +20,11 @@ const pcRes = (req, res, next) => {
     const hotColumn = (resolve) => {
         axiosAjax({
             type: 'GET',
-            url: ajaxJavaUrl + '/info/topic/listall?currentPage=1&pageSize=20',
+            url: ajaxJavaUrl + '/info/topic/listall?currentPage=1&pageSize=20&position=0',
             params: {},
             res: res,
             fn: function (resData) {
+                // console.log(resData)
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = !resData.obj.inforList ? [] : resData.obj.inforList
@@ -41,6 +42,8 @@ const pcRes = (req, res, next) => {
             params: {},
             res: res,
             fn: function (resData) {
+                // console.log('======')
+                // console.log(resData)
                 let thisData = []
                 if (resData.code === 1) {
                     thisData = resData.obj.inforList

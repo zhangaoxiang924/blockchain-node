@@ -501,6 +501,20 @@ const showLogin = (type, title) => {
 
 const lang = 'zh'
 const proxyUrl = ''
+const newsTitleArr = [
+    {label: '头条', value: '0'},
+    // {label: 'BTA', value: '12'},
+    // { label: '新闻', value: '1' },
+    {label: '投资快报', value: '14'},
+    {label: '产业', value: '2'},
+    {label: '技术', value: '6'},
+    {label: '挖矿', value: '13'},
+    {label: '项目', value: '3'},
+    {label: '人物', value: '4'},
+    {label: '游戏', value: '7'},
+    {label: '八点', value: '8'},
+    {label: '王峰十问', value: '9'}
+]
 
 export {
     isPc,
@@ -531,5 +545,6 @@ export {
     scrollDirect,
     add0,
     numTrans,
-    showLogin
+    showLogin,
+    newsTitleArr
 }

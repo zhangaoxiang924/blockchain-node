@@ -5,13 +5,21 @@
  */
 import Cookies from 'js-cookie'
 // import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getQueryString} from './public/public'
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent} from './public/public'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent, newsTitleArr} from './public/public'
 import {ad} from './modules/index'
 import layer from 'layui-layer'
 import {NewsSwiper, RealTimeNews} from './index/index'
 
 $(function () {
     pageLoadingHide()
+    function renderNewTitle () {
+        let str = ''
+        newsTitleArr.map((item) => {
+            str += `<li data-id="${item.value}" class="${parseInt(item.value) === 0 ? 'active' : ''}">${item.label}</li>`
+        })
+        $('#newsTabs').html(str)
+    }
+    renderNewTitle()
 
     let mySwiper = new Swiper('#adSwiper', {
         loop: true,
@@ -91,11 +99,18 @@ $(function () {
         return str
     }
     function getNewsList (currPage, pageSize, id, lastTime, fn) {
-        let sendData = {
-            currentPage: !currPage ? 1 : currPage,
-            pageSize: !pageSize ? 35 : pageSize,
-            channelId: !id ? 0 : id,
-            refreshTime: lastTime
+        let sendData = null
+        if (typeof lastTime === 'function') {
+            sendData = {
+                currentPage: !currPage ? 1 : currPage,
+                pageSize: !pageSize ? 35 : pageSize,
+                channelId: !id ? 0 : id
+            }
+        } else {
+            sendData = {
+                ...sendData,
+                refreshTime: lastTime
+            }
         }
         axiosAjax({
             type: 'get',
@@ -104,8 +119,13 @@ $(function () {
             params: {},
             fn: function (res) {
                 if (res.code === 1) {
-                    fn(res)
                     let list = res.obj.inforList
+                    if (typeof lastTime === 'function') {
+                        lastTime(res)
+                    }
+                    if (fn) {
+                        fn(res)
+                    }
                     $('.check-more-load').data('pagecount', res.obj.pageCount).data('currpage', sendData.currentPage).data('time', list[list.length - 1].publishTime)
                 }
             }
