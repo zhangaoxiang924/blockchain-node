@@ -68,6 +68,7 @@
     "layui-layer": "^1.0.9",
     "morgan": "~1.9.0",
     "nodemon": "^1.17.3",
+    "request": "^2.85.0",
     "simditor": "^2.3.6"
   }
 }

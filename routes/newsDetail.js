@@ -96,7 +96,6 @@ const mRes = (req, res, next) => {
     newsDetailData().then((resData) => {
         if (resData.code === 1) {
             let timestamp = new Date().getTime()
-            // console.log(timestamp)
             res.render('m-newsDetail', {
                 newsData: {
                     ...resData.obj,

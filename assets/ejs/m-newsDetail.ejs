@@ -4,6 +4,46 @@
 "private": ["../css/m-newsDetail.css"]
 })
 
+<script>
+    $(function () {
+        // 请求签名
+        $.ajax({
+            url: '/signture',
+            type: 'post',
+            data: {url: window.location.href},
+            success: function (data) {
+                wx.config({
+                    debug: false,
+                    appId: 'wxec2dc083d4024311',
+                    timestamp: data.timestamp,
+                    nonceStr: data.nonceStr,
+                    signature: data.signature,
+                    jsApiList: [
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ'
+                    ]
+                })
+                wx.ready(function () {
+                    var shareData = {
+                        title: '<%= newsData.current.title %>',
+                        desc: '<%= newsData.current.synopsis %>',
+                        link: data.url,
+                        imgUrl: '<%= JSON.parse(newsData.current.coverPic).wap_small %>'
+                    }
+                    wx.onMenuShareAppMessage(shareData)
+                    wx.onMenuShareTimeline(shareData)
+                    wx.onMenuShareQQ(shareData)
+                })
+                wx.error(function (err) {
+                    console(err.errMsg) // 正式环境关闭
+                })
+            }
+        })
+    })
+</script>
+
 <!-- 内容 -->
 @@include('m-newsDetail/main.ejs')
 

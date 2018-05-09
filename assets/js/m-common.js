@@ -1,7 +1,7 @@
 /**
  * Author：tantingting
  * Time：2018/4/27
- * Description：Description
+ * Description：mobile common
  */
 import {isPc, isIos, isAndroid, isWeixin} from '../js/public/public'
 
