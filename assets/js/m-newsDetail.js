@@ -4,9 +4,7 @@
  * Description：Description
  */
 
-import {pageLoadingHide, getQueryString, getTimeContent, ajaxGet, Animation, scrollDirect} from '../js/public/public'
-
-// import html2canvas from 'html2canvas'
+import {pageLoadingHide, getQueryString, getTimeContent, ajaxGet, Animation, scrollDirect} from './public/public'
 
 let url = '/info/news'
 let apiInfo = '/info'
@@ -29,7 +27,8 @@ $(function () {
 
     // 音频
     let audio = $('.audio-wrap').data('audio')
-    if (!audio) {} else {
+    if (!audio) {
+    } else {
         let musicList = []
         audio.map(function (item, index) {
             musicList.push({
@@ -44,7 +43,8 @@ $(function () {
             musicList: musicList,
             autoPlay: false,
             defaultMode: 1,
-            callback: function (obj) {}
+            callback: function (obj) {
+            }
         })
         console.log(smusic)
     }

@@ -17,6 +17,7 @@ const marketsRouter = require('./routes/markets')
 const exchangeListRouter = require('./routes/exchangeList')
 const projectRouter = require('./routes/marketsProject')
 const liveNewsDetailRouter = require('./routes/liveNewsDetail')
+const signtureRouter = require('./routes/signture')
 
 const app = express()
 
@@ -62,6 +63,7 @@ app.use('/markets', marketsRouter)
 app.use('/exchangelist', exchangeListRouter)
 app.use('/projectProjectmaterial', projectRouter)
 app.use('/project', projectRouter)
+app.use('/signture', signtureRouter)
 
 // react-router browserhistory
 app.get([
@@ -70,11 +72,8 @@ app.get([
     '/newcoins',
     '/newcoinsList',
     '/newcoinsDetail',
-    // '/project',
     '/projectInfo',
-    // '/projectProjectmaterial',
     '/projectRelatenews',
-    // '/exchangelist',
     '/copyright',
     '/about',
     '/user',

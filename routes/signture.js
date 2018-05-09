@@ -9,7 +9,7 @@ const router = express.Router()
 const sign = require('../utils/sign')
 const request = require('request')
 
-router.post('/signture', function (req, res, next) {
+router.post('/', function (req, res, next) {
     console.log('进入路由')
     let wxshare = {
         signs: []
