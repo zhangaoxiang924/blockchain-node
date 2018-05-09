@@ -10,7 +10,7 @@ const sign = require('../utils/sign')
 const request = require('request')
 
 router.post('/', function (req, res, next) {
-    console.log('进入路由')
+    console.log('enter router')
     let wxshare = {
         signs: []
     }
@@ -40,13 +40,13 @@ router.post('/', function (req, res, next) {
         if (response.statusCode === 200) {
             body = JSON.parse(body)
             wxshare.access_token = body.access_token
-            console.log('获取到access_token' + body.access_token)
+            console.log('get access_token' + body.access_token)
 
             // 获取jsapi_ticket
             const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + body.access_token + '&type=jsapi'
             request(ticketUrl, function (err, response, content) {
                 content = JSON.parse(content)
-                console.log('jsapi_ticket' + content.ticket)
+                console.log('get jsapi_ticket' + content.ticket)
 
                 if (content.errcode === 0) {
                     wxshare.jsapi_ticket = content.ticket

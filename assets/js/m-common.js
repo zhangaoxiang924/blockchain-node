@@ -15,7 +15,7 @@ $(function () {
     axiosAjax({
         type: 'post',
         url: '/signture',
-        params: {url: window.location.href},
+        params: {url: window.location.href.split('#')[0]},
         fn: function (data) {
             const $wxData = $('#wxShareTitleDesc')
             wx.config({
@@ -43,7 +43,7 @@ $(function () {
                 wx.onMenuShareQQ(shareData)
             })
             wx.error(function (err) {
-                alert(err.errMsg) // 正式环境关闭
+                console.log(err.errMsg)
             })
         }
     })
