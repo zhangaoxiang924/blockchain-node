@@ -5,13 +5,21 @@
  */
 import Cookies from 'js-cookie'
 // import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getQueryString} from './public/public'
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent} from './public/public'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent, newsTitleArr} from './public/public'
 import {ad} from './modules/index'
 import layer from 'layui-layer'
 import {NewsSwiper, RealTimeNews} from './index/index'
 
 $(function () {
     pageLoadingHide()
+    function renderNewTitle () {
+        let str = ''
+        newsTitleArr.map((item) => {
+            str += `<li data-id="${item.value}" class="${parseInt(item.value) === 0 ? 'active' : ''}">${item.label}</li>`
+        })
+        $('#newsTabs').html(str)
+    }
+    renderNewTitle()
 
     let mySwiper = new Swiper('#adSwiper', {
         loop: true,

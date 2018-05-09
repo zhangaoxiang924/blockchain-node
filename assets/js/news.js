@@ -5,11 +5,20 @@
  */
 
 // import Cookies from 'js-cookie'
-import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent} from './public/public'
+import {pageLoadingHide, axiosAjax, proxyUrl, fomartQuery, getTimeContent, getQueryString, newsTitleArr} from './public/public'
 import {relatedNews} from './modules/index'
 
 $(function () {
     pageLoadingHide()
+    let searchId = !getQueryString('id') ? newsTitleArr[0].value : getQueryString('id')
+    function renderNewTitle () {
+        let str = ''
+        newsTitleArr.map((item) => {
+            str += `<a data-id="${item.value}" class="${parseInt(item.value) === parseInt(searchId) ? 'active' : ''}">${item.label}<font class="${parseInt(item.value) === 0 ? 'active' : ''}"></font></a>`
+        })
+        $('#newsTabs').html(str)
+    }
+    renderNewTitle()
 
     // 新闻
     $('.nav-box a').on('click', function () {
