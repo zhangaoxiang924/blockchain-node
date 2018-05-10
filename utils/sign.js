@@ -25,14 +25,14 @@ const raw = function (args) {
 /**
  * @synopsis 签名算法
  *
- * @param jsapiTicket 用于签名的 jsapiTicket
+ * @param jsapi_ticket 用于签名的 jsapi_ticket
  * @param url 用于签名的 url ，注意必须动态获取，不能 hardcode
  *
  * @returns
  */
 const sign = function (jsapiTicket, url) {
     let ret = {
-        jsapiTicket: jsapiTicket,
+        jsapi_ticket: jsapiTicket,
         nonceStr: createNonceStr(),
         timestamp: createTimestamp(),
         url: url
