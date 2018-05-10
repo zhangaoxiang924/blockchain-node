@@ -42,7 +42,7 @@ class NewsSwiper {
         let str = ''
         data.map((item) => {
             str += `<div class="swiper-slide comment-news">
-                        <a target="_blank" href="/newsdetail?id=${item.id}">
+                        <a target="_blank" href="/newsdetail/${item.id}.html">
                             <div class="img-div">
                                 <img class="news-img" src="${!item.coverPic ? 'http://static.huoxing24.com/images/2018/03/05/1520243882098653.svg' : (JSON.parse(item.coverPic).pc_recommend || JSON.parse(item.coverPic).pc)}"alt="">
                             </div>

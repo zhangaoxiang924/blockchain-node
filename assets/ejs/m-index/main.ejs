@@ -66,7 +66,7 @@ const getTimeContent = (publishTime, requestTime) => {
                             data.inforList.map((item) => {
                                 %>
                         <div class="news-list-more ">
-                            <a href="/newsdetail?id=<%= item.id %>">
+                            <a href="/newsdetail/<%=`${item.id}.html` %>">
                                 <div class="title"><%= item.title %></div>
                                 <div class="list-text">
                                     <div class="author read-number clearfix"><sapn><%= item.hotCounts %></sapn></div>

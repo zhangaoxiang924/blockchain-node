@@ -35,9 +35,9 @@ $(function () {
         let pathStr = !searchQuery ? pathName : `${pathName}${searchQuery}`
         navArr.map((item) => {
             if (item.id === 'bta') {
-                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="./img/header/beta-icon.png"></li>`
+                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="../../img/header/beta-icon.png"></li>`
             } else if (item.id === 'baike') {
-                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="./img/header/new-icon.png"></li>`
+                str += ` <li class="nav-item"><a target="_blank" href="${item.path}">${item.name}</a> <img class="new-icon" src="../../img/header/new-icon.png"></li>`
             } else if (item.id === 'index') {
                 str += ` <li class="nav-item  ${pathStr === item.path || pathStr === '/' || pathStr === '' ? 'active' : ''}"><a target="_blank" href="${item.path}">${item.name}</a></li>`
             } else {
@@ -207,7 +207,7 @@ $(function () {
                     }
                     if (window.location.href.indexOf('/newsdetail') !== -1) {
                         // 评论
-                        let newsId = getQueryString('id')
+                        let newsId = getNewsId()
                         let reply = new Reply($('#replyBox'), newsId)
                         reply.init()
                     }
@@ -251,6 +251,15 @@ $(function () {
     $('#loginBlock .login-close').on('click', function () {
         showLogin('close')
     })
+
+    // get news id
+    function getNewsId () {
+        let id = 0
+        let hrefStr = location.href
+        let fileName = hrefStr.split('/newsdetail/')[1]
+        id = fileName.split('.html')[0]
+        return id
+    }
     /* function showLogin (type, title) {
         if (type === 'close') {
             $('#loginBlock').css({'display': 'none'})
@@ -413,7 +422,7 @@ $(function () {
         }
         if (window.location.href.indexOf('/newsdetail') !== -1) {
             // 评论
-            let newsId = getQueryString('id')
+            let newsId = getNewsId()
             let reply = new Reply($('#replyBox'), newsId)
             reply.init()
         }

@@ -12,6 +12,7 @@
 /public/fonts
 /public/static
 /public/mobile
+/public/tempStatic
 
 # Windows image file caches
 Thumbs.db

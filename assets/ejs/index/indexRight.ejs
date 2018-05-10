@@ -31,7 +31,7 @@
                         <p class="crowd">粉丝：<span><%= item.followCount %></span></p>
                     </div>
                 </div>
-                <a target="_blank" class="article-title" href="/newsdetail?id=<%= item.news.id%>"><%= item.news.title%></a>
+                <a target="_blank" class="article-title" href="/newsdetail/<%=`${item.news.id}.html`%>"><%= item.news.title%></a>
                 <%
                     if (item.passportId === data.userId) {
                         %>

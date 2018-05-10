@@ -8,7 +8,7 @@ import {pageLoadingHide, getQueryString, getTimeContent, ajaxGet, Animation, scr
 
 let url = '/info/news'
 let apiInfo = '/info'
-const htmlPath = ''
+// const htmlPath = ''
 
 $(function () {
     pageLoadingHide()
@@ -90,7 +90,7 @@ $(function () {
                 let time = getTimeContent(d.publishTime, timestamp)
                 let img = JSON.parse(d.coverPic)
                 newsList += `<div class="news-list-more ">
-                                <a href=${htmlPath + '/newsdetail?id=' + d.id}>
+                                <a href="/newsdetail/${d.id}.html">
                                     <div class="title">${cutString(d.title, 60)}</div>
                                     <div class="list-text">
                                         <div class="author clearfix"><span>${d.author}</span></div>

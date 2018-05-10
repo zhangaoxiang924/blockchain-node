@@ -17,7 +17,7 @@ let url = '/info/news'
 let url2 = '/info/lives'
 let apiInfo = '/info'
 // let url3 = '/market/coin'
-const htmlPath = ''
+// const htmlPath = ''
 
 // 频道分类数组
 const navIndex = [
@@ -485,7 +485,7 @@ $(function () {
                     // banner
                     let img = JSON.parse(d.coverPic)
                     swiperSlide += `<div class="swiper-slide">
-<a href=${htmlPath + '/newsdetail?id=' + d.id}><img src=${img.wap_big} alt=""></a>
+<a href="/newsdetail/${d.id}.html"><img src=${img.wap_big} alt=""></a>
 <span class="img-news-title">${d.title}</span>
 </div>`
 
@@ -494,7 +494,7 @@ $(function () {
                     let author = `<div class="author clearfix"><sapn>${d.author}</sapn></div>`
                     author = ''
                     const htmlStr = `<div class="news-list-more ">
-                <a href=${htmlPath + '/newsdetail?id=' + d.id}>
+                <a href="/newsdetail/${d.id}.html">
                      <div class="title">${d.title}</div>
                      <div class="list-text">
                         ${author}
@@ -509,7 +509,7 @@ $(function () {
                             newsList += htmlStr
                         } else if (channelId === 0) {
                             newsList += `<div class="news-list-first ">
-                <a href=${htmlPath + '/newsdetail?id=' + d.id}>
+                <a href="/newsdetail/${d.id}.html">
                     <div class="cover-img"><img src=${img.wap_big} alt=""></div>
                     <div class="title">${d.title}</div>
                     <div class="list-text">

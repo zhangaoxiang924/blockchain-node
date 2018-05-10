@@ -6,16 +6,21 @@
 
 const express = require('express')
 const router = express.Router()
+const path = require('path')
+const fs = require('fs')
 
 const {
     axiosAjax,
     ajaxJavaUrl,
-    pageRender
+    pageRender,
+    mkDirs
 } = require('../utils/public')
 
 const pcRes = (req, res, next) => {
-    let newsId = req.query.id
-
+    let fileNme = req.params.id
+    let newsId = fileNme.split('.html')[0]
+    let dirPath = `./public/tempStatic/newsDetail/pc`
+    let filePath = path.resolve(`${dirPath}/${fileNme}`)
     async function newsDetailData () {
         const data = await new Promise((resolve) => {
             let sendData = null
@@ -41,31 +46,50 @@ const pcRes = (req, res, next) => {
 
         return data
     }
-
-    newsDetailData().then((resData) => {
-        if (resData.code === 1) {
-            res.render('newsDetail', {
-                newsData: resData.obj,
-                webSiteInfo: {
-                    title: `${resData.obj.current.title}_火星财经`,
-                    keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
-                    description: resData.obj.current.synopsis
+    mkDirs(path.resolve(dirPath), () => {
+        fs.stat(filePath, (err, stats) => {
+            if (!err) {
+                res.sendFile(filePath)
+                return
+            }
+            newsDetailData().then((resData) => {
+                if (resData.code === 1) {
+                    res.render('newsDetail', {
+                        newsData: resData.obj,
+                        webSiteInfo: {
+                            title: `${resData.obj.current.title}_火星财经`,
+                            keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
+                            description: resData.obj.current.synopsis
+                        }
+                    }, (er, data) => {
+                        if (!er) {
+                            res.send(data)
+                            fs.writeFile(filePath, data, (er) => {
+                                if (er) {
+                                    console.log(er)
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    res.render('error', {
+                        message: resData.msg,
+                        error: {
+                            status: resData.code,
+                            stack: 'Please pass the correct parameters.'
+                        }
+                    })
                 }
             })
-        } else {
-            res.render('error', {
-                message: resData.msg,
-                error: {
-                    status: resData.code,
-                    stack: 'Please pass the correct parameters.'
-                }
-            })
-        }
+        })
     })
 }
 
 const mRes = (req, res, next) => {
-    let newsId = req.query.id
+    let fileNme = req.params.id
+    let newsId = fileNme.split('.html')[0]
+    let dirPath = `./public/tempStatic/newsDetail/m`
+    let filePath = path.resolve(`${dirPath}/${fileNme}`)
 
     async function newsDetailData () {
         const data = await new Promise((resolve) => {
@@ -92,35 +116,52 @@ const mRes = (req, res, next) => {
 
         return data
     }
-
-    newsDetailData().then((resData) => {
-        if (resData.code === 1) {
-            let timestamp = new Date().getTime()
-            res.render('m-newsDetail', {
-                newsData: {
-                    ...resData.obj,
-                    timestamp: timestamp
-                },
-                webSiteInfo: {
-                    title: `${resData.obj.current.title}_火星财经`,
-                    keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
-                    description: resData.obj.current.synopsis
+    mkDirs(path.resolve(dirPath), () => {
+        fs.stat(filePath, (err, stats) => {
+            if (!err) {
+                res.sendFile(filePath)
+                return
+            }
+            newsDetailData().then((resData) => {
+                if (resData.code === 1) {
+                    let timestamp = new Date().getTime()
+                    res.render('m-newsDetail', {
+                        newsData: {
+                            ...resData.obj,
+                            timestamp: timestamp
+                        },
+                        webSiteInfo: {
+                            title: `${resData.obj.current.title}_火星财经`,
+                            keywords: `${resData.obj.current.tags}，${resData.obj.current.title}`,
+                            description: resData.obj.current.synopsis
+                        }
+                    }, (er, data) => {
+                        if (!er) {
+                            res.send(data)
+                            fs.writeFile(filePath, data, (er) => {
+                                if (er) {
+                                    console.log(er)
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    res.render('error', {
+                        message: resData.msg,
+                        error: {
+                            status: resData.code,
+                            stack: 'Please pass the correct parameters.'
+                        }
+                    })
                 }
             })
-        } else {
-            res.render('error', {
-                message: resData.msg,
-                error: {
-                    status: resData.code,
-                    stack: 'Please pass the correct parameters.'
-                }
-            })
-        }
+        })
     })
 }
 
-// router.get('/:id', function (req, res, next) {
-router.get('/', function (req, res, next) {
+router.get('/:id', function (req, res, next) {
+    // console.log(req.params.id)
+    // router.get('/', function (req, res, next) {
     pageRender({
         req: req,
         res: res,

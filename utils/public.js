@@ -5,6 +5,8 @@
  */
 
 const axios = require('axios')
+const fs = require('fs')
+const path = require('path')
 
 const {
     mUrl,
@@ -171,7 +173,21 @@ const pageRender = (arg) => {
     }
 }
 
+// 创建多级目录
+const mkDirs = (dirname, callback) => {
+    fs.stat(dirname, (err, stats) => {
+        if (!err) {
+            callback()
+        } else {
+            mkDirs(path.dirname(dirname), function () {
+                fs.mkdir(dirname, callback)
+            })
+        }
+    })
+}
+
 module.exports = {
+    mkDirs,
     ajaxJavaUrl,
     proxyJavaApi,
     axiosAjax,

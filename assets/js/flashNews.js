@@ -52,7 +52,7 @@ $(function () {
     // 详情
     $('#liveNewsContain').on('click', '.news-detail', function (e) {
         let id = $(this).data('id')
-        window.open(`/liveNewsDetail?id=${id}`, '_blank')
+        window.open(`/liveNewsDetail/${id}.html`, '_blank')
     })
     $('#liveNewsContain').on('click', '.news-detail a', function (e) {
         e.stopPropagation()
@@ -229,7 +229,7 @@ $(function () {
     function getSortNewsStr (arr) {
         let str = ''
         arr.map((item, index) => {
-            str += `<div class="list-box clearfix"><span>${index + 1}</span><a target="_blank" class="right-text" href="/newsdetail?id=${item.id}">${item.title}</a></div>`
+            str += `<div class="list-box clearfix"><span>${index + 1}</span><a target="_blank" class="right-text" href="/newsdetail/${item.id}.html">${item.title}</a></div>`
         })
         return str
     }

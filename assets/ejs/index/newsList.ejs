@@ -37,12 +37,12 @@ const getTimeContent = (publishTime, requestTime) => {
             <% data.newsData.inforList.map((item) => {%>
             <div class="index-news-list">
                 <div class="list-left">
-                    <a target="_blank" href="/newsdetail?id=<%= item.id %>">
+                    <a target="_blank" href="/newsdetail/<%=`${item.id}.html` %>">
                         <img src="<%= (!item.coverPic || !JSON.parse(item.coverPic).pc ? `http://static.huoxing24.com/images/2018/03/05/1520243882098653.svg` : JSON.parse(item.coverPic).pc) %>" alt="">
                     </a>
                 </div>
                 <div class="list-right" style="width: 350px;">
-                    <a target="_blank" href="/newsdetail?id=<%= item.id %>">
+                    <a target="_blank" href="/newsdetail/<%=`${item.id}.html` %>">
                         <h6 class="headline"><%= item.title %></h6>
                         <div class="details"><%= item.synopsis %></div>
                     </a>

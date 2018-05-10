@@ -24,12 +24,12 @@ const relatedNews = (arr, dir) => {
     if (dir === 'bottom') {
         arr.map((item) => {
             // !item.createTime ? '' : formatDate(item.createTime, '.')
-            itemStr += `<a target="_blank" class="clearfix news-item" href="/newsdetail?id=${item.id}"><span class="dot"></span><div><div class="news-title">${item.title}</div><p>${item.author}丨${!item.createTime ? '' : formatDate(item.createTime, '.')}</p></div></a>`
+            itemStr += `<a target="_blank" class="clearfix news-item" href="/newsdetail/${item.id}.html"><span class="dot"></span><div><div class="news-title">${item.title}</div><p>${item.author}丨${!item.createTime ? '' : formatDate(item.createTime, '.')}</p></div></a>`
         })
         str = `<div class="news-list-contain">${itemStr}</div>`
     } else {
         arr.map((item) => {
-            itemStr += `<a class="list-box" target="_blank" href="/newsdetail?id=${item.id}"><div><div class="left-img"><img src="${!item.coverPic ? `http://static.huoxing24.com/images/2018/03/05/1520243882098653.svg` : JSON.parse(item.coverPic).pc}" alt=""></div><span class="right-text">${item.title}</span></div></a>`
+            itemStr += `<a class="list-box" target="_blank" href="/newsdetail/${item.id}.html"><div><div class="left-img"><img src="${!item.coverPic ? `http://static.huoxing24.com/images/2018/03/05/1520243882098653.svg` : JSON.parse(item.coverPic).pc}" alt=""></div><span class="right-text">${item.title}</span></div></a>`
         })
         str = `<div class="new-list-box">${itemStr}</div>`
     }

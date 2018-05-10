@@ -4,8 +4,8 @@ module.exports = {
     publicPath: '',
     // mUrl: 'm.huoxing24.vip',
     mUrl: 'm.huoxing24.com',
-    // pcUrl: 'www.huoxing24.vip',
-    pcUrl: 'www.huoxing24.com',
+    pcUrl: 'www.huoxing24.vip',
+    // pcUrl: 'www.huoxing24.com',
     vendors: [
         'babel-polyfill',
         'axios',
