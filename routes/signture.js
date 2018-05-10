@@ -9,67 +9,127 @@ const router = express.Router()
 const sign = require('../utils/sign')
 const request = require('request')
 
-router.post('/', function (req, res, next) {
-    console.log('enter router')
-    let wxshare = {
-        signs: []
-    }
+let config = {
+    appID: 'wxec2dc083d4024311',
+    appSecret: 'b78d95fd673f7fe469d2f957e877a34a'
+}
 
-    // 检查页面链接对应的签名是否可用
-    let signtag = false
-    let signindex
-    wxshare.signs.forEach(function (item, index) {
-        if (item.url === req.body.url) {
-            signindex = index
-            if (item.deadline && new Date().getTime() - item.deadline < 6000000) {
-                signtag = true
+let signTemp = {
+    signs: [
+        {
+            deadline: '',
+            jsapi_ticket: '',
+            nonceStr: '',
+            timestamp: '',
+            url: '',
+            signature: ''
+        }
+    ],
+    accessTime: '',
+    access_token: '',
+    jsapi_ticket: '',
+    nonceStr: '',
+    timestamp: '',
+    url: '',
+    signature: ''
+}
+
+/**
+ * 请求获取Jsapi_Ticket
+ * @param {* URL链接} hrefURL
+ * @param {* token} accessTtoken
+ * @param {* 回调请求方法} callback
+ */
+const jsapiTicket = (reqUrl, accessTtoken, callback) => {
+    const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + accessTtoken + '&type=jsapi'
+    request(ticketUrl, function (error, response, content) {
+        console.log('get jsapi_ticket:' + JSON.parse(content).ticket)
+
+        if (response.statusCode && response.statusCode === 200) {
+            content = JSON.parse(content)
+            if (content.errcode === 0) {
+                const signatureStr = sign(content.ticket, reqUrl)
+
+                console.log('signatureStr' + signatureStr)
+                callback && callback(signatureStr)
             }
         }
     })
+}
 
-    if (!signtag) {
+/**
+ * 请求获取access_token
+ * @param {* URL链接} hrefURL
+ * @param {* 回调请求方法} callback
+ */
+const accessToken = (callback) => {
+    const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + config.appID + '&secret=' + config.appSecret
+    request(tokenUrl, function (error, response, content) {
+        console.log('get access_token:' + JSON.parse(content).access_token)
 
-    }
-
-    const appID = 'wxec2dc083d4024311'
-    const appSecret = 'b78d95fd673f7fe469d2f957e877a34a'
-
-    // 获取access_token
-    const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appID + '&secret=' + appSecret
-    request(tokenUrl, function (error, response, body) {
-        if (response.statusCode === 200) {
-            body = JSON.parse(body)
-            wxshare.access_token = body.access_token
-            console.log('get access_token' + body.access_token)
-
-            // 获取jsapi_ticket
-            const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + body.access_token + '&type=jsapi'
-            request(ticketUrl, function (err, response, content) {
-                content = JSON.parse(content)
-                console.log('get jsapi_ticket' + content.ticket)
-
-                if (content.errcode === 0) {
-                    wxshare.jsapi_ticket = content.ticket
-
-                    // 先拿一个当前时间戳，这里我缓存到了global
-                    wxshare.deadline = new Date().getTime()
-                    const signatureStr = sign(content.ticket, req.body.url)
-                    signatureStr.deadline = new Date().getTime()
-
-                    if (signindex && signindex !== 0) {
-                        wxshare.signs(signindex, 1, signatureStr)
-                    } else {
-                        wxshare.signs.push(signatureStr)
-                    }
-
-                    console.log(wxshare)
-
-                    // 返回给前端
-                    res.status(200).json(signatureStr)
-                }
-            })
+        if (response.statusCode && response.statusCode === 200) {
+            const accessToken = JSON.parse(content).access_token
+            callback && callback(accessToken)
         }
     })
+}
+
+router.post('/', function (req, res, next) {
+    const reqUrl = req.body.url
+
+    const deadTime = (2 * 60 * 60 * 1000) - 1000 * 1000
+    const curentTime = new Date().getTime()
+    let signIndex = -1
+    let signtag = false
+
+    const aTime = curentTime - signTemp.accessTime < deadTime // access_token是否过期
+
+    for (let index in signTemp.signs) {
+        const item = signTemp.signs[index]
+
+        if (item.url === reqUrl) {
+            signIndex = index
+            if (aTime) {
+                signtag = true
+            }
+
+            break
+        }
+    }
+
+    const resJson = (signatureStr) => {
+        const curentUrlSign = {
+            deadline: new Date().getTime(),
+            ...signatureStr
+        }
+
+        if (signIndex === -1) {
+            signTemp.signs.push(curentUrlSign)
+        } else {
+            signTemp.signs[signIndex] = curentUrlSign
+        }
+
+        res.json(Object.assign(signTemp, signatureStr))
+    }
+
+    if (!signtag) {
+        if (aTime) {
+            jsapiTicket(reqUrl, signTemp.access_token, function (signatureStr) {
+                resJson(signatureStr)
+            })
+        } else {
+            accessToken(function (accessToken) {
+                signTemp.accessTime = new Date().getTime()
+                signTemp.access_token = accessToken
+
+                jsapiTicket(reqUrl, accessToken, function (signatureStr) {
+                    resJson(signatureStr)
+                })
+            })
+        }
+    } else {
+        res.json(signTemp.signs[signIndex])
+    }
 })
 
 module.exports = router

@@ -7,13 +7,10 @@
     @@include('./m-index/main.ejs')
 </div>
 
-<input type="hidden"
-       id="wxShareTitleDesc"
-       data-title="<%= webSiteInfo.title %>"
-       data-desc="<%= webSiteInfo.description %>"
-       data-imgurl="http://static.huoxing24.com/images/wxshare-icon.png"/>
-
 @@include('public/m-footer.ejs', {
 "plugin": ["http://static.huoxing24.com/assets/swiperv4/swiper.min.js"],
-"private": ["../js/m-common.js", " ../js/m-index.js"]
+"private": ["../js/m-common.js", " ../js/m-index.js"],
+"shreTitle": "<%= webSiteInfo.title %>",
+"shareDesc": "<%= webSiteInfo.description %>",
+"shareImgurl": "http://static.huoxing24.com/images/wxshare-icon.png"
 })

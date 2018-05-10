@@ -7,14 +7,11 @@
 <!-- 内容 -->
 @@include('m-newsDetail/main.ejs')
 
-<input type="hidden"
-       id="wxShareTitleDesc"
-       data-title="<%= newsData.current.title %>"
-       data-desc="<%= newsData.current.synopsis %>"
-       data-imgurl="<%= JSON.parse(newsData.current.coverPic).wap_small ? JSON.parse(newsData.current.coverPic).wap_small : 'http://static.huoxing24.com/images/wxshare-icon.png' %>"/>
-
 <!-- 公共底部 -->
 @@include('public/m-footer.ejs', {
 "plugin": ["http://static.huoxing24.com/assets/smusic/smusic.js"],
-"private": ["../js/m-common.js", "../js/m-newsDetail.js"]
+"private": ["../js/m-common.js", "../js/m-newsDetail.js"],
+"shreTitle": "<%=  newsData.current.title %>",
+"shareDesc": "<%= newsData.current.synopsis %>",
+"shareImgurl": "<%= JSON.parse(newsData.current.coverPic).wap_small ? JSON.parse(newsData.current.coverPic).wap_small : 'http://static.huoxing24.com/images/wxshare-icon.png' %>"
 })

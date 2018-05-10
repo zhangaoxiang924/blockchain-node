@@ -3,7 +3,7 @@
  * Time：2018/4/27
  * Description：Description
  */
-import {isPc, isIos, isAndroid, isWeixin, axiosAjax} from './public/public'
+import {isPc, isIos, isAndroid, isWeixin} from './public/public'
 
 const {pcUrl} = require('../../config')
 
@@ -11,42 +11,6 @@ $(function () {
     if (isPc()) {
         window.location.href = `http://${pcUrl}`
     }
-
-    axiosAjax({
-        type: 'post',
-        url: '/signture',
-        params: {url: window.location.href.split('#')[0]},
-        fn: function (data) {
-            const $wxData = $('#wxShareTitleDesc')
-            wx.config({
-                debug: false,
-                appId: 'wxec2dc083d4024311',
-                timestamp: data.timestamp,
-                nonceStr: data.nonceStr,
-                signature: data.signature,
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ'
-                ]
-            })
-            wx.ready(function () {
-                const shareData = {
-                    title: $wxData.data('title'),
-                    desc: $wxData.data('desc'),
-                    link: data.url,
-                    imgUrl: $wxData.data('imgurl')
-                }
-                wx.onMenuShareAppMessage(shareData)
-                wx.onMenuShareTimeline(shareData)
-                wx.onMenuShareQQ(shareData)
-            })
-            wx.error(function (err) {
-                console.log(err.errMsg)
-            })
-        }
-    })
 
     // 下载
     let iosUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.linekong.mars24'

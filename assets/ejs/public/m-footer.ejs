@@ -28,6 +28,57 @@
 <script src="`+private[i]+`"></script>
 }
 
+<script>
+    function isWeixin () {
+        const userAgent = window.navigator.userAgent.toLowerCase()
+
+        let flag = false
+        if (userAgent.indexOf('micromessenger') > -1) {
+            flag = true
+        }
+        return flag
+    }
+
+    if (isWeixin()) {
+        $.ajax({
+            type: 'post',
+            url: '/signture',
+            data: {url: window.location.href.split('#')[0]},
+            success: function (data) {
+                console.log(data)
+
+                wx.config({
+                    debug: false,
+                    appId: 'wxec2dc083d4024311',
+                    timestamp: data.timestamp,
+                    nonceStr: data.nonceStr,
+                    signature: data.signature,
+                    jsApiList: [
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ'
+                    ]
+                })
+                wx.ready(function () {
+                    var shareData = {
+                        title: '@@shreTitle',
+                        desc: '@@shareDesc',
+                        link: data.url,
+                        imgUrl: '@@shareImgurl'
+                    }
+                    wx.onMenuShareAppMessage(shareData)
+                    wx.onMenuShareTimeline(shareData)
+                    wx.onMenuShareQQ(shareData)
+                })
+                wx.error(function (err) {
+                    console.log(err.errMsg)
+                })
+            }
+        })
+    }
+</script>
+
 <!-- statistics -->
 <div style="display: none">
     <script src="https://s22.cnzz.com/z_stat.php?id=1272858809&web_id=1272858809" language="JavaScript"></script>

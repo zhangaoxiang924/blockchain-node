@@ -114,7 +114,6 @@ $(function () {
         const obj = data.obj[2]
         let list = ''
         obj.map((item) => {
-            console.log(item.useType)
             list += `<div class="block-ad">
                         <div class="block-ad-title">
                             <h3>${item.remake}</h3>
