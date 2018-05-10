@@ -73,7 +73,9 @@ router.get('/', function (req, res, next) {
                 data: renderData,
                 webSiteInfo: {
                     ...webInfo,
-                    title: `${renderData.title}_火星财经`
+                    title: `${renderData.title}_火星快讯_快讯速递_数字货币快讯_比特币快讯_以太坊快讯_火星财经`,
+                    keywords: `${renderData.title}，火星快讯，快讯速递，数字货币快讯，比特币快讯，以太坊快讯`,
+                    description: renderData.content
                 }
             })
         } else {
