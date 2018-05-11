@@ -9,12 +9,17 @@ const router = express.Router()
 const sign = require('../utils/sign')
 const request = require('request')
 
-let config = {
+// let config = {
+//     appID: 'wxb5b0d0477d219182',
+//     appSecret: '3c8a76677f9e4feb6672607aca7353a9'
+// }
+
+global.config = {
     appID: 'wxec2dc083d4024311',
     appSecret: 'b78d95fd673f7fe469d2f957e877a34a'
 }
 
-let signTemp = {
+global.signTemp = {
     signs: [
         {
             deadline: '',
@@ -40,9 +45,9 @@ let signTemp = {
  * @param {* 回调请求方法} callback
  */
 const getAccessToken = (callback) => {
-    console.log(config.appID)
-    console.log(config.appSecret)
-    const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + config.appID + '&secret=' + config.appSecret
+    console.log(global.config.appID)
+    console.log(global.config.appSecret)
+    const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + global.config.appID + '&secret=' + global.config.appSecret
     request(tokenUrl, function (error, response, data) {
         if (error) console.log(error)
 
@@ -78,14 +83,14 @@ const getJsapiTicket = (reqUrl, accessToken, callback) => {
             if (content.errcode === 0) {
                 const signatureStr = sign(content.ticket, reqUrl)
 
-                console.log('signatureStr' + signatureStr)
+                console.log(signatureStr)
                 callback && callback(signatureStr)
             } else if (content.errcode === 40001) {
                 console.log('access_token 过期')
 
                 getAccessToken(function (accessTokenIn) {
-                    signTemp.accessTime = new Date().getTime()
-                    signTemp.access_token = accessTokenIn
+                    global.signTemp.accessTime = new Date().getTime()
+                    global.signTemp.access_token = accessTokenIn
 
                     getJsapiTicket(reqUrl, accessTokenIn, callback)
                 })
@@ -103,10 +108,10 @@ router.post('/', function (req, res, next) {
     let signIndex = -1
     let signtag = false
 
-    const aTime = curentTime - signTemp.accessTime < deadTime // access_token是否过期
+    const aTime = curentTime - global.signTemp.accessTime < deadTime // access_token是否过期
 
-    for (let index in signTemp.signs) {
-        const item = signTemp.signs[index]
+    for (let index in global.signTemp.signs) {
+        const item = global.signTemp.signs[index]
 
         if (item.url === reqUrl) {
             signIndex = index
@@ -125,12 +130,12 @@ router.post('/', function (req, res, next) {
         }
 
         if (signIndex === -1) {
-            signTemp.signs.push(curentUrlSign)
+            global.signTemp.signs.push(curentUrlSign)
         } else {
-            signTemp.signs[signIndex] = curentUrlSign
+            global.signTemp.signs[signIndex] = curentUrlSign
         }
 
-        res.json(Object.assign(signTemp, signatureStr))
+        res.json(Object.assign(global.signTemp, signatureStr))
     }
 
     if (!signtag) {
@@ -138,14 +143,14 @@ router.post('/', function (req, res, next) {
 
         if (aTime) {
             console.log('access_token 未过期')
-            getJsapiTicket(reqUrl, signTemp.access_token, function (signatureStr) {
+            getJsapiTicket(reqUrl, global.signTemp.access_token, function (signatureStr) {
                 resJson(signatureStr)
             })
         } else {
             console.log('access_token 已过期')
             getAccessToken(function (accessToken) {
-                signTemp.accessTime = new Date().getTime()
-                signTemp.access_token = accessToken
+                global.signTemp.accessTime = new Date().getTime()
+                global.signTemp.access_token = accessToken
 
                 getJsapiTicket(reqUrl, accessToken, function (signatureStr) {
                     resJson(signatureStr)
@@ -154,7 +159,7 @@ router.post('/', function (req, res, next) {
         }
     } else {
         console.log('此url未签过名并access_token 未过期')
-        res.json(signTemp.signs[signIndex])
+        res.json(global.signTemp.signs[signIndex])
     }
 })
 
