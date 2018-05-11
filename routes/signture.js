@@ -35,46 +35,67 @@ let signTemp = {
 }
 
 /**
- * 请求获取Jsapi_Ticket
- * @param {* URL链接} hrefURL
- * @param {* token} accessTtoken
- * @param {* 回调请求方法} callback
- */
-const jsapiTicket = (reqUrl, accessTtoken, callback) => {
-    const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + accessTtoken + '&type=jsapi'
-    request(ticketUrl, function (error, response, content) {
-        console.log('get jsapi_ticket:' + JSON.parse(content).ticket)
-
-        if (response.statusCode && response.statusCode === 200) {
-            content = JSON.parse(content)
-            if (content.errcode === 0) {
-                const signatureStr = sign(content.ticket, reqUrl)
-
-                console.log('signatureStr' + signatureStr)
-                callback && callback(signatureStr)
-            }
-        }
-    })
-}
-
-/**
  * 请求获取access_token
  * @param {* URL链接} hrefURL
  * @param {* 回调请求方法} callback
  */
-const accessToken = (callback) => {
+const getAccessToken = (callback) => {
+    console.log(config.appID)
+    console.log(config.appSecret)
     const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + config.appID + '&secret=' + config.appSecret
-    request(tokenUrl, function (error, response, content) {
-        console.log('get access_token:' + JSON.parse(content).access_token)
+    request(tokenUrl, function (error, response, data) {
+        if (error) console.log(error)
+
+        console.log(data)
+        console.log('get access_token:' + JSON.parse(data).access_token)
 
         if (response.statusCode && response.statusCode === 200) {
-            const accessToken = JSON.parse(content).access_token
+            const accessToken = JSON.parse(data).access_token
             callback && callback(accessToken)
         }
     })
 }
 
+/**
+ * 请求获取Jsapi_Ticket
+ * @param {* URL链接} hrefURL
+ * @param {* token} accessToken
+ * @param {* 回调请求方法} callback
+ */
+const getJsapiTicket = (reqUrl, accessToken, callback) => {
+    console.log('ticket need access_token: ' + accessToken)
+    const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + accessToken + '&type=jsapi'
+    request(ticketUrl, function (error, response, data) {
+        if (error) console.log(error)
+
+        console.log(data)
+        console.log('get jsapi_ticket:' + JSON.parse(data).ticket)
+        console.log(response.statusCode)
+
+        if (response.statusCode && response.statusCode === 200) {
+            const content = JSON.parse(data)
+
+            if (content.errcode === 0) {
+                const signatureStr = sign(content.ticket, reqUrl)
+
+                console.log('signatureStr' + signatureStr)
+                callback && callback(signatureStr)
+            } else if (content.errcode === 40001) {
+                console.log('access_token 过期')
+
+                getAccessToken(function (accessTokenIn) {
+                    signTemp.accessTime = new Date().getTime()
+                    signTemp.access_token = accessTokenIn
+
+                    getJsapiTicket(reqUrl, accessTokenIn, callback)
+                })
+            }
+        }
+    })
+}
+
 router.post('/', function (req, res, next) {
+    console.log('进入路由')
     const reqUrl = req.body.url
 
     const deadTime = (2 * 60 * 60 * 1000) - 1000 * 1000
@@ -113,21 +134,26 @@ router.post('/', function (req, res, next) {
     }
 
     if (!signtag) {
+        console.log('此url未签过名')
+
         if (aTime) {
-            jsapiTicket(reqUrl, signTemp.access_token, function (signatureStr) {
+            console.log('access_token 未过期')
+            getJsapiTicket(reqUrl, signTemp.access_token, function (signatureStr) {
                 resJson(signatureStr)
             })
         } else {
-            accessToken(function (accessToken) {
+            console.log('access_token 已过期')
+            getAccessToken(function (accessToken) {
                 signTemp.accessTime = new Date().getTime()
                 signTemp.access_token = accessToken
 
-                jsapiTicket(reqUrl, accessToken, function (signatureStr) {
+                getJsapiTicket(reqUrl, accessToken, function (signatureStr) {
                     resJson(signatureStr)
                 })
             })
         }
     } else {
+        console.log('此url未签过名并access_token 未过期')
         res.json(signTemp.signs[signIndex])
     }
 })
