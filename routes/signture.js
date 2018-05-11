@@ -9,11 +9,6 @@ const router = express.Router()
 const sign = require('../utils/sign')
 const request = require('request')
 
-// let config = {
-//     appID: 'wxb5b0d0477d219182',
-//     appSecret: '3c8a76677f9e4feb6672607aca7353a9'
-// }
-
 global.config = {
     appID: 'wxec2dc083d4024311',
     appSecret: 'b78d95fd673f7fe469d2f957e877a34a'

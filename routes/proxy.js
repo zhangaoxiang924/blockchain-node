@@ -10,6 +10,7 @@ const utils = require('../utils/public')
 
 // pc:java接口代理
 const javaApi = proxyJava(utils.ajaxJavaUrl, {
+    limit: '5mb',
     proxyReqPathResolver: function (req) {
         return req.originalUrl
     }
